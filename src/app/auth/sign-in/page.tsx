@@ -1,12 +1,17 @@
-import { AuthWrapper } from "@/features/auth/components/auth-wrapper";
+import loginImage from "@/assets/images/login.png";
+import { AuthCard } from "@/features/auth/components/auth-card";
+import { AuthIllustration } from "@/features/auth/components/auth-illustration";
+import { AuthLayout } from "@/features/auth/components/auth-layout";
 import { SignInForm } from "@/features/auth/components/sign-in-form";
 
 const Page = () => {
-    return (
-        <AuthWrapper>
-            <SignInForm />
-        </AuthWrapper>
-    );
+  return (
+    <AuthLayout illustration={<AuthIllustration lightImage={loginImage} alt="Login illustration" />}>
+      <AuthCard>
+        <SignInForm />
+      </AuthCard>
+    </AuthLayout>
+  );
 };
 
 export default Page;

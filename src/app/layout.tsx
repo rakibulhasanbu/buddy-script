@@ -1,31 +1,27 @@
-import { Geist_Mono, Inter } from "next/font/google"
+import { Poppins } from "next/font/google";
 
-import "./globals.css"
+import "./globals.css";
 
-import { cn } from "@/lib/utils"
-import { Providers } from "@/providers"
+import { Providers } from "@/providers";
 
-const inter = Inter({ subsets: [ 'latin' ], variable: '--font-sans' })
+import { cn } from "@/lib/utils";
 
-const fontMono = Geist_Mono({
-  subsets: [ "latin" ],
-  variable: "--font-mono",
-})
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-sans",
+});
 
-export default function RootLayout ({
+export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={ cn("antialiased", fontMono.variable, "font-sans", inter.variable) }
-    >
+    <html lang="en" suppressHydrationWarning className={cn("antialiased", "font-sans", poppins.variable)}>
       <body>
-        <Providers>{ children }</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
-  )
+  );
 }

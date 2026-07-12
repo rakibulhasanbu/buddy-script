@@ -1,7 +1,7 @@
-import { Spinner } from "@/components/ui/spinner"
+import { Spinner } from "@/components/ui/spinner";
 
 const Loading = () => {
-    return <Spinner />
-}
+  return <Spinner />;
+};
 
-export default Loading
+export default Loading;
