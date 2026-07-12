@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ThreeDotsIcon } from "./feed-icons";
+
 const PostDropdown = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -102,14 +104,10 @@ const PostDropdown = () => {
         onClick={() => setOpen((prev) => !prev)}
         className="cursor-pointer border-none bg-transparent p-1 outline-none"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="4" height="17" fill="none" viewBox="0 0 4 17">
-          <circle cx="2" cy="2" r="2" fill="#C4C4C4" />
-          <circle cx="2" cy="8" r="2" fill="#C4C4C4" />
-          <circle cx="2" cy="15" r="2" fill="#C4C4C4" />
-        </svg>
+        <ThreeDotsIcon />
       </button>
       {open && (
-        <div className="absolute top-6 right-0 z-50 w-[200px] rounded-md bg-white p-2 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+        <div className="absolute top-6 right-0 z-50 w-50 rounded-md bg-white p-2 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
           <ul>
             {items.map((item) => (
               <li key={item.label}>
@@ -133,8 +131,8 @@ const CommentBox = () => {
     <div className="rounded-[18px] bg-[#F6F6F6] p-1">
       <form className="flex flex-wrap items-center justify-between">
         <div className="flex flex-1 items-center">
-          <div className="flex-shrink-0">
-            <Image src="/images/comment_img.png" alt="" width={26} height={26} className="h-[26px] w-[26px]" />
+          <div className="shrink-0">
+            <Image src="/images/comment_img.png" alt="" width={26} height={26} className="h-6.5 w-6.5" />
           </div>
           <div className="relative w-full">
             <textarea
@@ -179,7 +177,7 @@ const Comment = () => {
 
   return (
     <div className="flex gap-3">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <Link href="#0">
           <Image src="/images/txt_img.png" alt="" width={40} height={40} className="h-10 w-10 rounded-full" />
         </Link>
@@ -298,7 +296,7 @@ export const TimelinePost = () => {
         <PostDropdown />
       </div>
 
-      <h4 className="mb-4 text-sm leading-[21px] font-normal text-black">-Healthy Tracking App</h4>
+      <h4 className="mb-4 text-sm leading-5.25 font-normal text-black">-Healthy Tracking App</h4>
       <div className="mb-6">
         <Image src="/images/timeline_img.png" alt="" width={600} height={400} className="h-auto w-full rounded-md" />
       </div>
@@ -340,7 +338,7 @@ export const TimelinePost = () => {
             height={32}
             className="-ml-4 hidden h-8 w-8 rounded-full border border-white bg-[#C4C4C4] sm:block"
           />
-          <span className="-ml-4 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#1890FF] text-sm leading-[21px] font-normal text-white">
+          <span className="-ml-4 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#1890FF] text-sm leading-5.25 font-normal text-white">
             9+
           </span>
         </div>
@@ -360,7 +358,7 @@ export const TimelinePost = () => {
         <button
           type="button"
           onClick={() => setLiked(!liked)}
-          className={`mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none py-3 text-sm leading-[21px] font-normal text-black transition-colors ${liked ? "bg-[#e4f1fd]" : "bg-transparent hover:bg-[#e4f1fd]"}`}
+          className={`mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none py-3 text-sm leading-5.25 font-normal text-black transition-colors ${liked ? "bg-[#e4f1fd]" : "bg-transparent hover:bg-[#e4f1fd]"}`}
         >
           <span className="mr-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 19 19">
@@ -383,7 +381,7 @@ export const TimelinePost = () => {
         </button>
         <button
           type="button"
-          className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-[21px] font-normal text-black transition-colors hover:bg-[#e4f1fd]"
+          className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-black transition-colors hover:bg-[#e4f1fd]"
         >
           <span className="mr-2">
             <svg
@@ -410,7 +408,7 @@ export const TimelinePost = () => {
         </button>
         <button
           type="button"
-          className="flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-[21px] font-normal text-black transition-colors hover:bg-[#e4f1fd]"
+          className="flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-black transition-colors hover:bg-[#e4f1fd]"
         >
           <span className="mr-2">
             <svg

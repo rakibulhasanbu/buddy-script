@@ -18,11 +18,11 @@ export const FeedLayout = ({ leftSidebar, middle, rightSidebar }: FeedLayoutProp
       <DesktopHeader />
       <MobileHeader />
 
-      <div className="container mx-auto max-w-[1140px] px-4 pt-[70px] lg:pt-[75px]">
-        <div className="grid h-[calc(100vh-75px)] grid-cols-1 gap-4 lg:grid-cols-12">
-          <aside className="hidden h-full overflow-auto lg:col-span-3 lg:block lg:pt-[18px]">{leftSidebar}</aside>
-          <main className="col-span-1 h-full overflow-auto pt-2 lg:col-span-6 lg:pt-[10px]">{middle}</main>
-          <aside className="hidden h-full overflow-auto lg:col-span-3 lg:block lg:pt-[18px]">{rightSidebar}</aside>
+      <div className="container mx-auto max-w-285 px-4 pt-14 lg:pt-18.75">
+        <div className="grid h-[calc(100vh-56px)] grid-cols-1 gap-4 pb-17 lg:h-[calc(100vh-75px)] lg:grid-cols-12 lg:pb-0">
+          <aside className="hidden h-full overflow-auto lg:col-span-3 lg:block lg:pt-4.5">{leftSidebar}</aside>
+          <main className="col-span-1 h-full overflow-auto px-2 pt-2 lg:col-span-6 lg:px-0 lg:pt-2.5">{middle}</main>
+          <aside className="hidden h-full overflow-auto lg:col-span-3 lg:block lg:pt-4.5">{rightSidebar}</aside>
         </div>
       </div>
 

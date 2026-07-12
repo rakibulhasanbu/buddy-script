@@ -20,12 +20,28 @@ const ExploreItem = ({ icon, label, badge }: { icon: React.ReactNode; label: str
   </li>
 );
 
-const SuggestedPerson = ({ image, name, role }: { image: string; name: string; role: string }) => (
+const SuggestedPerson = ({
+  image,
+  name,
+  role,
+  wide,
+}: {
+  image: string;
+  name: string;
+  role: string;
+  wide?: boolean;
+}) => (
   <div className="mb-6 flex flex-wrap items-center justify-between">
     <div className="flex flex-1 items-center">
       <div className="mr-4">
         <Link href="#0">
-          <Image src={image} alt={name} width={40} height={40} className="h-10 w-10 rounded-full object-cover" />
+          <Image
+            src={image}
+            alt={name}
+            width={wide ? 71 : 37}
+            height={wide ? 40 : 37}
+            className={`rounded-full object-cover ${wide ? "h-10 w-17.75" : "h-9.25 w-9.25"}`}
+          />
         </Link>
       </div>
       <div className="flex-1">
@@ -38,7 +54,7 @@ const SuggestedPerson = ({ image, name, role }: { image: string; name: string; r
     <div>
       <Link
         href="#0"
-        className="block rounded-sm border border-[#DCDFE4] bg-white px-1.5 py-[7px] text-xs leading-tight font-medium text-[#959EAE] transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white"
+        className="block rounded-sm border border-[#DCDFE4] bg-white px-1.5 py-1.75 text-xs leading-tight font-medium text-[#959EAE] transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white"
       >
         Connect
       </Link>
@@ -69,8 +85,8 @@ const EventCard = () => (
       </div>
       <hr className="mx-0 my-1 border-[#DFDFDF]" />
       <div className="flex items-center justify-between px-4 pt-0.5 pb-3">
-        <p className="text-xs leading-[18px] font-medium text-[#8A8A8A] opacity-70">17 People Going</p>
-        <span className="block rounded-sm border border-[#1890FF] bg-[#F3F9FF] px-3.5 py-0.5 text-xs leading-[18px] font-medium text-[#1890FF] transition-colors hover:bg-[#1890FF] hover:text-[#F3F9FF]">
+        <p className="text-xs leading-4.5 font-medium text-[#8A8A8A] opacity-70">17 People Going</p>
+        <span className="block rounded-sm border border-[#1890FF] bg-[#F3F9FF] px-3.5 py-0.5 text-xs leading-4.5 font-medium text-[#1890FF] transition-colors hover:bg-[#1890FF] hover:text-[#F3F9FF]">
           Going
         </span>
       </div>
@@ -199,11 +215,11 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-[#212121]">Suggested People</h4>
-          <Link href="#0" className="text-xs leading-[18px] font-medium text-[#1890FF]">
+          <Link href="#0" className="text-xs leading-4.5 font-medium text-[#1890FF]">
             See All
           </Link>
         </div>
-        <SuggestedPerson image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" />
+        <SuggestedPerson image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" wide />
         <SuggestedPerson image="/images/people2.png" name="Ryan Roslansky" role="CEO of Linkedin" />
         <SuggestedPerson image="/images/people3.png" name="Dylan Field" role="CEO of Figma" />
       </div>
@@ -211,7 +227,7 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-[#212121]">Events</h4>
-          <Link href="#0" className="text-xs leading-[18px] font-medium text-[#1890FF]">
+          <Link href="#0" className="text-xs leading-4.5 font-medium text-[#1890FF]">
             See all
           </Link>
         </div>

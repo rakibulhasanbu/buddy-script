@@ -11,7 +11,7 @@ const ActionButton = ({ icon, label, onClick }: { icon: React.ReactNode; label?:
   >
     <span className="mr-2">{icon}</span>
     {label && (
-      <span className="text-base leading-[23px] font-normal text-[#666666] transition-colors hover:text-[#1890FF]">
+      <span className="text-base leading-5.75 font-normal text-[#666666] transition-colors hover:text-[#1890FF]">
         {label}
       </span>
     )}
@@ -36,17 +36,17 @@ export const PostComposer = () => {
   return (
     <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-6">
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 cursor-pointer">
+        <div className="shrink-0 cursor-pointer">
           <Image src="/images/txt_img.png" alt="User" width={40} height={40} className="h-10 w-10 rounded-full p-px" />
         </div>
         <div className="relative w-full">
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="h-[88px] w-full resize-none border-none p-2 text-sm outline-none placeholder:text-xs placeholder:text-[#666666]"
+            className="peer h-22 w-full resize-none border-none p-2 text-sm outline-none placeholder:text-xs placeholder:text-[#666666]"
             placeholder=""
           />
-          <label className="pointer-events-none absolute top-2 left-2 flex items-center gap-2 text-base leading-tight font-normal text-[#666666] transition-opacity">
+          <label className="pointer-events-none absolute top-2 left-2 flex items-center gap-2 text-base leading-tight font-normal text-[#666666] transition-opacity peer-focus:opacity-0">
             Write something ...
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="24" fill="none" viewBox="0 0 23 24">
               <path
@@ -61,10 +61,7 @@ export const PostComposer = () => {
       <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
       {/* Desktop bottom */}
-      <div
-        className="hidden items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] px-4 lg:flex"
-        style={{ height: "64px", marginTop: "10px" }}
-      >
+      <div className="mt-2.5 hidden h-16 items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] px-4 lg:flex">
         <div className="flex items-center">
           <ActionButton
             label="Photo"
