@@ -1,132 +1,104 @@
 "use client";
 
-import { useState, useTransition } from "react";
-
-import { registerAction } from "@/features/auth/actions";
-import { AuthDivider } from "@/features/auth/components/auth-divider";
-import { AuthFormCheckbox } from "@/features/auth/components/auth-form-checkbox";
-import { AuthFormInput } from "@/features/auth/components/auth-form-input";
-import { AuthLink } from "@/features/auth/components/auth-link";
-import { AuthLogoTitle } from "@/features/auth/components/auth-logo-title";
-import { AuthSubmitButton } from "@/features/auth/components/auth-submit-button";
-import { GoogleAuthButton } from "@/features/auth/components/google-auth-button";
-import { useAuthSuccess } from "@/features/auth/hooks/use-auth-utils";
-import { signUpFormSchema } from "@/features/auth/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-type FormValues = z.infer<typeof signUpFormSchema>;
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export const SignUpForm = () => {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(signUpFormSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      terms: false,
-    },
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [terms, setTerms] = useState(true);
 
-  const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const onSuccess = useAuthSuccess();
-
-  const onSubmit = (data: FormValues) => {
-    setError(null);
-    startTransition(async () => {
-      const response = await registerAction({
-        firstName: data.firstName.trim(),
-        lastName: data.lastName.trim(),
-        email: data.email.trim(),
-        password: data.password.trim(),
-      });
-
-      if (response.status === "success") {
-        onSuccess({
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-          user: response.data.user,
-        });
-      } else {
-        setError(response.error || "Something went wrong");
-      }
-    });
+  const handleSubmit = () => {
+    console.log({ email, password, confirmPassword, terms });
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
-      <AuthLogoTitle subtitle="Get Started Now" title="Registration" />
+    <div className="rounded-md bg-white p-12">
+      <div className="mx-auto mb-7 max-w-[161px]">
+        <Image src="/images/logo.svg" alt="Buddy Script" width={161} height={40} className="h-auto w-[161px]" />
+      </div>
+      <p className="mb-2 text-center text-base leading-snug font-normal text-[#2D3748]">Get Started Now</p>
+      <h4 className="mb-[50px] text-center text-[28px] font-medium text-[#212121]">Registration</h4>
 
-      <GoogleAuthButton label="Register with google" />
+      <button
+        type="button"
+        className="mb-10 flex w-full items-center justify-center rounded-md border border-[#F0F2F5] bg-white px-[60px] py-3 transition-shadow hover:shadow-md"
+      >
+        <Image src="/images/google.svg" alt="Google" width={20} height={20} className="mr-2 h-5 w-5" />
+        <span className="text-base leading-snug font-medium whitespace-nowrap text-[#312000]">
+          Register with google
+        </span>
+      </button>
 
-      <AuthDivider />
-
-      <div className="flex flex-col gap-[14px]">
-        <div className="grid grid-cols-1 gap-[14px] sm:grid-cols-2">
-          <AuthFormInput
-            name="firstName"
-            label="First Name"
-            placeholder="Enter first name"
-            type="text"
-            control={form.control}
-            required
-            autoComplete="given-name"
-          />
-          <AuthFormInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Enter last name"
-            type="text"
-            control={form.control}
-            required
-            autoComplete="family-name"
-          />
-        </div>
-
-        <AuthFormInput
-          name="email"
-          label="Email"
-          placeholder="Enter your email"
-          type="email"
-          control={form.control}
-          required
-          autoComplete="email"
-        />
-
-        <AuthFormInput
-          name="password"
-          label="Password"
-          placeholder="Enter your password"
-          type="password"
-          control={form.control}
-          required
-          autoComplete="new-password"
-        />
-
-        <AuthFormInput
-          name="confirmPassword"
-          label="Repeat Password"
-          placeholder="Repeat your password"
-          type="password"
-          control={form.control}
-          required
-          autoComplete="new-password"
-        />
-
-        <AuthFormCheckbox name="terms" label="I agree to terms & conditions" control={form.control} />
-
-        {error && <p className="text-center text-sm text-destructive">{error}</p>}
-
-        <div className="mt-6">
-          <AuthSubmitButton isLoading={isPending}>Login now</AuthSubmitButton>
-        </div>
+      <div className="relative mb-10 text-center">
+        <span className="relative z-10 bg-white px-2 text-sm leading-snug font-normal text-[#C4C4C4]">Or</span>
+        <span className="absolute top-1/2 left-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
+        <span className="absolute top-1/2 right-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
       </div>
 
-      <AuthLink text="Already have an account?" linkText="Sign In" href="/auth/sign-in" />
-    </form>
+      <form className="w-full">
+        <div className="mb-[14px]">
+          <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+          />
+        </div>
+        <div className="mb-[14px]">
+          <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+          />
+        </div>
+        <div className="mb-[14px]">
+          <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Repeat Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="flex cursor-pointer items-center gap-2">
+            <input
+              type="checkbox"
+              checked={terms}
+              onChange={(e) => setTerms(e.target.checked)}
+              className="peer sr-only"
+            />
+            <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#666666] transition-colors peer-checked:border-[#1890FF] peer-checked:bg-transparent">
+              <span className="h-2 w-2 rounded-full bg-[#1890FF] opacity-0 transition-opacity peer-checked:opacity-100" />
+            </span>
+            <span className="text-sm leading-snug font-normal text-[#2D3748]">I agree to terms & conditions</span>
+          </label>
+        </div>
+
+        <div className="mt-10 mb-[60px]">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md"
+          >
+            Login now
+          </button>
+        </div>
+      </form>
+
+      <p className="text-center text-sm text-[#2D3748]">
+        Dont have an account?{" "}
+        <Link href="/auth/sign-in" className="text-[#1890FF]">
+          Create New Account
+        </Link>
+      </p>
+    </div>
   );
 };

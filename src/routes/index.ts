@@ -1,7 +1,7 @@
 export const ROUTES = {
   superAdminRoutes: ["/overview", "/users"] as const,
   adminRoutes: ["/overview"] as const,
-  public: ["/"] as const,
+  public: [] as const,
   protected: ["/feed"] as const,
   auth: ["/auth/sign-in", "/auth/sign-up"] as const,
 };

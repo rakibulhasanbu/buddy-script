@@ -1,18 +1,14 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 type LogoProps = {
-    size?: "sm" | "md" | "lg"
-}
+  size?: "sm" | "md" | "lg";
+};
 
 export const Logo = ({ size = "md" }: LogoProps) => {
-    const sizeClasses = {
-        sm: "text-xl",
-        md: "text-2xl",
-        lg: "text-3xl",
-    }
-    return (
-        <span className={ cn("font-semibold text-3xl text-primary", sizeClasses[ size ]) }>
-            LOGO
-        </span>
-    )
-}
+  const sizeClasses = {
+    sm: "text-xl",
+    md: "text-2xl",
+    lg: "text-3xl",
+  };
+  return <span className={cn("text-3xl font-semibold text-primary", sizeClasses[size])}>LOGO</span>;
+};

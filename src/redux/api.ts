@@ -1,6 +1,6 @@
-import { config } from "@/config"
-import { logoutThunk, setTokens, setTokensThunk } from "@/features/auth/slice"
-import { METHOD, ResponseObject, RootState, tagTypes } from "@/redux/types"
+import { config } from "@/config";
+import { logoutThunk, setTokens, setTokensThunk } from "@/features/auth/slice";
+import { METHOD, ResponseObject, RootState, tagTypes } from "@/redux/types";
 import {
   BaseQueryFn,
   createApi,
@@ -8,40 +8,40 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
   retry,
-} from "@reduxjs/toolkit/query/react"
-import { toast } from "sonner"
+} from "@reduxjs/toolkit/query/react";
+import { toast } from "sonner";
 
-export const API_TIMEOUT = 120_000 // 2 minutes
-export const API_BASE_URL = config.serverUrl
+export const API_TIMEOUT = 120_000; // 2 minutes
+export const API_BASE_URL = config.serverUrl;
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,
   timeout: API_TIMEOUT,
 
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.accessToken
+    const token = (getState() as RootState).auth.accessToken;
 
     if (token) {
-      headers.set("Authorization", `${token}`)
+      headers.set("Authorization", `${token}`);
     }
-    return headers
+    return headers;
   },
-})
+});
 
 const baseQueryWithoutAuth = fetchBaseQuery({
   baseUrl: API_BASE_URL,
   timeout: API_TIMEOUT,
-})
+});
 
-export const baseQueryWithReAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions)
+export const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions
+) => {
+  let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    const refreshToken = (api.getState() as RootState).auth.refreshToken
+    const refreshToken = (api.getState() as RootState).auth.refreshToken;
 
     if (refreshToken) {
       const refreshResult = await baseQueryWithoutAuth(
@@ -52,24 +52,24 @@ export const baseQueryWithReAuth: BaseQueryFn<
         },
         api,
         extraOptions
-      )
+      );
 
       if (!refreshResult.error && refreshResult.data) {
         const response = refreshResult.data as ResponseObject<{
-          accessToken: string
-        }>
+          accessToken: string;
+        }>;
         const tokens = {
           accessToken: response.data.accessToken,
           refreshToken: refreshToken,
-        }
+        };
 
-        api.dispatch(setTokens(tokens))
-        await api.dispatch(setTokensThunk(tokens))
+        api.dispatch(setTokens(tokens));
+        await api.dispatch(setTokensThunk(tokens));
 
-        result = await baseQuery(args, api, extraOptions)
+        result = await baseQuery(args, api, extraOptions);
       } else {
-        await api.dispatch(logoutThunk())
-        toast.error("Session expired")
+        await api.dispatch(logoutThunk());
+        toast.error("Session expired");
       }
 
       // if (refreshResult.data) {
@@ -86,16 +86,16 @@ export const baseQueryWithReAuth: BaseQueryFn<
       //     toast.error("Session expired");
       // }
     } else {
-      api.dispatch({ type: "auth/logout" })
+      api.dispatch({ type: "auth/logout" });
     }
   }
 
-  return result
-}
+  return result;
+};
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: retry(baseQueryWithReAuth, { maxRetries: 0 }),
   endpoints: () => ({}),
   tagTypes: tagTypes,
-})
+});

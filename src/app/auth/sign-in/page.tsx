@@ -1,17 +1,25 @@
-import loginImage from "@/assets/images/login.png";
-import { AuthCard } from "@/features/auth/components/auth-card";
-import { AuthIllustration } from "@/features/auth/components/auth-illustration";
-import { AuthLayout } from "@/features/auth/components/auth-layout";
+import Image from "next/image";
+
+import { AuthPageLayout } from "@/features/auth/components/auth-page-layout";
 import { SignInForm } from "@/features/auth/components/sign-in-form";
 
-const Page = () => {
+export default function SignInPage() {
   return (
-    <AuthLayout illustration={<AuthIllustration lightImage={loginImage} alt="Login illustration" />}>
-      <AuthCard>
-        <SignInForm />
-      </AuthCard>
-    </AuthLayout>
+    <AuthPageLayout
+      illustration={
+        <div className="relative w-full max-w-[633px]">
+          <Image
+            src="/images/login.png"
+            alt="Login illustration"
+            width={633}
+            height={500}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
+      }
+    >
+      <SignInForm />
+    </AuthPageLayout>
   );
-};
-
-export default Page;
+}
