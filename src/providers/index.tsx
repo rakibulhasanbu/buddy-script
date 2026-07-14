@@ -1,5 +1,6 @@
 import { AuthInitiatorFromCookies } from "@/features/auth/components/auth-initiator-from-cookies";
 import { TokenInitiatorInStore } from "@/features/auth/components/token-initiator-in-store";
+import { SocketProvider } from "@/features/notifications/hooks/use-socket";
 import { AlertProvider } from "@/providers/AlertProvider";
 import { StoreProvider } from "@/providers/store-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -13,12 +14,14 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <ThemeProvider>
         <AuthInitiatorFromCookies>
           <TokenInitiatorInStore>
-            <AlertProvider>
-              <TooltipProvider>
-                <Toaster richColors position="top-right" />
-                {children}
-              </TooltipProvider>
-            </AlertProvider>
+            <SocketProvider>
+              <AlertProvider>
+                <TooltipProvider>
+                  <Toaster richColors position="top-right" />
+                  {children}
+                </TooltipProvider>
+              </AlertProvider>
+            </SocketProvider>
           </TokenInitiatorInStore>
         </AuthInitiatorFromCookies>
       </ThemeProvider>

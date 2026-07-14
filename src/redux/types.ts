@@ -19,6 +19,7 @@ export enum TagType {
   Post = "Post",
   Comment = "Comment",
   Reaction = "Reaction",
+  Notification = "Notification",
 }
 
 export const tagTypes = Object.values(TagType);
