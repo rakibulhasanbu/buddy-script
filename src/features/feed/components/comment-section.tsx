@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 
-import { useCreateCommentMutation, useGetCommentsByPostQuery } from "@/features/feed/api";
+import { useCreateCommentMutation } from "@/features/feed/api";
 import { CommentBox } from "@/features/feed/components/comment-box";
-import { CommentItem } from "@/features/feed/components/comment-item";
+import { CommentList } from "@/features/feed/components/comment-list";
 import { toast } from "sonner";
-
-import { Spinner } from "@/components/ui/spinner";
 
 interface CommentSectionProps {
   postId: string;
@@ -18,16 +16,14 @@ export const CommentSection = ({ postId, commentCount }: CommentSectionProps) =>
   const [expanded, setExpanded] = useState(false);
   const [newComment, setNewComment] = useState("");
 
-  const { data, isLoading } = useGetCommentsByPostQuery({ postId }, { skip: !expanded });
   const [createComment, { isLoading: isCreating }] = useCreateCommentMutation();
-
-  const comments = data?.data.data || [];
 
   const handleCreateComment = async () => {
     if (!newComment.trim()) return;
     try {
       await createComment({ postId, content: newComment.trim() }).unwrap();
       setNewComment("");
+      setExpanded(true);
     } catch {
       toast.error("Failed to add comment");
     }
@@ -45,21 +41,7 @@ export const CommentSection = ({ postId, commentCount }: CommentSectionProps) =>
         </button>
       )}
 
-      {expanded && (
-        <>
-          {isLoading ? (
-            <div className="flex justify-center py-4">
-              <Spinner className="h-5 w-5" />
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {comments.map((comment) => (
-                <CommentItem key={comment.id} comment={comment} postId={postId} />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      {expanded && <CommentList postId={postId} />}
 
       <div className="px-6 pt-6 pb-2">
         <CommentBox

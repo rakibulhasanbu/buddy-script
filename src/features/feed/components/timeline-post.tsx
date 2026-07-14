@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -112,11 +112,9 @@ const PostDropdown = ({
 
 interface TimelinePostProps {
   post: Post;
-  onPostUpdated?: (updated: Post) => void;
-  onPostDeleted?: (id: string) => void;
 }
 
-export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePostProps) => {
+const TimelinePostInner = ({ post }: TimelinePostProps) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const isAuthor = currentUser?.id === post.author.id;
 
@@ -139,7 +137,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
 
   const handleUpdatePost = async () => {
     try {
-      const result = await updatePost({
+      await updatePost({
         id: post.id,
         body: {
           content: editContent,
@@ -149,7 +147,6 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
       }).unwrap();
       setIsEditing(false);
       toast.success("Post updated successfully");
-      onPostUpdated?.(result.data);
     } catch {
       toast.error("Failed to update post");
     }
@@ -160,7 +157,6 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
     try {
       await deletePost(post.id).unwrap();
       toast.success("Post deleted successfully");
-      onPostDeleted?.(post.id);
     } catch {
       toast.error("Failed to delete post");
     }
@@ -176,6 +172,8 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
               alt={post.author.name}
               width={44}
               height={44}
+              loading="lazy"
+              sizes="44px"
               className="h-11 w-11 rounded-full object-cover transition-opacity hover:opacity-70"
             />
           </div>
@@ -246,7 +244,15 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
           </div>
           {post.imageUrl && !isEditImageRemoved && (
             <div className="relative">
-              <Image src={post.imageUrl} alt="" width={600} height={400} className="h-auto w-full rounded-md" />
+              <Image
+                src={post.imageUrl}
+                alt=""
+                width={600}
+                height={400}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 600px"
+                className="h-auto w-full rounded-md"
+              />
               <button
                 type="button"
                 onClick={() => setIsEditImageRemoved(true)}
@@ -284,7 +290,15 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
           <h4 className="mb-4 text-sm leading-5.25 font-normal text-buddy-text">{post.content}</h4>
           {post.imageUrl && (
             <div className="mb-6">
-              <Image src={post.imageUrl} alt="" width={600} height={400} className="h-auto w-full rounded-md" />
+              <Image
+                src={post.imageUrl}
+                alt=""
+                width={600}
+                height={400}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 600px"
+                className="h-auto w-full rounded-md"
+              />
             </div>
           )}
         </Link>
@@ -415,3 +429,5 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
     </div>
   );
 };
+
+export const TimelinePost = memo(TimelinePostInner);

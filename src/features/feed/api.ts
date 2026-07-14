@@ -24,6 +24,16 @@ const feedApi = api.injectEndpoints({
         method: METHOD.GET,
         params: { cursor, limit },
       }),
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newItems, { arg }) => {
+        if (!arg?.cursor) {
+          currentCache.data.data = newItems.data.data;
+        } else {
+          currentCache.data.data.push(...newItems.data.data);
+        }
+        currentCache.data.meta.nextCursor = newItems.data.meta.nextCursor;
+      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg?.cursor !== previousArg?.cursor,
       providesTags: (result) =>
         result
           ? [
