@@ -53,7 +53,7 @@ export const ProfilePage = ({ user, isLoading, isError, isOwner }: ProfilePagePr
 
   return (
     <div className="min-h-screen bg-buddy-page-bg pb-8">
-      <div className="container mx-auto max-w-4xl px-4 pt-6">
+      <div className="container mx-auto max-w-6xl px-4 pt-6">
         <ProfileHeader user={user} isOwner={isOwner} onEdit={() => setIsEditing(true)} />
 
         <div className="grid gap-6 lg:grid-cols-[280px_1fr]">

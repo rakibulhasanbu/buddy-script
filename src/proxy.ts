@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { User, UserRole } from "@/features/auth/types";
 import { isRouteExactMatched, isRouteMatched, ROUTES } from "@/routes";
 
 export async function proxy(req: NextRequest) {
@@ -16,16 +15,16 @@ export async function proxy(req: NextRequest) {
   if (isPublicRoute) return NextResponse.next();
 
   if (isAuthenticated) {
-    const { isAdmin } = checkUserRole(req);
+    // const { isAdmin } = checkUserRole(req);
 
     if (isAuthRoute) {
-      const callback = searchParams.get("callbackUrl") || "/feed";
+      const callback = searchParams.get("callbackUrl") || "/";
       return redirectTo(callback, req);
     }
 
-    if (isSuperAdminRoute && !isAdmin) {
-      return redirectTo("/feed", req);
-    }
+    // if (isSuperAdminRoute && !isAdmin) {
+    //   return redirectTo("/feed", req);
+    // }
 
     return NextResponse.next();
   }
@@ -55,16 +54,16 @@ const checkAuth = (req: NextRequest) => {
   return false;
 };
 
-const checkUserRole = (req: NextRequest) => {
-  const userCookie = req.cookies.get("user")?.value;
-  const user = userCookie ? (JSON.parse(userCookie) as User) : ({} as User);
+// const checkUserRole = (req: NextRequest) => {
+//   const userCookie = req.cookies.get("user")?.value;
+//   const user = userCookie ? (JSON.parse(userCookie) as User) : ({} as User);
 
-  const isAdmin = user?.role === UserRole.ADMIN || user?.role === UserRole.SUPER_ADMIN;
+//   const isAdmin = user?.role === UserRole.ADMIN || user?.role === UserRole.SUPER_ADMIN;
 
-  return {
-    isAdmin,
-  };
-};
+//   return {
+//     isAdmin,
+//   };
+// };
 
 // Matcher configuration - exclude static files and API routes
 export const config = {

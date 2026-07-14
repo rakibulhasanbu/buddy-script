@@ -150,6 +150,7 @@ const TimelinePostInner = ({ post }: TimelinePostProps) => {
             </p>
           </div>
         </Link>
+
         <PostDropdown
           isAuthor={isAuthor}
           onEdit={() => setIsComposerOpen(true)}
