@@ -41,8 +41,8 @@ export const NotificationItem = ({ notification, onClick }: NotificationItemProp
     <button
       type="button"
       onClick={onClick}
-      className={`mb-2 flex w-full items-start rounded-md p-2 text-left transition-colors hover:bg-[#f5f5f5] ${
-        notification.isRead ? "bg-white" : "bg-[#e6f3ff]"
+      className={`mb-2 flex w-full items-start rounded-md p-2 text-left transition-colors hover:bg-buddy-muted-bg ${
+        notification.isRead ? "bg-buddy-card-bg" : "bg-[#e6f3ff] dark:bg-[#1a3a5c]"
       }`}
     >
       <div className="relative mr-3 shrink-0">
@@ -56,11 +56,13 @@ export const NotificationItem = ({ notification, onClick }: NotificationItemProp
         {!notification.isRead && <span className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-[#1890FF]" />}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-sm leading-relaxed text-[#666666]">
-          <span className="font-medium text-[#212121]">{notification.actor.name}</span>
+        <p className="text-sm leading-relaxed text-buddy-text-secondary">
+          <span className="font-medium text-buddy-text-dark">{notification.actor.name}</span>
           <span dangerouslySetInnerHTML={{ __html: text.replace(notification.actor.name, "") }} />
         </p>
-        <p className="mt-1 text-xs font-semibold text-[#1890FF]">{formatRelativeTime(notification.createdAt)} ago</p>
+        <p className="mt-1 text-xs font-semibold text-buddy-primary">
+          {formatRelativeTime(notification.createdAt)} ago
+        </p>
       </div>
     </button>
   );
@@ -78,7 +80,9 @@ export const FriendRequestNotificationItem = ({
   onDecline,
 }: FriendRequestNotificationItemProps) => {
   return (
-    <div className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-white" : "bg-[#e6f3ff]"}`}>
+    <div
+      className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-buddy-card-bg" : "bg-[#e6f3ff] dark:bg-[#1a3a5c]"}`}
+    >
       <Link href={`/users/${notification.actor.id}`} className="mr-3 shrink-0">
         <Image
           src={notification.actor.photoUrl || "/images/profile.png"}
@@ -89,13 +93,15 @@ export const FriendRequestNotificationItem = ({
         />
       </Link>
       <div className="min-w-0 flex-1">
-        <p className="text-sm leading-relaxed text-[#666666]">
-          <Link href={`/users/${notification.actor.id}`} className="font-medium text-[#212121] hover:underline">
+        <p className="text-sm leading-relaxed text-buddy-text-secondary">
+          <Link href={`/users/${notification.actor.id}`} className="font-medium text-buddy-text-dark hover:underline">
             {notification.actor.name}
           </Link>{" "}
           sent you a friend request
         </p>
-        <p className="mt-1 text-xs font-semibold text-[#1890FF]">{formatRelativeTime(notification.createdAt)} ago</p>
+        <p className="mt-1 text-xs font-semibold text-buddy-primary">
+          {formatRelativeTime(notification.createdAt)} ago
+        </p>
         <div className="mt-2 flex gap-2">
           <button
             type="button"
@@ -107,7 +113,7 @@ export const FriendRequestNotificationItem = ({
           <button
             type="button"
             onClick={onDecline}
-            className="rounded-md border border-[#d9d9d9] bg-white px-3 py-1.5 text-xs font-medium text-[#212121] hover:bg-[#f5f5f5]"
+            className="rounded-md border border-buddy-border-color bg-buddy-card-bg px-3 py-1.5 text-xs font-medium text-buddy-text-dark hover:bg-buddy-muted-bg"
           >
             Decline
           </button>

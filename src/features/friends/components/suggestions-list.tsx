@@ -20,11 +20,15 @@ export const SuggestionsList = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4 text-center text-[#666666]">Loading suggestions...</div>;
+    return <div className="py-4 text-center text-buddy-text-secondary">Loading suggestions...</div>;
   }
 
   if (suggestions.length === 0) {
-    return <div className="rounded-md bg-white p-6 text-center text-[#666666]">No suggestions right now.</div>;
+    return (
+      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
+        No suggestions right now.
+      </div>
+    );
   }
 
   return (

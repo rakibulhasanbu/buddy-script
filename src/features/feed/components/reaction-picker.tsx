@@ -30,7 +30,7 @@ export const ReactionPicker = ({ onReact, children, className }: ReactionPickerP
       {children}
 
       {showReactions && (
-        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded-full bg-white px-2 py-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded-full bg-buddy-card-bg px-2 py-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
           <div className="flex items-center gap-1">
             {Object.values(EReactionType).map((type) => (
               <button

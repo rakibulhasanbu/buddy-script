@@ -8,6 +8,7 @@ import { useDeletePostMutation, useToggleReactionMutation, useUpdatePostMutation
 import { CommentSection } from "@/features/feed/components/comment-section";
 import { REACTION_CONFIG, ReactionEmoji, ReactionLabel } from "@/features/feed/components/reaction-assets";
 import { ReactionPicker } from "@/features/feed/components/reaction-picker";
+import { SavePostButton } from "@/features/feed/components/save-post-button";
 import { WhoReactedModal } from "@/features/feed/components/who-reacted-modal";
 import { EReactionEntity, EReactionType, EVisibility, Post } from "@/features/feed/types";
 import { formatRelativeTime, getTopReactions, getTotalReactions } from "@/features/feed/utils";
@@ -50,7 +51,7 @@ const PostDropdown = ({
         <ThreeDotsIcon />
       </button>
       {open && (
-        <div className="absolute top-6 right-0 z-50 w-50 rounded-md bg-white p-2 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+        <div className="absolute top-6 right-0 z-50 w-50 rounded-md bg-buddy-card-bg p-2 shadow-[0_8px_24px_rgba(149,157,165,0.2)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
           <ul>
             <li>
               <button
@@ -59,7 +60,7 @@ const PostDropdown = ({
                   onEdit();
                   setOpen(false);
                 }}
-                className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-[#212121] hover:bg-[#f5f5f5]"
+                className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-buddy-text-dark hover:bg-buddy-muted-bg"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
                   <path
@@ -88,7 +89,7 @@ const PostDropdown = ({
                   setOpen(false);
                 }}
                 disabled={isDeleting}
-                className="flex w-full cursor-pointer items-center gap-2 px-2 py-2 text-left text-sm text-[#FF4D4F] hover:bg-[#f5f5f5] disabled:opacity-50"
+                className="flex w-full cursor-pointer items-center gap-2 px-2 py-2 text-left text-sm text-[#FF4D4F] hover:bg-buddy-muted-bg disabled:opacity-50"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
                   <path
@@ -166,7 +167,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
   };
 
   return (
-    <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-6">
+    <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-6">
       <div className="mb-4 flex items-center justify-between">
         <Link href={`/users/${post.author.id}`} className="flex cursor-pointer items-center">
           <div className="mr-4">
@@ -179,12 +180,12 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
             />
           </div>
           <div>
-            <h4 className="text-base leading-tight font-normal text-black transition-colors hover:underline">
+            <h4 className="text-base leading-tight font-normal text-buddy-text-dark transition-colors hover:underline">
               {post.author.name}
             </h4>
-            <p className="text-sm leading-tight text-[rgba(0,0,0,0.46)]">
+            <p className="text-sm leading-tight text-buddy-text-muted">
               {formatRelativeTime(post.createdAt)} ago .{" "}
-              <span className="text-[rgba(0,0,0,0.46)]">
+              <span className="text-buddy-text-muted">
                 {post.visibility === EVisibility.PRIVATE ? (
                   <span className="flex items-center gap-1">
                     <svg
@@ -223,10 +224,10 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
           <textarea
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
-            className="h-32 w-full resize-none rounded-md border border-[#E8E8E8] p-3 text-sm outline-none"
+            className="h-32 w-full resize-none rounded-md border border-buddy-input-border bg-buddy-page-bg p-3 text-sm text-buddy-text outline-none"
           />
           <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 text-sm text-[#666666]">
+            <label className="flex items-center gap-2 text-sm text-buddy-text-secondary">
               <input
                 type="radio"
                 checked={editVisibility === EVisibility.PUBLIC}
@@ -234,7 +235,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
               />
               Public
             </label>
-            <label className="flex items-center gap-2 text-sm text-[#666666]">
+            <label className="flex items-center gap-2 text-sm text-buddy-text-secondary">
               <input
                 type="radio"
                 checked={editVisibility === EVisibility.PRIVATE}
@@ -264,7 +265,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
                 setEditVisibility(post.visibility);
                 setIsEditImageRemoved(false);
               }}
-              className="rounded-md border border-[#DCDFE4] bg-white px-4 py-2 text-sm text-[#666666]"
+              className="rounded-md border border-buddy-border-color bg-buddy-card-bg px-4 py-2 text-sm text-buddy-text-secondary"
             >
               Cancel
             </button>
@@ -279,14 +280,14 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
           </div>
         </div>
       ) : (
-        <>
-          <h4 className="mb-4 text-sm leading-5.25 font-normal text-black">{post.content}</h4>
+        <Link href={`/post/${post.id}`} className="block cursor-pointer">
+          <h4 className="mb-4 text-sm leading-5.25 font-normal text-buddy-text">{post.content}</h4>
           {post.imageUrl && (
             <div className="mb-6">
               <Image src={post.imageUrl} alt="" width={600} height={400} className="h-auto w-full rounded-md" />
             </div>
           )}
-        </>
+        </Link>
       )}
 
       <div className="mb-6 flex items-center justify-between">
@@ -300,29 +301,29 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
             {topReactions.map((type, index) => (
               <span
                 key={type}
-                className={`h-8 w-8 rounded-full border border-white bg-[#C4C4C4] ${index > 0 ? "-ml-4" : ""}`}
+                className={`h-8 w-8 rounded-full border border-buddy-card-bg bg-[#C4C4C4] ${index > 0 ? "-ml-4" : ""}`}
               >
                 <ReactionEmoji type={type as EReactionType} className="text-lg" />
               </span>
             ))}
           </div>
           {totalReactions > 0 && (
-            <span className="ml-2 text-sm leading-tight font-normal text-[rgba(0,0,0,0.46)]">{totalReactions}</span>
+            <span className="ml-2 text-sm leading-tight font-normal text-buddy-text-muted">{totalReactions}</span>
           )}
         </button>
         <div className="flex">
-          <p className="mx-4 text-sm leading-tight font-normal text-[rgba(0,0,0,0.46)]">
-            <span className="text-[#212121]">{post.commentCount}</span> Comment
+          <p className="mx-4 text-sm leading-tight font-normal text-buddy-text-muted">
+            <span className="text-buddy-text-dark">{post.commentCount}</span> Comment
           </p>
         </div>
       </div>
 
-      <div className="flex bg-[#FBFCFD] p-2">
+      <div className="flex bg-buddy-muted-bg p-2">
         <ReactionPicker onReact={handleReact} className="mr-1 flex flex-1">
           <button
             type="button"
             onClick={() => handleReact(EReactionType.LIKE)}
-            className={`flex w-full flex-1 cursor-pointer items-center justify-center rounded-md border-none py-3 text-sm leading-5.25 font-normal text-black transition-colors ${
+            className={`flex w-full flex-1 cursor-pointer items-center justify-center rounded-md border-none py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors ${
               post.myReaction ? "bg-[#e4f1fd]" : "bg-transparent hover:bg-[#e4f1fd]"
             }`}
             style={{ color: post.myReaction ? REACTION_CONFIG[post.myReaction].color : undefined }}
@@ -353,11 +354,11 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
         </ReactionPicker>
         <button
           type="button"
-          className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-black transition-colors hover:bg-[#e4f1fd]"
+          className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-[#e4f1fd]"
         >
           <span className="mr-2">
             <svg
-              className="text-black"
+              className="text-buddy-text-dark"
               xmlns="http://www.w3.org/2000/svg"
               width="21"
               height="21"
@@ -378,13 +379,14 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
           </span>
           Comment
         </button>
+        {!isAuthor && <SavePostButton postId={post.id} isSaved={post.isSaved} />}
         <button
           type="button"
-          className="flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-black transition-colors hover:bg-[#e4f1fd]"
+          className="flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-[#e4f1fd]"
         >
           <span className="mr-2">
             <svg
-              className="text-black"
+              className="text-buddy-text-dark"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="21"

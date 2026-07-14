@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const MobileBottomNav = () => {
   return (
-    <div className="fixed right-0 bottom-0 left-0 z-[1030] block bg-white py-2 lg:hidden">
+    <div className="fixed right-0 bottom-0 left-0 z-[1030] block bg-buddy-card-bg py-2 lg:hidden">
       <div className="container mx-auto">
         <ul className="flex items-center justify-around">
           <li>
@@ -52,7 +52,7 @@ export const MobileBottomNav = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-white bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
+              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
                 6
               </span>
             </Link>
@@ -68,7 +68,7 @@ export const MobileBottomNav = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-white bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
+              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
                 2
               </span>
             </Link>

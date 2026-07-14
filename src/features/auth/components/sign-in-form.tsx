@@ -45,45 +45,47 @@ export const SignInForm = () => {
   };
 
   return (
-    <div className="rounded-md bg-white p-12">
+    <div className="rounded-md bg-buddy-card-bg p-12">
       <div className="mx-auto mb-7 max-w-[161px]">
         <Image src="/images/logo.svg" alt="Buddy Script" width={161} height={40} className="h-auto w-[161px]" />
       </div>
-      <p className="mb-2 text-center text-base leading-snug font-normal text-[#2D3748]">Welcome back</p>
-      <h4 className="mb-[50px] text-center text-[28px] font-medium text-[#212121]">Login to your account</h4>
+      <p className="mb-2 text-center text-base leading-snug font-normal text-buddy-text">Welcome back</p>
+      <h4 className="mb-[50px] text-center text-[28px] font-medium text-buddy-text-dark">Login to your account</h4>
 
       <button
         type="button"
-        className="mb-10 flex w-full items-center justify-center rounded-md border border-[#F0F2F5] bg-white px-[60px] py-3 transition-shadow hover:shadow-md"
+        className="mb-10 flex w-full items-center justify-center rounded-md border border-buddy-border-color bg-buddy-card-bg px-[60px] py-3 transition-shadow hover:shadow-md"
       >
         <Image src="/images/google.svg" alt="Google" width={20} height={20} className="mr-2 h-5 w-5" />
-        <span className="text-base leading-snug font-medium whitespace-nowrap text-[#312000]">
+        <span className="text-base leading-snug font-medium whitespace-nowrap text-buddy-text-dark">
           Or sign-in with google
         </span>
       </button>
 
       <div className="relative mb-10 text-center">
-        <span className="relative z-10 bg-white px-2 text-sm leading-snug font-normal text-[#C4C4C4]">Or</span>
-        <span className="absolute top-1/2 left-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
-        <span className="absolute top-1/2 right-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
+        <span className="relative z-10 bg-buddy-card-bg px-2 text-sm leading-snug font-normal text-buddy-text-muted">
+          Or
+        </span>
+        <span className="absolute top-1/2 left-0 h-[2px] w-[108px] -translate-y-1/2 bg-buddy-border-color" />
+        <span className="absolute top-1/2 right-0 h-[2px] w-[108px] -translate-y-1/2 bg-buddy-border-color" />
       </div>
 
       <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="mb-[14px]">
-          <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Email</label>
+          <label className="mb-2 block text-base leading-snug font-medium text-buddy-text">Email</label>
           <input
             type="email"
             {...register("email")}
-            className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+            className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
           />
           {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
         </div>
         <div className="mb-[14px]">
-          <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Password</label>
+          <label className="mb-2 block text-base leading-snug font-medium text-buddy-text">Password</label>
           <input
             type="password"
             {...register("password")}
-            className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+            className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
           />
           {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
         </div>
@@ -96,12 +98,12 @@ export const SignInForm = () => {
               onChange={(e) => setRemember(e.target.checked)}
               className="peer sr-only"
             />
-            <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#666666] transition-colors peer-checked:border-[#1890FF] peer-checked:bg-transparent">
+            <span className="flex h-4 w-4 items-center justify-center rounded-full border border-buddy-text-secondary transition-colors peer-checked:border-[#1890FF] peer-checked:bg-transparent">
               <span className="h-2 w-2 rounded-full bg-[#1890FF] opacity-0 transition-opacity peer-checked:opacity-100" />
             </span>
-            <span className="text-sm leading-snug font-normal text-[#2D3748]">Remember me</span>
+            <span className="text-sm leading-snug font-normal text-buddy-text">Remember me</span>
           </label>
-          <Link href="#0" className="text-sm leading-snug font-normal text-[#1890FF]">
+          <Link href="#0" className="text-sm leading-snug font-normal text-buddy-primary">
             Forgot password?
           </Link>
         </div>
@@ -117,9 +119,9 @@ export const SignInForm = () => {
         </div>
       </form>
 
-      <p className="text-center text-sm text-[#2D3748]">
+      <p className="text-center text-sm text-buddy-text">
         Dont have an account?{" "}
-        <Link href="/auth/sign-up" className="text-[#1890FF]">
+        <Link href="/auth/sign-up" className="text-buddy-primary">
           Create New Account
         </Link>
       </p>

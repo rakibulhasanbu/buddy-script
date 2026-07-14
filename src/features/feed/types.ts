@@ -36,6 +36,7 @@ export interface Post {
   updatedAt: string;
   author: PostAuthor;
   myReaction: EReactionType | null;
+  isSaved?: boolean;
 }
 
 export interface FeedResponse {

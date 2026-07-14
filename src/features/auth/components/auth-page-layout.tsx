@@ -9,7 +9,7 @@ interface AuthPageLayoutProps {
 
 export const AuthPageLayout = ({ children, illustration }: AuthPageLayoutProps) => {
   return (
-    <section className="relative z-1 min-h-screen w-full overflow-hidden bg-[#F0F2F5] py-25">
+    <section className="relative z-1 min-h-screen w-full overflow-hidden bg-buddy-page-bg py-25">
       <div className="pointer-events-none absolute top-0 left-0 z-[-1] hidden lg:block">
         <Image src="/images/shape1.svg" alt="" width={150} height={150} unoptimized className="block" />
       </div>

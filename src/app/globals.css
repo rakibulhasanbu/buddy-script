@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Buddy Script design tokens - light mode only */
   --background: #F0F2F5;
@@ -42,6 +44,47 @@
   --buddy-shadow-sm: 0px 2px 0px 2px rgba(108, 126, 147, 0.15);
   --buddy-shadow-md: 0px 4px 16px rgba(108, 126, 147, 0.15);
   --buddy-shadow-lg: 7.5px 20px 7.5px 20px rgba(108, 126, 147, 0.15);
+}
+
+.dark {
+  /* shadcn / base tokens */
+  --background: #0F172A;
+  --foreground: #E2E8F0;
+  --card: #1E293B;
+  --card-foreground: #F1F5F9;
+  --popover: #1E293B;
+  --popover-foreground: #F1F5F9;
+  --primary: #1890FF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #334155;
+  --secondary-foreground: #F1F5F9;
+  --muted: #334155;
+  --muted-foreground: #94A3B8;
+  --accent: #1E293B;
+  --accent-foreground: #1890FF;
+  --destructive: #FF4D4F;
+  --destructive-foreground: #FFFFFF;
+  --border: #334155;
+  --input: #1E293B;
+  --ring: #1890FF;
+
+  /* Buddy extended tokens */
+  --buddy-text: #E2E8F0;
+  --buddy-text-primary: #F1F5F9;
+  --buddy-text-secondary: #94A3B8;
+  --buddy-text-muted: #64748B;
+  --buddy-text-dark: #F1F5F9;
+  --buddy-page-bg: #0F172A;
+  --buddy-card-bg: #1E293B;
+  --buddy-muted-bg: #334155;
+  --buddy-border-color: #334155;
+  --buddy-input-border: #334155;
+  --buddy-primary: #1890FF;
+  --buddy-primary-hover: #40A9FF;
+  --buddy-success: #0ACF83;
+  --buddy-shadow-sm: 0px 2px 0px 2px rgba(0, 0, 0, 0.25);
+  --buddy-shadow-md: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  --buddy-shadow-lg: 7.5px 20px 7.5px 20px rgba(0, 0, 0, 0.25);
 }
 
 @theme inline {

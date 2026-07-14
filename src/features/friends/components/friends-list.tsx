@@ -25,11 +25,11 @@ export const FriendsList = () => {
 
   if (friendships.length === 0) {
     return (
-      <div className="rounded-md bg-white p-8 text-center">
-        <h3 className="mb-2 text-lg font-medium text-[#212121]">No friends yet</h3>
-        <p className="text-sm text-[#666666]">
+      <div className="rounded-md bg-buddy-card-bg p-8 text-center">
+        <h3 className="mb-2 text-lg font-medium text-buddy-text-dark">No friends yet</h3>
+        <p className="text-sm text-buddy-text-secondary">
           Connect with people to see them here.{" "}
-          <Link href="/friends" className="text-[#1890FF] hover:underline">
+          <Link href="/friends" className="text-buddy-primary hover:underline">
             Find friends
           </Link>
         </p>

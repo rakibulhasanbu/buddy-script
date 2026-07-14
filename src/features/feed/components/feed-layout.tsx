@@ -13,7 +13,7 @@ interface FeedLayoutProps {
 
 export const FeedLayout = ({ leftSidebar, middle, rightSidebar }: FeedLayoutProps) => {
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-[#F0F2F5]">
+    <div className="flex h-screen flex-col overflow-hidden bg-buddy-page-bg">
       <ThemeToggle />
       <DesktopHeader />
       <MobileHeader />

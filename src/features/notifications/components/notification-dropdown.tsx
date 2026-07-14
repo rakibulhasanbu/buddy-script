@@ -105,21 +105,25 @@ export const NotificationDropdown = () => {
       <div ref={ref} className="relative">
         <span
           onClick={() => setOpen((prev) => !prev)}
-          className="relative block cursor-pointer px-4 py-5.5 text-black/60 transition-colors hover:text-[#1890FF]"
+          className="relative block cursor-pointer px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF]"
         >
           <BellIcon />
           {badgeText && (
-            <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-white bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
+            <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
               {badgeText}
             </span>
           )}
         </span>
 
         {open && (
-          <div className="absolute top-8 -left-27.5 z-50 max-h-[calc(100vh-90px)] w-100 overflow-auto rounded-md bg-white p-4 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+          <div className="absolute top-8 -left-27.5 z-50 max-h-[calc(100vh-90px)] w-100 overflow-auto rounded-md bg-buddy-card-bg p-4 shadow-[0_8px_24px_rgba(149,157,165,0.2)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
             <div className="mb-5 flex items-center justify-between">
-              <h4 className="m-0 text-[20px] leading-tight font-semibold text-[#212121]">Notifications</h4>
-              <button type="button" onClick={() => markAllAsRead()} className="text-xs text-[#1890FF] hover:underline">
+              <h4 className="m-0 text-[20px] leading-tight font-semibold text-buddy-text-dark">Notifications</h4>
+              <button
+                type="button"
+                onClick={() => markAllAsRead()}
+                className="text-xs text-buddy-primary hover:underline"
+              >
                 Mark all as read
               </button>
             </div>
@@ -128,8 +132,8 @@ export const NotificationDropdown = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab("all")}
-                className={`h-9 rounded-md border border-[#f1f1f1] px-3 text-base leading-tight font-medium transition-colors ${
-                  activeTab === "all" ? "bg-[#1890ff26] text-[#1890FF]" : "text-[#212121] hover:bg-[#f5f5f5]"
+                className={`h-9 rounded-md border border-buddy-border-color px-3 text-base leading-tight font-medium transition-colors ${
+                  activeTab === "all" ? "bg-[#1890ff26] text-[#1890FF]" : "text-buddy-text-dark hover:bg-buddy-muted-bg"
                 }`}
               >
                 All
@@ -137,8 +141,10 @@ export const NotificationDropdown = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab("unread")}
-                className={`h-9 rounded-md border border-[#f1f1f1] px-3 text-base leading-tight font-medium transition-colors ${
-                  activeTab === "unread" ? "bg-[#1890ff26] text-[#1890FF]" : "text-[#212121] hover:bg-[#f5f5f5]"
+                className={`h-9 rounded-md border border-buddy-border-color px-3 text-base leading-tight font-medium transition-colors ${
+                  activeTab === "unread"
+                    ? "bg-[#1890ff26] text-[#1890FF]"
+                    : "text-buddy-text-dark hover:bg-buddy-muted-bg"
                 }`}
               >
                 Unread
@@ -147,9 +153,9 @@ export const NotificationDropdown = () => {
 
             <div>
               {isLoading ? (
-                <div className="py-8 text-center text-sm text-[#666666]">Loading notifications...</div>
+                <div className="py-8 text-center text-sm text-buddy-text-secondary">Loading notifications...</div>
               ) : groups.length === 0 ? (
-                <div className="py-8 text-center text-sm text-[#666666]">No notifications</div>
+                <div className="py-8 text-center text-sm text-buddy-text-secondary">No notifications</div>
               ) : (
                 groups.map((notification) =>
                   notification.type === ENotificationType.FRIEND_REQUEST ? (
@@ -173,7 +179,7 @@ export const NotificationDropdown = () => {
                 <button
                   type="button"
                   onClick={loadMore}
-                  className="mt-2 w-full rounded-md py-2 text-sm font-medium text-[#1890FF] hover:bg-[#f5f5f5]"
+                  className="mt-2 w-full rounded-md py-2 text-sm font-medium text-buddy-primary hover:bg-buddy-muted-bg"
                 >
                   Load more
                 </button>

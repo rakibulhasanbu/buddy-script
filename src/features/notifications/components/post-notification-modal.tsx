@@ -22,13 +22,13 @@ export const PostNotificationModal = ({ postId, open, onOpenChange }: PostNotifi
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto p-0">
         {isLoading ? (
-          <div className="p-6 text-center text-sm text-[#666666]">Loading post...</div>
+          <div className="p-6 text-center text-sm text-buddy-text-secondary">Loading post...</div>
         ) : post ? (
           <div className="p-2">
             <TimelinePost post={post} />
           </div>
         ) : (
-          <div className="p-6 text-center text-sm text-[#666666]">Post not found</div>
+          <div className="p-6 text-center text-sm text-buddy-text-secondary">Post not found</div>
         )}
       </DialogContent>
     </Dialog>

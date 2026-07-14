@@ -17,7 +17,7 @@ const ActionButton = ({ icon, label, onClick }: { icon: React.ReactNode; label?:
   >
     <span className="mr-2">{icon}</span>
     {label && (
-      <span className="text-base leading-5.75 font-normal text-[#666666] transition-colors hover:text-[#1890FF]">
+      <span className="text-base leading-5.75 font-normal text-buddy-text-secondary transition-colors hover:text-[#1890FF]">
         {label}
       </span>
     )}
@@ -91,7 +91,7 @@ export const PostComposer = ({ onPostCreated }: PostComposerProps) => {
   const isLoading = isCreating || isUploading;
 
   return (
-    <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-6">
+    <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-6">
       <div className="flex items-start gap-4">
         <div className="shrink-0 cursor-pointer">
           <Image src="/images/txt_img.png" alt="User" width={40} height={40} className="h-10 w-10 rounded-full p-px" />
@@ -100,10 +100,10 @@ export const PostComposer = ({ onPostCreated }: PostComposerProps) => {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="peer h-22 w-full resize-none border-none p-2 text-sm outline-none placeholder:text-xs placeholder:text-[#666666]"
+            className="peer h-22 w-full resize-none border-none bg-transparent p-2 text-sm text-buddy-text outline-none placeholder:text-xs placeholder:text-buddy-text-secondary"
             placeholder=""
           />
-          <label className="pointer-events-none absolute top-2 left-2 flex items-center gap-2 text-base leading-tight font-normal text-[#666666] transition-opacity peer-focus:opacity-0">
+          <label className="pointer-events-none absolute top-2 left-2 flex items-center gap-2 text-base leading-tight font-normal text-buddy-text-secondary transition-opacity peer-focus:opacity-0">
             Write something ...
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="24" fill="none" viewBox="0 0 23 24">
               <path
@@ -131,7 +131,7 @@ export const PostComposer = ({ onPostCreated }: PostComposerProps) => {
       <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
       {/* Desktop bottom */}
-      <div className="mt-2.5 hidden h-16 items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] px-4 lg:flex">
+      <div className="mt-2.5 hidden h-16 items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] px-4 lg:flex dark:bg-[rgba(24,144,255,0.1)]">
         <div className="flex items-center">
           <ActionButton
             label="Photo"
@@ -215,7 +215,7 @@ export const PostComposer = ({ onPostCreated }: PostComposerProps) => {
       </div>
 
       {/* Mobile bottom */}
-      <div className="mt-4 block items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] p-2 lg:hidden">
+      <div className="mt-4 block items-center justify-between rounded-b-md bg-[rgba(24,144,255,0.05)] p-2 lg:hidden dark:bg-[rgba(24,144,255,0.1)]">
         <div className="flex items-center justify-around">
           <ActionButton
             onClick={() => fileInputRef.current?.click()}

@@ -79,8 +79,8 @@ export const FeedMiddle = () => {
           ))}
 
           {posts.length === 0 && !isFetching && (
-            <div className="rounded-md bg-white py-12 text-center">
-              <p className="text-[#666666]">No posts yet. Be the first to share something!</p>
+            <div className="rounded-md bg-buddy-card-bg py-12 text-center">
+              <p className="text-buddy-text-secondary">No posts yet. Be the first to share something!</p>
             </div>
           )}
 

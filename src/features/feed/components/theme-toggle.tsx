@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useTheme } from "next-themes";
 
 export const ThemeToggle = () => {
-  const [active, setActive] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const active = theme === "dark";
 
   const toggle = () => {
-    setActive((prev) => !prev);
-    console.log("theme toggled");
+    setTheme(active ? "light" : "dark");
   };
 
   return (

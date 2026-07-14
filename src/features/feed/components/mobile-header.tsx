@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const MobileHeader = () => {
   return (
-    <div className="fixed top-0 right-0 left-0 z-[1030] block bg-white p-4 lg:hidden">
+    <div className="fixed top-0 right-0 left-0 z-[1030] block bg-buddy-card-bg p-4 lg:hidden">
       <div className="container mx-auto">
         <div className="mb-4 flex items-center justify-between">
           <div>

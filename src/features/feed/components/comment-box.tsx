@@ -31,7 +31,7 @@ export const CommentBox = ({
   };
 
   return (
-    <div className="rounded-[18px] bg-[#F6F6F6] p-1">
+    <div className="rounded-[18px] bg-buddy-muted-bg p-1">
       <div className="flex flex-wrap items-center justify-between">
         <div className="flex flex-1 items-center">
           <div className="shrink-0">
@@ -43,7 +43,7 @@ export const CommentBox = ({
               onChange={(e) => onChange(e.target.value)}
               onKeyDown={handleKeyDown}
               autoFocus={autoFocus}
-              className="h-10 w-full resize-none border-none bg-transparent p-2 text-sm outline-none"
+              className="h-10 w-full resize-none border-none bg-transparent p-2 text-sm text-buddy-text outline-none"
               placeholder={placeholder}
             />
           </div>
@@ -53,7 +53,7 @@ export const CommentBox = ({
             <button
               type="button"
               onClick={onCancel}
-              className="mr-2 border-none bg-transparent px-2 py-2 text-xs text-[#666666]"
+              className="mr-2 border-none bg-transparent px-2 py-2 text-xs text-buddy-text-secondary"
             >
               Cancel
             </button>

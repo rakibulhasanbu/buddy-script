@@ -39,7 +39,7 @@ export const CommentSection = ({ postId, commentCount }: CommentSectionProps) =>
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
-          className="mb-3 cursor-pointer text-sm text-[rgba(0,0,0,0.46)]"
+          className="mb-3 cursor-pointer text-sm text-buddy-text-muted"
         >
           {expanded ? "Hide comments" : `View ${commentCount} previous comment${commentCount === 1 ? "" : "s"}`}
         </button>

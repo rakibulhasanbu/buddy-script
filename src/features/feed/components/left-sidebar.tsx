@@ -22,13 +22,13 @@ const ExploreItem = ({
   <li className="relative mb-6 flex items-center justify-between">
     <Link
       href={href}
-      className="flex w-full items-center text-base leading-snug font-medium text-[#666666] transition-colors hover:text-[#1890FF]"
+      className="flex w-full items-center text-base leading-snug font-medium text-buddy-text-secondary transition-colors hover:text-[#1890FF]"
     >
       <span className="mr-3.5">{icon}</span>
       {label}
     </Link>
     {badge && (
-      <span className="absolute right-0 flex h-6 w-9 items-center justify-center rounded-lg border-2 border-white bg-[#0ACF83] text-[13px] leading-tight font-normal text-white">
+      <span className="absolute right-0 flex h-6 w-9 items-center justify-center rounded-lg border-2 border-buddy-card-bg bg-[#0ACF83] text-[13px] leading-tight font-normal text-white">
         {badge}
       </span>
     )}
@@ -61,9 +61,9 @@ const SuggestedPerson = ({
       </div>
       <div className="flex-1">
         <Link href={`/users/${person.id}`}>
-          <h4 className="text-sm leading-tight font-medium text-[#212121]">{person.name}</h4>
+          <h4 className="text-sm leading-tight font-medium text-buddy-text-dark">{person.name}</h4>
         </Link>
-        <p className="text-[11px] leading-tight font-light text-[#212121]">{person.headline || "Member"}</p>
+        <p className="text-[11px] leading-tight font-light text-buddy-text-secondary">{person.headline || "Member"}</p>
       </div>
     </div>
     <div>
@@ -71,7 +71,7 @@ const SuggestedPerson = ({
         type="button"
         disabled={isLoading}
         onClick={() => onConnect(person.id)}
-        className="block cursor-pointer rounded-sm border border-[#DCDFE4] bg-white px-1.5 py-1.75 text-xs leading-tight font-medium text-[#959EAE] transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white disabled:opacity-60"
+        className="block cursor-pointer rounded-sm border border-buddy-border-color bg-buddy-card-bg px-1.5 py-1.75 text-xs leading-tight font-medium text-buddy-text-muted transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white disabled:opacity-60"
       >
         {isLoading ? "Sending..." : "Connect"}
       </button>
@@ -81,7 +81,7 @@ const SuggestedPerson = ({
 
 const EventCard = () => (
   <Link href="#0" className="block">
-    <div className="mb-4 cursor-pointer rounded-md bg-white shadow-[0_4px_8px_rgba(0,0,0,0.08)]">
+    <div className="mb-4 cursor-pointer rounded-md bg-buddy-card-bg shadow-[0_4px_8px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_8px_rgba(0,0,0,0.25)]">
       <div>
         <Image
           src="/images/feed_event1.png"
@@ -97,13 +97,13 @@ const EventCard = () => (
           <p className="text-lg leading-tight font-normal text-white">Jul</p>
         </div>
         <div className="pt-1 pl-2">
-          <h4 className="text-base leading-snug font-medium text-black">No more terrorism no more cry</h4>
+          <h4 className="text-base leading-snug font-medium text-buddy-text-dark">No more terrorism no more cry</h4>
         </div>
       </div>
-      <hr className="mx-0 my-1 border-[#DFDFDF]" />
+      <hr className="mx-0 my-1 border-buddy-border-color" />
       <div className="flex items-center justify-between px-4 pt-0.5 pb-3">
-        <p className="text-xs leading-4.5 font-medium text-[#8A8A8A] opacity-70">17 People Going</p>
-        <span className="block rounded-sm border border-[#1890FF] bg-[#F3F9FF] px-3.5 py-0.5 text-xs leading-4.5 font-medium text-[#1890FF] transition-colors hover:bg-[#1890FF] hover:text-[#F3F9FF]">
+        <p className="text-xs leading-4.5 font-medium text-buddy-text-muted opacity-70">17 People Going</p>
+        <span className="block rounded-sm border border-[#1890FF] bg-[#F3F9FF] px-3.5 py-0.5 text-xs leading-4.5 font-medium text-[#1890FF] transition-colors hover:bg-[#1890FF] hover:text-[#F3F9FF] dark:bg-[#1890FF]/10">
           Going
         </span>
       </div>
@@ -128,8 +128,8 @@ export const LeftSidebar = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
-        <h4 className="mb-6 text-xl leading-snug font-medium text-[#212121]">Explore</h4>
+      <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
+        <h4 className="mb-6 text-xl leading-snug font-medium text-buddy-text-dark">Explore</h4>
         <ul>
           <ExploreItem
             badge="New"
@@ -229,7 +229,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Save post"
-            href="/coming-soon?feature=Save%20post"
+            href="/saved-posts"
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +237,7 @@ export const LeftSidebar = () => {
                 height="22"
                 viewBox="0 0 22 24"
                 fill="none"
-                stroke="#666"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -251,9 +251,9 @@ export const LeftSidebar = () => {
         </ul>
       </div>
 
-      <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
+      <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
-          <h4 className="m-0 text-xl leading-snug font-medium text-[#212121]">Suggested People</h4>
+          <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Suggested People</h4>
           <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-[#1890FF]">
             See All
           </Link>
@@ -264,7 +264,7 @@ export const LeftSidebar = () => {
             <Loader2 className="h-5 w-5 animate-spin text-[#1890FF]" />
           </div>
         ) : suggestions.length === 0 ? (
-          <p className="py-4 text-sm text-[#999999]">No suggestions right now.</p>
+          <p className="py-4 text-sm text-buddy-text-muted">No suggestions right now.</p>
         ) : (
           suggestions
             .slice(0, 3)
@@ -274,9 +274,9 @@ export const LeftSidebar = () => {
         )}
       </div>
 
-      <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
+      <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
-          <h4 className="m-0 text-xl leading-snug font-medium text-[#212121]">Events</h4>
+          <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Events</h4>
           <Link href="#0" className="text-xs leading-4.5 font-medium text-[#1890FF]">
             See all
           </Link>

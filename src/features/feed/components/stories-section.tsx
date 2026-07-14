@@ -16,7 +16,7 @@ export const StoriesSection = () => {
         <div className="absolute top-1/2 -right-1 z-[18] -translate-y-1/2">
           <button
             type="button"
-            className="flex h-6 w-6 items-center justify-center rounded-full border border-[#F0F2F5] bg-[#1890FF] px-[7px] py-0"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-buddy-page-bg bg-[#1890FF] px-[7px] py-0"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" fill="none" viewBox="0 0 9 8">
               <path
@@ -104,7 +104,7 @@ export const StoriesSection = () => {
                     </svg>
                   </div>
                 </div>
-                <p className="mt-1 text-xs text-[#212121]">Your Story</p>
+                <p className="mt-1 text-xs text-buddy-text-dark">Your Story</p>
               </button>
             </li>
             {[...Array(7)].map((_, i) => (
@@ -117,7 +117,7 @@ export const StoriesSection = () => {
                     height={80}
                     className="h-20 w-[60px] rounded-full object-cover"
                   />
-                  <p className="mt-1 text-xs text-[#212121]">Ryan...</p>
+                  <p className="mt-1 text-xs text-buddy-text-dark">Ryan...</p>
                 </button>
               </li>
             ))}

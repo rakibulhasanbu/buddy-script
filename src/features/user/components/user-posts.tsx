@@ -23,7 +23,7 @@ export const UserPosts = ({ userId }: UserPostsProps) => {
 
   if (isError) {
     return (
-      <div className="rounded-md bg-white p-6 text-center text-[#666666]">
+      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
         Failed to load posts. Please try again later.
       </div>
     );
@@ -33,9 +33,9 @@ export const UserPosts = ({ userId }: UserPostsProps) => {
 
   if (posts.length === 0) {
     return (
-      <div className="rounded-md bg-white p-8 text-center">
-        <h3 className="mb-2 text-lg font-medium text-[#212121]">No posts yet</h3>
-        <p className="text-sm text-[#666666]">When this user shares posts, they will appear here.</p>
+      <div className="rounded-md bg-buddy-card-bg p-8 text-center">
+        <h3 className="mb-2 text-lg font-medium text-buddy-text-dark">No posts yet</h3>
+        <p className="text-sm text-buddy-text-secondary">When this user shares posts, they will appear here.</p>
       </div>
     );
   }

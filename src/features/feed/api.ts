@@ -41,6 +41,43 @@ const feedApi = api.injectEndpoints({
       providesTags: (result, error, id) => [{ type: TagType.Post, id }],
     }),
 
+    savePost: builder.mutation<ResponseObject<{ isSaved: boolean }>, string>({
+      query: (id) => ({
+        url: `/posts/${id}/save`,
+        method: METHOD.POST,
+      }),
+      invalidatesTags: (result, error, id) => [
+        { type: TagType.Post, id },
+        { type: TagType.Post, id: "SAVED" },
+      ],
+    }),
+
+    unsavePost: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/posts/${id}/save`,
+        method: METHOD.DELETE,
+      }),
+      invalidatesTags: (result, error, id) => [
+        { type: TagType.Post, id },
+        { type: TagType.Post, id: "SAVED" },
+      ],
+    }),
+
+    getSavedPosts: builder.query<ResponseObject<FeedResponse>, { cursor?: string; limit?: number }>({
+      query: ({ cursor, limit }) => ({
+        url: `/posts/saved`,
+        method: METHOD.GET,
+        params: { cursor, limit },
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.data.map(({ id }) => ({ type: TagType.Post, id }) as const),
+              { type: TagType.Post, id: "SAVED" },
+            ]
+          : [{ type: TagType.Post, id: "SAVED" }],
+    }),
+
     createPost: builder.mutation<ResponseObject<Post>, CreatePostInput>({
       query: (body) => ({
         url: `/posts`,
@@ -247,6 +284,10 @@ export const {
   useGetFeedQuery,
   useLazyGetFeedQuery,
   useGetPostQuery,
+  useSavePostMutation,
+  useUnsavePostMutation,
+  useGetSavedPostsQuery,
+  useLazyGetSavedPostsQuery,
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,

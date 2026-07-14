@@ -16,7 +16,7 @@ interface ProfileHeaderProps {
 
 export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => {
   return (
-    <div className="relative mb-6 rounded-md bg-white shadow-[0_4px_8px_rgba(0,0,0,0.08)]">
+    <div className="relative mb-6 rounded-md bg-buddy-card-bg shadow-[0_4px_8px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_8px_rgba(0,0,0,0.25)]">
       {/* Cover */}
       <div className="relative h-48 overflow-hidden rounded-t-md md:h-72">
         {user.coverUrl ? (
@@ -30,7 +30,7 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
       <div className="relative px-6 pb-6">
         <div className="flex flex-col items-center md:flex-row md:items-end">
           <div className="relative -mt-16 mb-4 md:mb-0">
-            <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white md:h-40 md:w-40">
+            <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-buddy-card-bg bg-buddy-card-bg md:h-40 md:w-40">
               <Image
                 src={user.photoUrl || "/images/profile.png"}
                 alt={user.name}
@@ -43,7 +43,7 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
               <button
                 type="button"
                 onClick={onEdit}
-                className="absolute right-1 bottom-1 flex h-8 w-8 items-center justify-center rounded-full bg-[#F5F5F5] text-[#212121] shadow transition-colors hover:bg-[#E8E8E8]"
+                className="absolute right-1 bottom-1 flex h-8 w-8 items-center justify-center rounded-full bg-buddy-muted-bg text-buddy-text-dark shadow transition-colors hover:bg-buddy-border-color"
                 aria-label="Edit profile"
               >
                 <Camera className="h-4 w-4" />
@@ -52,14 +52,16 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
           </div>
 
           <div className="flex-1 text-center md:ml-6 md:text-left">
-            <h1 className="text-2xl font-semibold text-[#212121] md:text-3xl">{user.name}</h1>
-            {user.headline ? <p className="mt-1 text-[#4A5568]">{user.headline}</p> : null}
+            <h1 className="text-2xl font-semibold text-buddy-text-dark md:text-3xl">{user.name}</h1>
+            {user.headline ? <p className="mt-1 text-buddy-text">{user.headline}</p> : null}
             {user.bio ? (
-              <p className="mt-1 max-w-xl text-[#666666]">{user.bio}</p>
+              <p className="mt-1 max-w-xl text-buddy-text-secondary">{user.bio}</p>
             ) : (
-              <p className="mt-1 text-[#999999]">No bio yet</p>
+              <p className="mt-1 text-buddy-text-muted">No bio yet</p>
             )}
-            <p className="mt-2 text-sm text-[#999999]">Member since {format(new Date(user.createdAt), "MMMM yyyy")}</p>
+            <p className="mt-2 text-sm text-buddy-text-muted">
+              Member since {format(new Date(user.createdAt), "MMMM yyyy")}
+            </p>
           </div>
 
           {isOwner && (
@@ -68,7 +70,7 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
                 type="button"
                 onClick={onEdit}
                 variant="outline"
-                className="h-10 gap-2 rounded-md border-[#DCDFE4] bg-white px-5 text-sm font-medium text-[#212121] hover:bg-[#F5F5F5]"
+                className="h-10 gap-2 rounded-md border-buddy-border-color bg-buddy-card-bg px-5 text-sm font-medium text-buddy-text-dark hover:bg-buddy-muted-bg"
               >
                 <Pencil className="h-4 w-4" />
                 Edit Profile

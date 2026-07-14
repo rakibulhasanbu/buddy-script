@@ -69,64 +69,64 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
 
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 py-2">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">First Name</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">First Name</label>
             <input
               type="text"
               {...register("firstName")}
-              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
             />
             {errors.firstName && <p className="mt-1 text-sm text-red-500">{errors.firstName.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Last Name</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">Last Name</label>
             <input
               type="text"
               {...register("lastName")}
-              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
             />
             {errors.lastName && <p className="mt-1 text-sm text-red-500">{errors.lastName.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Bio</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">Bio</label>
             <textarea
               {...register("bio")}
               rows={3}
-              className="w-full resize-none rounded-md border border-[#E8E8E8] px-3 py-2 text-sm outline-none focus:border-[#1890FF]"
+              className="w-full resize-none rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 py-2 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
               placeholder="Tell people about yourself"
             />
             {errors.bio && <p className="mt-1 text-sm text-red-500">{errors.bio.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Headline</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">Headline</label>
             <input
               type="text"
               {...register("headline")}
-              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
               placeholder="CEO of something"
             />
             {errors.headline && <p className="mt-1 text-sm text-red-500">{errors.headline.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Profile Photo URL</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">Profile Photo URL</label>
             <input
               type="url"
               {...register("photoUrl")}
-              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
               placeholder="https://example.com/photo.jpg"
             />
             {errors.photoUrl && <p className="mt-1 text-sm text-red-500">{errors.photoUrl.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Cover Photo URL</label>
+            <label className="mb-1.5 block text-sm font-medium text-buddy-text">Cover Photo URL</label>
             <input
               type="url"
               {...register("coverUrl")}
-              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
               placeholder="https://example.com/cover.jpg"
             />
             {errors.coverUrl && <p className="mt-1 text-sm text-red-500">{errors.coverUrl.message}</p>}
@@ -137,7 +137,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="border-[#DCDFE4] bg-white text-[#212121] hover:bg-[#F5F5F5]"
+              className="border-buddy-border-color bg-buddy-card-bg text-buddy-text-dark hover:bg-buddy-muted-bg"
             >
               Cancel
             </Button>

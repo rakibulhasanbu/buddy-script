@@ -53,7 +53,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
               type="button"
               onClick={() => setActiveTab("ALL")}
               className={`border-b-2 px-2 py-2 text-sm font-medium transition-colors ${
-                activeTab === "ALL" ? "border-[#1890FF] text-[#1890FF]" : "border-transparent text-[#666666]"
+                activeTab === "ALL" ? "border-[#1890FF] text-[#1890FF]" : "border-transparent text-buddy-text-secondary"
               }`}
             >
               All {counts.total}
@@ -67,7 +67,9 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
                   type="button"
                   onClick={() => setActiveTab(type)}
                   className={`flex items-center gap-1 border-b-2 px-2 py-2 text-sm font-medium transition-colors ${
-                    activeTab === type ? "border-[#1890FF] text-[#1890FF]" : "border-transparent text-[#666666]"
+                    activeTab === type
+                      ? "border-[#1890FF] text-[#1890FF]"
+                      : "border-transparent text-buddy-text-secondary"
                   }`}
                 >
                   <span>{REACTION_CONFIG[type].emoji}</span>
@@ -89,7 +91,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <p className="py-8 text-center text-sm text-[#666666]">No reactions yet</p>
+            <p className="py-8 text-center text-sm text-buddy-text-secondary">No reactions yet</p>
           ) : (
             <div className="space-y-3 py-3">
               {filtered.map((user) => (
@@ -104,7 +106,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     </div>
-                    <span className="text-sm font-medium text-[#212121]">{user.name}</span>
+                    <span className="text-sm font-medium text-buddy-text-dark">{user.name}</span>
                   </div>
                   <ReactionEmoji type={user.type} className="text-lg" />
                 </div>

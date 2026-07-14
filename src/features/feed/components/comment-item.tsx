@@ -104,7 +104,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
         <div>
           <div className="mb-1">
             <Link href={`/users/${comment.author.id}`}>
-              <h4 className="text-sm font-medium text-[#212121]">{comment.author.name}</h4>
+              <h4 className="text-sm font-medium text-buddy-text-dark">{comment.author.name}</h4>
             </Link>
           </div>
 
@@ -124,7 +124,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
             </div>
           ) : (
             <div className="mb-1">
-              <p className="text-sm leading-relaxed text-[#666666]">
+              <p className="text-sm leading-relaxed text-buddy-text-secondary">
                 <span>{comment.content}</span>
               </p>
             </div>
@@ -143,13 +143,13 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
                   </span>
                 ))}
               </div>
-              <span className="text-sm text-[#212121]">{totalReactions}</span>
+              <span className="text-sm text-buddy-text-dark">{totalReactions}</span>
             </button>
           )}
 
           {!isEditing && (
             <div className="mb-2">
-              <ul className="flex items-center gap-1 text-sm text-[#666666]">
+              <ul className="flex items-center gap-1 text-sm text-buddy-text-secondary">
                 <li>
                   <ReactionPicker onReact={handleReact}>
                     <button
@@ -212,7 +212,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
           <button
             type="button"
             onClick={() => setShowReplies((prev) => !prev)}
-            className="mb-2 cursor-pointer text-sm font-medium text-[#1890FF]"
+            className="mb-2 cursor-pointer text-sm font-medium text-buddy-primary"
           >
             {showReplies ? "Hide replies" : `View ${comment.replyCount} reply${comment.replyCount === 1 ? "" : "ies"}`}
           </button>

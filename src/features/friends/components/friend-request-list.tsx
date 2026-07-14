@@ -34,11 +34,15 @@ export const FriendRequestList = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4 text-center text-[#666666]">Loading requests...</div>;
+    return <div className="py-4 text-center text-buddy-text-secondary">Loading requests...</div>;
   }
 
   if (requests.length === 0) {
-    return <div className="rounded-md bg-white p-6 text-center text-[#666666]">No pending friend requests.</div>;
+    return (
+      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
+        No pending friend requests.
+      </div>
+    );
   }
 
   return (

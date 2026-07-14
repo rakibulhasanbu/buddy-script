@@ -34,7 +34,7 @@ const ProfileDropdown = () => {
         />
       </div>
       <div className="flex cursor-pointer items-center">
-        <p className="text-base leading-6 font-normal text-[#212121]">{currentUser.name}</p>
+        <p className="text-base leading-6 font-normal text-buddy-text-dark">{currentUser.name}</p>
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
@@ -50,7 +50,7 @@ const ProfileDropdown = () => {
       </div>
 
       {open && (
-        <div className="absolute top-12.5 right-0 z-50 w-70 rounded-md bg-white p-4 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+        <div className="absolute top-12.5 right-0 z-50 w-70 rounded-md bg-buddy-card-bg p-4 shadow-[0_8px_24px_rgba(149,157,165,0.2)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
           <div className="mb-4 flex items-center">
             <div className="mr-3">
               <Image
@@ -62,13 +62,13 @@ const ProfileDropdown = () => {
               />
             </div>
             <div>
-              <h4 className="text-base font-medium text-[#212121]">{currentUser.name}</h4>
+              <h4 className="text-base font-medium text-buddy-text-dark">{currentUser.name}</h4>
               <Link href="/profile" className="text-sm text-[#1890FF]" onClick={() => setOpen(false)}>
                 View Profile
               </Link>
             </div>
           </div>
-          <hr className="my-3 border-[#DFDFDF]" />
+          <hr className="my-3 border-buddy-border-color" />
           <ul className="space-y-2">
             {[
               {
@@ -119,7 +119,7 @@ const ProfileDropdown = () => {
               },
             ].map((item) => (
               <li key={item.label}>
-                <Link href="#0" className="flex items-center justify-between text-[#212121]">
+                <Link href="#0" className="flex items-center justify-between text-buddy-text-dark">
                   <span className="flex items-center gap-2 text-sm">
                     {item.icon}
                     {item.label}
@@ -143,7 +143,7 @@ const ProfileDropdown = () => {
 
 export const DesktopHeader = () => {
   return (
-    <nav className="fixed top-0 right-0 left-0 z-1030 bg-white pt-2.5 pb-0">
+    <nav className="fixed top-0 right-0 left-0 z-1030 bg-buddy-card-bg pt-2.5 pb-0">
       <div className="container mx-auto max-w-285 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -171,7 +171,7 @@ export const DesktopHeader = () => {
                   <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
                 </svg>
                 <input
-                  className="h-10 w-106 rounded-4xl border border-[#F5F5F5] bg-[#F5F5F5] py-2 pr-2 pl-11.75 text-sm transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-[rgba(0,0,0,0.25)] hover:border-[#1890FF]"
+                  className="h-10 w-106 rounded-4xl border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-11.75 text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-[#1890FF]"
                   type="search"
                   placeholder="input search text"
                   aria-label="Search"
@@ -206,7 +206,7 @@ export const DesktopHeader = () => {
               <li className="mx-3">
                 <Link
                   href="/friends"
-                  className="relative block px-4 py-5.5 text-black/60 transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
+                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" fill="none" viewBox="0 0 26 20">
                     <path
@@ -224,7 +224,7 @@ export const DesktopHeader = () => {
               <li className="mx-3">
                 <Link
                   href="#0"
-                  className="relative block px-4 py-5.5 text-black/60 transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
+                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" fill="none" viewBox="0 0 23 22">
                     <path
@@ -234,7 +234,7 @@ export const DesktopHeader = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-white bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
+                  <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
                     2
                   </span>
                 </Link>
