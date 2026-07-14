@@ -12,7 +12,7 @@ import { ProfileUser, PublicProfileUser } from "@/features/user/types";
 import { useAppDispatch } from "@/redux/hook";
 import { toast } from "sonner";
 
-import { Spinner } from "@/components/ui/spinner";
+import { ProfileSkeleton } from "@/components/shared/profile-skeleton";
 
 interface ProfilePageProps {
   user?: ProfileUser | PublicProfileUser;
@@ -37,11 +37,7 @@ export const ProfilePage = ({ user, isLoading, isError, isOwner }: ProfilePagePr
   };
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Spinner className="h-10 w-10" />
-      </div>
-    );
+    return <ProfileSkeleton />;
   }
 
   if (isError || !user) {

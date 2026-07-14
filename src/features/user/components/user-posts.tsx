@@ -4,7 +4,7 @@ import { TimelinePost } from "@/features/feed/components/timeline-post";
 import { Post } from "@/features/feed/types";
 import { useGetUserPostsQuery } from "@/features/user/api";
 
-import { Spinner } from "@/components/ui/spinner";
+import { PostListSkeleton } from "@/components/shared/post-skeleton";
 
 interface UserPostsProps {
   userId: string;
@@ -14,11 +14,7 @@ export const UserPosts = ({ userId }: UserPostsProps) => {
   const { data, isLoading, isError } = useGetUserPostsQuery({ userId });
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-12">
-        <Spinner className="h-8 w-8" />
-      </div>
-    );
+    return <PostListSkeleton count={3} />;
   }
 
   if (isError) {

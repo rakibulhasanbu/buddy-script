@@ -4,6 +4,7 @@ import { useGetPostQuery } from "@/features/feed/api";
 import { TimelinePost } from "@/features/feed/components/timeline-post";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { PostSkeleton } from "@/components/shared/post-skeleton";
 
 interface PostNotificationModalProps {
   postId: string | null;
@@ -22,7 +23,9 @@ export const PostNotificationModal = ({ postId, open, onOpenChange }: PostNotifi
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto p-0">
         {isLoading ? (
-          <div className="p-6 text-center text-sm text-buddy-text-secondary">Loading post...</div>
+          <div className="p-4">
+            <PostSkeleton />
+          </div>
         ) : post ? (
           <div className="p-2">
             <TimelinePost post={post} />

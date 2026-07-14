@@ -7,18 +7,14 @@ import { FriendCard } from "@/features/friends/components/friend-card";
 import { Friendship } from "@/features/friends/types";
 import { useAppSelector } from "@/redux/hook";
 
-import { Spinner } from "@/components/ui/spinner";
+import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
 
 export const FriendsList = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const { data, isLoading } = useGetFriendsQuery();
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-8">
-        <Spinner className="h-8 w-8" />
-      </div>
-    );
+    return <FriendListSkeleton count={5} />;
   }
 
   const friendships = data?.data.data || [];

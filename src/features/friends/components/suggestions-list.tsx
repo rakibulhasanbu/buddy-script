@@ -4,6 +4,8 @@ import { useGetSuggestionsQuery, useSendFriendRequestMutation } from "@/features
 import { FriendCard } from "@/features/friends/components/friend-card";
 import { toast } from "sonner";
 
+import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
+
 export const SuggestionsList = () => {
   const { data, isLoading } = useGetSuggestionsQuery();
   const [sendRequest, { isLoading: isSending }] = useSendFriendRequestMutation();
@@ -20,7 +22,7 @@ export const SuggestionsList = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4 text-center text-buddy-text-secondary">Loading suggestions...</div>;
+    return <FriendListSkeleton count={4} />;
   }
 
   if (suggestions.length === 0) {

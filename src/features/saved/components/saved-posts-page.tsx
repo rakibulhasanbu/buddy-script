@@ -6,7 +6,7 @@ import { LeftSidebar } from "@/features/feed/components/left-sidebar";
 import { RightSidebar } from "@/features/feed/components/right-sidebar";
 import { TimelinePost } from "@/features/feed/components/timeline-post";
 
-import { Spinner } from "@/components/ui/spinner";
+import { PostListSkeleton } from "@/components/shared/post-skeleton";
 
 export const SavedPostsPage = () => {
   const { data, isLoading, isError } = useGetSavedPostsQuery({});
@@ -20,11 +20,7 @@ export const SavedPostsPage = () => {
         <div className="flex flex-col">
           <h2 className="mb-4 text-xl font-medium text-buddy-text-dark">Saved Posts</h2>
 
-          {isLoading && (
-            <div className="flex justify-center py-8">
-              <Spinner className="h-8 w-8" />
-            </div>
-          )}
+          {isLoading && <PostListSkeleton count={3} />}
 
           {!isLoading && isError && (
             <div className="rounded-md bg-buddy-card-bg p-8 text-center text-buddy-text-secondary">

@@ -1,7 +1,11 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 
+import { useAppSelector } from "@/redux/hook";
+import { Send } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Spinner } from "@/components/ui/spinner";
 
 interface CommentBoxProps {
@@ -23,6 +27,16 @@ export const CommentBox = ({
   autoFocus,
   onCancel,
 }: CommentBoxProps) => {
+  const currentUser = useAppSelector((state) => state.auth.user);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }, [value]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -31,29 +45,28 @@ export const CommentBox = ({
   };
 
   return (
-    <div className="rounded-[18px] bg-buddy-muted-bg p-1">
-      <div className="flex flex-wrap items-center justify-between">
-        <div className="flex flex-1 items-center">
-          <div className="shrink-0">
-            <Image src="/images/comment_img.png" alt="" width={26} height={26} className="h-6.5 w-6.5" />
-          </div>
-          <div className="relative w-full">
-            <textarea
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              onKeyDown={handleKeyDown}
-              autoFocus={autoFocus}
-              className="h-10 w-full resize-none border-none bg-transparent p-2 text-sm text-buddy-text outline-none"
-              placeholder={placeholder}
-            />
-          </div>
-        </div>
-        <div className="flex items-center">
+    <div className="flex items-start gap-2">
+      <Avatar className="h-8 w-8 shrink-0">
+        <AvatarImage src={currentUser?.photoUrl || "/images/Avatar.png"} alt={currentUser?.name || "User"} />
+        <AvatarFallback>{currentUser?.name?.[0] || "U"}</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-1 items-end rounded-[18px] bg-buddy-muted-bg p-1">
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          autoFocus={autoFocus}
+          rows={1}
+          className="max-h-40 min-h-9 flex-1 resize-none border-none bg-transparent px-3 py-2 text-sm text-buddy-text outline-none placeholder:text-buddy-text-secondary"
+          placeholder={placeholder}
+        />
+        <div className="flex shrink-0 items-center gap-1 pr-1 pb-1">
           {onCancel && (
             <button
               type="button"
               onClick={onCancel}
-              className="mr-2 border-none bg-transparent px-2 py-2 text-xs text-buddy-text-secondary"
+              className="rounded-full px-2 py-1.5 text-xs text-buddy-text-secondary transition-colors hover:bg-buddy-muted-bg"
             >
               Cancel
             </button>
@@ -62,20 +75,9 @@ export const CommentBox = ({
             type="button"
             onClick={onSubmit}
             disabled={isLoading || !value.trim()}
-            className="border-none bg-transparent p-2 disabled:opacity-50"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#1890FF] transition-colors hover:bg-buddy-muted-bg disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isLoading ? (
-              <Spinner className="h-4 w-4" />
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path
-                  fill="#1890FF"
-                  fillRule="evenodd"
-                  d="M13.167 6.534a.5.5 0 01.5.5c0 3.061-2.35 5.582-5.333 5.837V14.5a.5.5 0 01-1 0v-1.629C4.35 12.616 2 10.096 2 7.034a.5.5 0 011 0c0 2.679 2.168 4.859 4.833 4.859 2.666 0 4.834-2.18 4.834-4.86a.5.5 0 01.5-.5zM7.833.667a3.218 3.218 0 013.208 3.22v3.126c0 1.775-1.439 3.22-3.208 3.22a3.218 3.218 0 01-3.208-3.22V3.887c0-1.776 1.44-3.22 3.208-3.22zm0 1a2.217 2.217 0 00-2.208 2.22v3.126c0 1.223.991 2.22 2.208 2.22a2.217 2.217 0 002.208-2.22V3.887c0-1.224-.99-2.22-2.208-2.22z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            )}
+            {isLoading ? <Spinner className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </button>
         </div>
       </div>

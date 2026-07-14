@@ -8,6 +8,8 @@ import { useNotifications } from "@/features/notifications/hooks/use-notificatio
 import { ENotificationType, NotificationGroup } from "@/features/notifications/types";
 import { toast } from "sonner";
 
+import { NotificationListSkeleton } from "@/components/shared/notification-skeleton";
+
 import { FriendRequestNotificationItem, NotificationItem } from "./notification-item";
 import { PostNotificationModal } from "./post-notification-modal";
 
@@ -153,7 +155,7 @@ export const NotificationDropdown = () => {
 
             <div>
               {isLoading ? (
-                <div className="py-8 text-center text-sm text-buddy-text-secondary">Loading notifications...</div>
+                <NotificationListSkeleton count={4} />
               ) : groups.length === 0 ? (
                 <div className="py-8 text-center text-sm text-buddy-text-secondary">No notifications</div>
               ) : (

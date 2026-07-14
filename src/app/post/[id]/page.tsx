@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useGetPostQuery } from "@/features/feed/api";
 import { TimelinePost } from "@/features/feed/components/timeline-post";
 
-import { Spinner } from "@/components/ui/spinner";
+import { PostSkeleton } from "@/components/shared/post-skeleton";
 
 export default function PostDetailPage() {
   const params = useParams();
@@ -14,8 +14,10 @@ export default function PostDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-buddy-page-bg">
-        <Spinner className="h-8 w-8" />
+      <div className="min-h-screen bg-buddy-page-bg pb-8">
+        <div className="container mx-auto max-w-3xl px-4 pt-20">
+          <PostSkeleton />
+        </div>
       </div>
     );
   }

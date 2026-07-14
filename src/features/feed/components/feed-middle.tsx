@@ -9,7 +9,7 @@ import { StoriesSection } from "@/features/feed/components/stories-section";
 import { TimelinePost } from "@/features/feed/components/timeline-post";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
-import { Spinner } from "@/components/ui/spinner";
+import { PostListSkeleton } from "@/components/shared/post-skeleton";
 
 const POSTS_LIMIT = 20;
 
@@ -57,11 +57,7 @@ export const FeedMiddle = () => {
       <StoriesSection />
       <PostComposer />
 
-      {isLoading && posts.length === 0 && (
-        <div className="flex justify-center py-8">
-          <Spinner className="h-8 w-8" />
-        </div>
-      )}
+      {isLoading && posts.length === 0 && <PostListSkeleton count={3} />}
 
       {isError && posts.length === 0 && (
         <div className="rounded-md bg-buddy-card-bg py-12 text-center">
@@ -102,7 +98,7 @@ export const FeedMiddle = () => {
       )}
 
       <div ref={sentinelRef} className="flex justify-center py-4">
-        {isFetchingMore && <Spinner className="h-6 w-6" />}
+        {isFetchingMore && <PostListSkeleton count={1} />}
       </div>
     </div>
   );

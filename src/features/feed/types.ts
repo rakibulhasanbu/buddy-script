@@ -54,7 +54,7 @@ export interface CreatePostInput {
 
 export interface UpdatePostInput {
   content?: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
   visibility?: EVisibility;
 }
 

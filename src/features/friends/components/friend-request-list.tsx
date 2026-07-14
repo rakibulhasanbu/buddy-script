@@ -8,6 +8,8 @@ import {
 import { FriendCard } from "@/features/friends/components/friend-card";
 import { toast } from "sonner";
 
+import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
+
 export const FriendRequestList = () => {
   const { data, isLoading } = useGetPendingRequestsQuery();
   const [acceptRequest, { isLoading: isAccepting }] = useAcceptFriendRequestMutation();
@@ -34,7 +36,7 @@ export const FriendRequestList = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4 text-center text-buddy-text-secondary">Loading requests...</div>;
+    return <FriendListSkeleton count={3} />;
   }
 
   if (requests.length === 0) {

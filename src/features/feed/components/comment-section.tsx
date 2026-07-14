@@ -10,10 +10,11 @@ import { toast } from "sonner";
 interface CommentSectionProps {
   postId: string;
   commentCount: number;
+  forceExpanded?: boolean;
 }
 
-export const CommentSection = ({ postId, commentCount }: CommentSectionProps) => {
-  const [expanded, setExpanded] = useState(false);
+export const CommentSection = ({ postId, commentCount, forceExpanded = false }: CommentSectionProps) => {
+  const [expanded, setExpanded] = useState(forceExpanded);
   const [newComment, setNewComment] = useState("");
 
   const [createComment, { isLoading: isCreating }] = useCreateCommentMutation();
@@ -31,7 +32,7 @@ export const CommentSection = ({ postId, commentCount }: CommentSectionProps) =>
 
   return (
     <div className="mt-4">
-      {commentCount > 0 && (
+      {!forceExpanded && commentCount > 0 && (
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
@@ -41,9 +42,9 @@ export const CommentSection = ({ postId, commentCount }: CommentSectionProps) =>
         </button>
       )}
 
-      {expanded && <CommentList postId={postId} />}
+      {(expanded || forceExpanded) && <CommentList postId={postId} />}
 
-      <div className="px-6 pt-6 pb-2">
+      <div className="pt-4">
         <CommentBox
           value={newComment}
           onChange={setNewComment}
