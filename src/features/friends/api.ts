@@ -5,10 +5,11 @@ import { FriendListResponse, Friendship, SendFriendRequestInput, SuggestionListR
 
 const friendsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getFriends: builder.query<ResponseObject<FriendListResponse>, void>({
-      query: () => ({
+    getFriends: builder.query<ResponseObject<FriendListResponse>, { search?: string }>({
+      query: ({ search }) => ({
         url: "/friendships/friends",
         method: METHOD.GET,
+        params: search ? { search } : undefined,
       }),
       providesTags: [TagType.User],
     }),

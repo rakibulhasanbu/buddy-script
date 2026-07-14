@@ -55,7 +55,7 @@ const SuggestedPerson = ({
             alt={person.name}
             width={wide ? 71 : 37}
             height={wide ? 40 : 37}
-            className={`rounded-full object-cover ${wide ? "h-10 w-17.75" : "h-9.25 w-9.25"}`}
+            className={`rounded-full object-cover ${wide ? "size-11" : "size-9.25"}`}
           />
         </Link>
       </div>
@@ -254,7 +254,7 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Suggested People</h4>
-          <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-primary">
+          <Link href="/friends" className="text-xs leading-4.5 font-medium text-primary hover:underline">
             See All
           </Link>
         </div>

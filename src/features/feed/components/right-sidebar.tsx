@@ -1,7 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+import { useGetFriendsQuery } from "@/features/friends/api";
+import { Friendship } from "@/features/friends/types";
+import { useAppSelector } from "@/redux/hook";
+
+import { Spinner } from "@/components/ui/spinner";
+
+import { Search } from "lucide-react";
 
 const YouMightLikeCard = () => (
   <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-6">
@@ -48,82 +57,81 @@ const YouMightLikeCard = () => (
   </div>
 );
 
-const FriendItem = ({
-  image,
-  name,
-  role,
-  active,
-  time,
-}: {
-  image: string;
-  name: string;
-  role: string;
-  active?: boolean;
-  time?: string;
-}) => (
-  <div className="mb-6 flex items-center justify-between rounded-lg p-1.5 transition-colors hover:bg-buddy-muted-bg">
-    <div className="flex items-center">
-      <div className="mr-4">
-        <Link href="#0">
-          <Image src={image} alt={name} width={40} height={40} className="h-10 w-10 rounded-full object-cover" />
+const YourFriendsCard = () => {
+  const currentUser = useAppSelector((state) => state.auth.user);
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useGetFriendsQuery({ search });
+
+  const friendships = data?.data.data || [];
+
+  const getFriendUser = (friendship: Friendship) => {
+    return friendship.requesterId === currentUser?.id ? friendship.addressee : friendship.requester;
+  };
+
+  return (
+    <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
+      <div className="mb-6 flex items-center justify-between">
+        <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Your Friends</h4>
+        <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-primary hover:underline">
+          See All
         </Link>
       </div>
-      <div>
-        <Link href="#0">
-          <h4 className="text-sm leading-tight font-medium text-buddy-text-dark">{name}</h4>
-        </Link>
-        <p className="text-[11px] leading-tight font-light text-buddy-text-secondary">{role}</p>
+      <div className="relative mb-6">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-buddy-text-secondary" />
+        <input
+          className="h-10 w-full rounded-[32px] border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-3 pl-[42px] text-sm text-buddy-text transition-colors outline-none placeholder:text-buddy-text-muted hover:border-primary"
+          type="search"
+          placeholder="Search friends..."
+          aria-label="Search friends"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
-    </div>
-    <div>
-      {active ? (
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 14 14">
-          <rect width="12" height="12" x="1" y="1" fill="#0ACF83" stroke="#fff" strokeWidth="2" rx="6" />
-        </svg>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-6">
+          <Spinner className="h-5 w-5" />
+        </div>
+      ) : friendships.length === 0 ? (
+        <p className="py-4 text-center text-sm text-buddy-text-muted">
+          {search ? `No friends match "${search}"` : "No friends yet."}
+        </p>
       ) : (
-        <span className="text-[11px] leading-[21px] text-buddy-text-muted">{time}</span>
+        friendships.map((friendship) => {
+          const user = getFriendUser(friendship);
+          return (
+            <div
+              key={friendship.id}
+              className="mb-6 flex items-center justify-between rounded-lg p-1.5 transition-colors hover:bg-buddy-muted-bg"
+            >
+              <div className="flex items-center">
+                <div className="mr-4">
+                  <Link href={`/users/${user.id}`}>
+                    <Image
+                      src={user.photoUrl || "/images/profile.png"}
+                      alt={user.name}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  </Link>
+                </div>
+                <div>
+                  <Link href={`/users/${user.id}`}>
+                    <h4 className="text-sm leading-tight font-medium text-buddy-text-dark">{user.name}</h4>
+                  </Link>
+                  <p className="text-[11px] leading-tight font-light text-buddy-text-secondary">
+                    {user.headline || "Member"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })
       )}
     </div>
-  </div>
-);
-
-const YourFriendsCard = () => (
-  <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
-    <div className="mb-6 flex items-center justify-between">
-      <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Your Friends</h4>
-      <Link href="#0" className="text-xs leading-[18px] font-medium text-primary">
-        See All
-      </Link>
-    </div>
-    <form className="relative mb-6">
-      <svg
-        className="absolute top-3 left-[18px]"
-        xmlns="http://www.w3.org/2000/svg"
-        width="17"
-        height="17"
-        fill="none"
-        viewBox="0 0 17 17"
-      >
-        <circle cx="7" cy="7" r="6" stroke="#666" />
-        <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
-      </svg>
-      <input
-        className="h-10 w-full rounded-[32px] border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-[47px] text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-primary"
-        type="search"
-        placeholder="input search text"
-        aria-label="Search"
-      />
-    </form>
-    <FriendItem image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" time="5 minute ago" />
-    <FriendItem image="/images/people2.png" name="Ryan Roslansky" role="CEO of Linkedin" active />
-    <FriendItem image="/images/people3.png" name="Dylan Field" role="CEO of Figma" active />
-    <FriendItem image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" time="5 minute ago" />
-    <FriendItem image="/images/people2.png" name="Ryan Roslansky" role="CEO of Linkedin" active />
-    <FriendItem image="/images/people3.png" name="Dylan Field" role="CEO of Figma" active />
-    <FriendItem image="/images/people3.png" name="Dylan Field" role="CEO of Figma" active />
-    <FriendItem image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" time="5 minute ago" />
-  </div>
-);
+  );
+};
 
 export const RightSidebar = () => {
   return (

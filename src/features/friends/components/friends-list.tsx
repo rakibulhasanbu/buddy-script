@@ -15,7 +15,7 @@ interface FriendsListProps {
 
 export const FriendsList = ({ search = "" }: FriendsListProps) => {
   const currentUser = useAppSelector((state) => state.auth.user);
-  const { data, isLoading } = useGetFriendsQuery();
+  const { data, isLoading } = useGetFriendsQuery({ search });
 
   if (isLoading) {
     return <FriendListSkeleton count={8} />;
