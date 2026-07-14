@@ -37,6 +37,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
       firstName: user.firstName,
       lastName: user.lastName,
       bio: user.bio || "",
+      headline: user.headline || "",
       photoUrl: user.photoUrl || "",
       coverUrl: user.coverUrl || "",
     },
@@ -47,6 +48,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
       firstName: user.firstName,
       lastName: user.lastName,
       bio: user.bio || "",
+      headline: user.headline || "",
       photoUrl: user.photoUrl || "",
       coverUrl: user.coverUrl || "",
     });
@@ -95,6 +97,17 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
               placeholder="Tell people about yourself"
             />
             {errors.bio && <p className="mt-1 text-sm text-red-500">{errors.bio.message}</p>}
+          </div>
+
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[#4A5568]">Headline</label>
+            <input
+              type="text"
+              {...register("headline")}
+              className="h-11 w-full rounded-md border border-[#E8E8E8] px-3 text-sm outline-none focus:border-[#1890FF]"
+              placeholder="CEO of something"
+            />
+            {errors.headline && <p className="mt-1 text-sm text-red-500">{errors.headline.message}</p>}
           </div>
 
           <div>

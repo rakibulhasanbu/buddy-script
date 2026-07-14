@@ -53,6 +53,7 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
 
           <div className="flex-1 text-center md:ml-6 md:text-left">
             <h1 className="text-2xl font-semibold text-[#212121] md:text-3xl">{user.name}</h1>
+            {user.headline ? <p className="mt-1 text-[#4A5568]">{user.headline}</p> : null}
             {user.bio ? (
               <p className="mt-1 max-w-xl text-[#666666]">{user.bio}</p>
             ) : (

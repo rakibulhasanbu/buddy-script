@@ -3,10 +3,25 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const ExploreItem = ({ icon, label, badge }: { icon: React.ReactNode; label: string; badge?: string }) => (
+import { useGetSuggestionsQuery, useSendFriendRequestMutation } from "@/features/friends/api";
+import { FriendUser } from "@/features/friends/types";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+const ExploreItem = ({
+  icon,
+  label,
+  badge,
+  href = "#0",
+}: {
+  icon: React.ReactNode;
+  label: string;
+  badge?: string;
+  href?: string;
+}) => (
   <li className="relative mb-6 flex items-center justify-between">
     <Link
-      href="#0"
+      href={href}
       className="flex w-full items-center text-base leading-snug font-medium text-[#666666] transition-colors hover:text-[#1890FF]"
     >
       <span className="mr-3.5">{icon}</span>
@@ -21,23 +36,23 @@ const ExploreItem = ({ icon, label, badge }: { icon: React.ReactNode; label: str
 );
 
 const SuggestedPerson = ({
-  image,
-  name,
-  role,
+  person,
+  onConnect,
+  isLoading,
   wide,
 }: {
-  image: string;
-  name: string;
-  role: string;
+  person: FriendUser;
+  onConnect: (id: string) => void;
+  isLoading?: boolean;
   wide?: boolean;
 }) => (
   <div className="mb-6 flex flex-wrap items-center justify-between">
     <div className="flex flex-1 items-center">
       <div className="mr-4">
-        <Link href="#0">
+        <Link href={`/users/${person.id}`}>
           <Image
-            src={image}
-            alt={name}
+            src={person.photoUrl || "/images/profile.png"}
+            alt={person.name}
             width={wide ? 71 : 37}
             height={wide ? 40 : 37}
             className={`rounded-full object-cover ${wide ? "h-10 w-17.75" : "h-9.25 w-9.25"}`}
@@ -45,19 +60,21 @@ const SuggestedPerson = ({
         </Link>
       </div>
       <div className="flex-1">
-        <Link href="#0">
-          <h4 className="text-sm leading-tight font-medium text-[#212121]">{name}</h4>
+        <Link href={`/users/${person.id}`}>
+          <h4 className="text-sm leading-tight font-medium text-[#212121]">{person.name}</h4>
         </Link>
-        <p className="text-[11px] leading-tight font-light text-[#212121]">{role}</p>
+        <p className="text-[11px] leading-tight font-light text-[#212121]">{person.headline || "Member"}</p>
       </div>
     </div>
     <div>
-      <Link
-        href="#0"
-        className="block rounded-sm border border-[#DCDFE4] bg-white px-1.5 py-1.75 text-xs leading-tight font-medium text-[#959EAE] transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white"
+      <button
+        type="button"
+        disabled={isLoading}
+        onClick={() => onConnect(person.id)}
+        className="block cursor-pointer rounded-sm border border-[#DCDFE4] bg-white px-1.5 py-1.75 text-xs leading-tight font-medium text-[#959EAE] transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white disabled:opacity-60"
       >
-        Connect
-      </Link>
+        {isLoading ? "Sending..." : "Connect"}
+      </button>
     </div>
   </div>
 );
@@ -95,6 +112,20 @@ const EventCard = () => (
 );
 
 export const LeftSidebar = () => {
+  const { data: suggestionsResponse, isLoading: isSuggestionsLoading } = useGetSuggestionsQuery();
+  const [sendRequest, { isLoading: isSending }] = useSendFriendRequestMutation();
+
+  const handleConnect = async (id: string) => {
+    try {
+      await sendRequest({ addresseeId: id }).unwrap();
+      toast.success("Friend request sent");
+    } catch {
+      toast.error("Failed to send friend request");
+    }
+  };
+
+  const suggestions = suggestionsResponse?.data?.data ?? [];
+
   return (
     <div className="flex flex-col">
       <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
@@ -103,6 +134,7 @@ export const LeftSidebar = () => {
           <ExploreItem
             badge="New"
             label="Learning"
+            href="/coming-soon?feature=Learning"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
                 <path
@@ -114,6 +146,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Insights"
+            href="/coming-soon?feature=Insights"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
                 <path
@@ -125,6 +158,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Find friends"
+            href="/friends"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
                 <path
@@ -136,6 +170,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Bookmarks"
+            href="/coming-soon?feature=Bookmarks"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
                 <path
@@ -147,6 +182,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Group"
+            href="/coming-soon?feature=Group"
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,6 +205,7 @@ export const LeftSidebar = () => {
           <ExploreItem
             badge="New"
             label="Gaming"
+            href="/coming-soon?feature=Gaming"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
                 <path
@@ -180,6 +217,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Settings"
+            href="/coming-soon?feature=Settings"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path
@@ -191,6 +229,7 @@ export const LeftSidebar = () => {
           />
           <ExploreItem
             label="Save post"
+            href="/coming-soon?feature=Save%20post"
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -215,13 +254,24 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-[#212121]">Suggested People</h4>
-          <Link href="#0" className="text-xs leading-4.5 font-medium text-[#1890FF]">
+          <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-[#1890FF]">
             See All
           </Link>
         </div>
-        <SuggestedPerson image="/images/people1.png" name="Steve Jobs" role="CEO of Apple" wide />
-        <SuggestedPerson image="/images/people2.png" name="Ryan Roslansky" role="CEO of Linkedin" />
-        <SuggestedPerson image="/images/people3.png" name="Dylan Field" role="CEO of Figma" />
+
+        {isSuggestionsLoading ? (
+          <div className="flex items-center justify-center py-6">
+            <Loader2 className="h-5 w-5 animate-spin text-[#1890FF]" />
+          </div>
+        ) : suggestions.length === 0 ? (
+          <p className="py-4 text-sm text-[#999999]">No suggestions right now.</p>
+        ) : (
+          suggestions
+            .slice(0, 3)
+            .map((person) => (
+              <SuggestedPerson key={person.id} person={person} onConnect={handleConnect} isLoading={isSending} wide />
+            ))
+        )}
       </div>
 
       <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-1.5">
