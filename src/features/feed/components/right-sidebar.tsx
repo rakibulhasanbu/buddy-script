@@ -7,7 +7,7 @@ const YouMightLikeCard = () => (
   <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-6">
     <div className="mb-6 flex items-center justify-between">
       <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">You Might Like</h4>
-      <Link href="#0" className="text-xs leading-[18px] font-medium text-[#1890FF]">
+      <Link href="#0" className="text-xs leading-[18px] font-medium text-primary">
         See All
       </Link>
     </div>
@@ -34,13 +34,13 @@ const YouMightLikeCard = () => (
     <div className="flex gap-1">
       <button
         type="button"
-        className="flex-1 cursor-pointer rounded-md border border-buddy-border-color bg-transparent py-2 text-sm leading-[22px] font-medium text-buddy-text-muted transition-colors hover:bg-[#377DFF] hover:text-white"
+        className="flex-1 cursor-pointer rounded-md border border-buddy-border-color bg-transparent py-2 text-sm leading-[22px] font-medium text-buddy-text-muted transition-colors hover:bg-primary hover:text-primary-foreground"
       >
         Ignore
       </button>
       <button
         type="button"
-        className="flex-1 cursor-pointer rounded-md border border-buddy-border-color bg-[#377DFF] py-2 text-sm leading-[22px] font-medium text-white transition-colors hover:bg-[#1890FF]"
+        className="flex-1 cursor-pointer rounded-md border border-buddy-border-color bg-primary py-2 text-sm leading-[22px] font-medium text-primary-foreground transition-colors hover:bg-buddy-primary-hover"
       >
         Follow
       </button>
@@ -91,7 +91,7 @@ const YourFriendsCard = () => (
   <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
     <div className="mb-6 flex items-center justify-between">
       <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Your Friends</h4>
-      <Link href="#0" className="text-xs leading-[18px] font-medium text-[#1890FF]">
+      <Link href="#0" className="text-xs leading-[18px] font-medium text-primary">
         See All
       </Link>
     </div>
@@ -108,7 +108,7 @@ const YourFriendsCard = () => (
         <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
       </svg>
       <input
-        className="h-10 w-full rounded-[32px] border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-[47px] text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-[#1890FF]"
+        className="h-10 w-full rounded-[32px] border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-[47px] text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-primary"
         type="search"
         placeholder="input search text"
         aria-label="Search"

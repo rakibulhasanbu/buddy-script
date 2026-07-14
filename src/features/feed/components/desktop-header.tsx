@@ -63,7 +63,7 @@ const ProfileDropdown = () => {
             </div>
             <div>
               <h4 className="text-base font-medium text-buddy-text-dark">{currentUser.name}</h4>
-              <Link href="/profile" className="text-sm text-[#1890FF]" onClick={() => setOpen(false)}>
+              <Link href="/profile" className="text-sm text-primary" onClick={() => setOpen(false)}>
                 View Profile
               </Link>
             </div>
@@ -171,7 +171,7 @@ export const DesktopHeader = () => {
                   <path stroke="#666" strokeLinecap="round" d="M16 16l-3-3" />
                 </svg>
                 <input
-                  className="h-10 w-106 rounded-4xl border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-11.75 text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-[#1890FF]"
+                  className="h-10 w-106 rounded-4xl border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-2 pl-11.75 text-sm text-buddy-text transition-colors outline-none placeholder:text-base placeholder:font-normal placeholder:text-buddy-text-muted hover:border-primary"
                   type="search"
                   placeholder="input search text"
                   aria-label="Search"
@@ -183,7 +183,7 @@ export const DesktopHeader = () => {
               <li className="mx-3">
                 <Link
                   href="/"
-                  className="relative block px-4 py-5.5 transition-colors before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-[#00ACFF]"
+                  className="relative block px-4 py-5.5 transition-colors before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-primary"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="21" fill="none" viewBox="0 0 18 21">
                     <path
@@ -206,7 +206,7 @@ export const DesktopHeader = () => {
               <li className="mx-3">
                 <Link
                   href="/friends"
-                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
+                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-primary hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-primary"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" fill="none" viewBox="0 0 26 20">
                     <path
@@ -224,7 +224,7 @@ export const DesktopHeader = () => {
               <li className="mx-3">
                 <Link
                   href="#0"
-                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF] hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-[#00ACFF]"
+                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-primary hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-primary"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" fill="none" viewBox="0 0 23 22">
                     <path
@@ -234,7 +234,7 @@ export const DesktopHeader = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
+                  <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-primary px-0.75 text-[11px] leading-none font-normal text-primary-foreground">
                     2
                   </span>
                 </Link>

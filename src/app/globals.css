@@ -22,7 +22,7 @@
   --accent-foreground: #1890FF;
   --destructive: #FF4D4F;
   --destructive-foreground: #FFFFFF;
-  --border: #E8E8E8;
+  --border: #DFDFDF;
   --input: #F5F5F5;
   --ring: #1890FF;
   --radius: 0.375rem;
@@ -36,8 +36,8 @@
   --buddy-page-bg: #F0F2F5;
   --buddy-card-bg: #FFFFFF;
   --buddy-muted-bg: #F5F5F5;
-  --buddy-border-color: #E8E8E8;
-  --buddy-input-border: #E8E8E8;
+  --buddy-border-color: #DFDFDF;
+  --buddy-input-border: #DFDFDF;
   --buddy-primary: #1890FF;
   --buddy-primary-hover: #40A9FF;
   --buddy-success: #0ACF83;

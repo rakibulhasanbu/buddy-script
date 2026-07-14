@@ -69,7 +69,7 @@ export const CustomTextCopy = ({
         onClick={!href ? handleCopy : undefined}
         className={cn(
           "line-clamp-1 flex-1 text-base font-medium",
-          href ? "text-blue-500" : "cursor-pointer hover:text-blue-500",
+          href ? "text-primary" : "cursor-pointer hover:text-primary",
           textClassName
         )}
       >
@@ -87,7 +87,7 @@ export const CustomTextCopy = ({
           className={cn("cursor-pointer hover:text-primary", buttonClassName)}
           title={copied ? "Copied!" : "Copy to clipboard"}
         >
-          {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
+          {copied ? <Check className="h-4 w-4 text-buddy-success" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
         </button>
       )}
     </div>

@@ -130,7 +130,7 @@ const OTPVerifyForm = () => {
         <CustomOTPFormInput pattern={REGEXP_ONLY_DIGITS} control={form.control} name="otp" />
 
         {resendSuccess && (
-          <div className="rounded-md bg-green-50 p-3 text-sm text-green-800 dark:bg-green-900/20 dark:text-green-400">
+          <div className="rounded-md bg-accent p-3 text-sm text-buddy-success dark:bg-accent dark:text-buddy-success">
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0" />
               <span>

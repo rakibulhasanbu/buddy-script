@@ -107,11 +107,11 @@ export const NotificationDropdown = () => {
       <div ref={ref} className="relative">
         <span
           onClick={() => setOpen((prev) => !prev)}
-          className="relative block cursor-pointer px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-[#1890FF]"
+          className="relative block cursor-pointer px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-primary"
         >
           <BellIcon />
           {badgeText && (
-            <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-0.75 text-[11px] leading-none font-normal text-white">
+            <span className="absolute top-4 right-2.5 flex h-4.25 min-w-4.25 items-center justify-center rounded-[9px] border border-buddy-card-bg bg-primary px-0.75 text-[11px] leading-none font-normal text-primary-foreground">
               {badgeText}
             </span>
           )}
@@ -135,7 +135,7 @@ export const NotificationDropdown = () => {
                 type="button"
                 onClick={() => setActiveTab("all")}
                 className={`h-9 rounded-md border border-buddy-border-color px-3 text-base leading-tight font-medium transition-colors ${
-                  activeTab === "all" ? "bg-[#1890ff26] text-[#1890FF]" : "text-buddy-text-dark hover:bg-buddy-muted-bg"
+                  activeTab === "all" ? "bg-accent text-primary" : "text-buddy-text-dark hover:bg-buddy-muted-bg"
                 }`}
               >
                 All
@@ -145,7 +145,7 @@ export const NotificationDropdown = () => {
                 onClick={() => setActiveTab("unread")}
                 className={`h-9 rounded-md border border-buddy-border-color px-3 text-base leading-tight font-medium transition-colors ${
                   activeTab === "unread"
-                    ? "bg-[#1890ff26] text-[#1890FF]"
+                    ? "bg-accent text-primary"
                     : "text-buddy-text-dark hover:bg-buddy-muted-bg"
                 }`}
               >

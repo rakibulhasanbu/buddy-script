@@ -73,7 +73,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <input
               type="text"
               {...register("firstName")}
-              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-primary"
             />
             {errors.firstName && <p className="mt-1 text-sm text-red-500">{errors.firstName.message}</p>}
           </div>
@@ -83,7 +83,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <input
               type="text"
               {...register("lastName")}
-              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-primary"
             />
             {errors.lastName && <p className="mt-1 text-sm text-red-500">{errors.lastName.message}</p>}
           </div>
@@ -93,7 +93,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <textarea
               {...register("bio")}
               rows={3}
-              className="w-full resize-none rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 py-2 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="w-full resize-none rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 py-2 text-sm text-buddy-text outline-none focus:border-primary"
               placeholder="Tell people about yourself"
             />
             {errors.bio && <p className="mt-1 text-sm text-red-500">{errors.bio.message}</p>}
@@ -104,7 +104,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <input
               type="text"
               {...register("headline")}
-              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-primary"
               placeholder="CEO of something"
             />
             {errors.headline && <p className="mt-1 text-sm text-red-500">{errors.headline.message}</p>}
@@ -115,7 +115,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <input
               type="url"
               {...register("photoUrl")}
-              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-primary"
               placeholder="https://example.com/photo.jpg"
             />
             {errors.photoUrl && <p className="mt-1 text-sm text-red-500">{errors.photoUrl.message}</p>}
@@ -126,7 +126,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <input
               type="url"
               {...register("coverUrl")}
-              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-[#1890FF]"
+              className="h-11 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-3 text-sm text-buddy-text outline-none focus:border-primary"
               placeholder="https://example.com/cover.jpg"
             />
             {errors.coverUrl && <p className="mt-1 text-sm text-red-500">{errors.coverUrl.message}</p>}
@@ -144,7 +144,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
             <Button
               type="submit"
               disabled={isLoading}
-              className="bg-[#1890FF] text-white hover:bg-[#1890FF]/90 disabled:opacity-60"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
             >
               {isLoading ? "Saving..." : "Save Changes"}
             </Button>

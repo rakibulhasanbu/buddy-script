@@ -41,7 +41,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
                   digital influence.
                 </span>
               </h2>
-              <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-400">
+              <p className="mt-6 max-w-md text-lg leading-relaxed text-buddy-text-secondary">
                 The world’s most powerful social growth engine. Verified results, premium accounts, and unparalleled
                 reach.
               </p>
@@ -61,13 +61,13 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
               </div>
               <div className="text-sm">
                 <p className="font-semibold text-white">4.9/5 Rating</p>
-                <p className="text-xs text-slate-500">Trusted by 50,000+ creators</p>
+                <p className="text-xs text-buddy-text-secondary">Trusted by 50,000+ creators</p>
               </div>
             </motion.div>
           </div>
 
           {/* Footer link */}
-          <div className="text-sm text-slate-500">© 2026 Inventory — The Standard for Inventory Management</div>
+          <div className="text-sm text-buddy-text-secondary">© 2026 Inventory — The Standard for Inventory Management</div>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full max-w-sm">
           {/* Back to site link - Premium touch */}
           <Link href="/" className="group mb-12 flex items-center gap-2 text-sm text-primary transition-colors">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-100 bg-background shadow-sm transition-all group-hover:border-[#3B82F6] group-hover:text-[#3B82F6]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-buddy-border-color bg-background shadow-sm transition-all group-hover:border-primary group-hover:text-primary">
               <ArrowRight size={14} className="rotate-180" />
             </div>
             Back to homepage

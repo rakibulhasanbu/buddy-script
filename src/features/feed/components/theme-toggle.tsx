@@ -15,12 +15,12 @@ export const ThemeToggle = () => {
       <button
         type="button"
         onClick={toggle}
-        className="relative flex h-8 w-[66px] rotate-90 items-center rounded-[40px] border border-[#1890FF] bg-[#1890FF]"
+        className="relative flex h-8 w-[66px] rotate-90 items-center rounded-[40px] border border-primary bg-primary"
       >
         <div
           className={`absolute left-[10px] transition-all duration-200 ${active ? "translate-x-[28px]" : "translate-x-0"}`}
         >
-          <div className="h-[18px] w-[18px] rounded-full bg-white" />
+          <div className="h-[18px] w-[18px] rounded-full bg-primary-foreground" />
         </div>
         <div className={`absolute right-4 -rotate-90 ${active ? "opacity-0" : "opacity-100"}`}>
           <svg xmlns="http://www.w3.org/2000/svg" width="11" height="16" fill="none" viewBox="0 0 11 16">

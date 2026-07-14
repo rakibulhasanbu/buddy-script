@@ -179,7 +179,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
                         type="button"
                         onClick={handleDelete}
                         disabled={isDeleting}
-                        className="cursor-pointer text-[#FF4D4F] disabled:opacity-50"
+                        className="cursor-pointer text-destructive disabled:opacity-50"
                       >
                         Delete
                       </button>
@@ -187,7 +187,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
                   </>
                 )}
                 <li>
-                  <span className="text-[#1890FF]">.{formatRelativeTime(comment.createdAt)}</span>
+                  <span className="text-primary">.{formatRelativeTime(comment.createdAt)}</span>
                 </li>
               </ul>
             </div>

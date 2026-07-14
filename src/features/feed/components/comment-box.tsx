@@ -75,7 +75,7 @@ export const CommentBox = ({
             type="button"
             onClick={onSubmit}
             disabled={isLoading || !value.trim()}
-            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#1890FF] transition-colors hover:bg-buddy-muted-bg disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:bg-buddy-muted-bg disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? <Spinner className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </button>

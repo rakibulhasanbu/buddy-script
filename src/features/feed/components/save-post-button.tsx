@@ -34,12 +34,12 @@ export const SavePostButton = ({ postId, isSaved }: SavePostButtonProps) => {
       type="button"
       onClick={handleClick}
       disabled={isSaving || isUnsaving}
-      className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-[#e4f1fd] disabled:opacity-50"
+      className="mr-1 flex flex-1 cursor-pointer items-center justify-center rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-accent disabled:opacity-50"
     >
       {isSaving || isUnsaving ? (
         <Spinner className="mr-2 h-4 w-4" />
       ) : isSaved ? (
-        <BookmarkCheck className="mr-2 h-5 w-5 text-[#1890FF]" />
+        <BookmarkCheck className="mr-2 h-5 w-5 text-primary" />
       ) : (
         <Bookmark className="mr-2 h-5 w-5" />
       )}

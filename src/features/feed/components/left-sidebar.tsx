@@ -22,13 +22,13 @@ const ExploreItem = ({
   <li className="relative mb-6 flex items-center justify-between">
     <Link
       href={href}
-      className="flex w-full items-center text-base leading-snug font-medium text-buddy-text-secondary transition-colors hover:text-[#1890FF]"
+      className="flex w-full items-center text-base leading-snug font-medium text-buddy-text-secondary transition-colors hover:text-primary"
     >
       <span className="mr-3.5">{icon}</span>
       {label}
     </Link>
     {badge && (
-      <span className="absolute right-0 flex h-6 w-9 items-center justify-center rounded-lg border-2 border-buddy-card-bg bg-[#0ACF83] text-[13px] leading-tight font-normal text-white">
+      <span className="absolute right-0 flex h-6 w-9 items-center justify-center rounded-lg border-2 border-buddy-card-bg bg-buddy-success text-[13px] leading-tight font-normal text-primary-foreground">
         {badge}
       </span>
     )}
@@ -71,7 +71,7 @@ const SuggestedPerson = ({
         type="button"
         disabled={isLoading}
         onClick={() => onConnect(person.id)}
-        className="block cursor-pointer rounded-sm border border-buddy-border-color bg-buddy-card-bg px-1.5 py-1.75 text-xs leading-tight font-medium text-buddy-text-muted transition-colors hover:border-[#1890FF] hover:bg-[#1890FF] hover:text-white disabled:opacity-60"
+        className="block cursor-pointer rounded-sm border border-buddy-border-color bg-buddy-card-bg px-1.5 py-1.75 text-xs leading-tight font-medium text-buddy-text-muted transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground disabled:opacity-60"
       >
         {isLoading ? "Sending..." : "Connect"}
       </button>
@@ -92,9 +92,9 @@ const EventCard = () => (
         />
       </div>
       <div className="flex items-center px-4 pt-5 pb-3.5">
-        <div className="w-fit rounded-sm bg-[#0ACF83] px-2 py-2 text-center">
-          <p className="text-lg leading-tight font-bold text-white">10</p>
-          <p className="text-lg leading-tight font-normal text-white">Jul</p>
+        <div className="w-fit rounded-sm bg-buddy-success px-2 py-2 text-center">
+          <p className="text-lg leading-tight font-bold text-primary-foreground">10</p>
+          <p className="text-lg leading-tight font-normal text-primary-foreground">Jul</p>
         </div>
         <div className="pt-1 pl-2">
           <h4 className="text-base leading-snug font-medium text-buddy-text-dark">No more terrorism no more cry</h4>
@@ -103,7 +103,7 @@ const EventCard = () => (
       <hr className="mx-0 my-1 border-buddy-border-color" />
       <div className="flex items-center justify-between px-4 pt-0.5 pb-3">
         <p className="text-xs leading-4.5 font-medium text-buddy-text-muted opacity-70">17 People Going</p>
-        <span className="block rounded-sm border border-[#1890FF] bg-[#F3F9FF] px-3.5 py-0.5 text-xs leading-4.5 font-medium text-[#1890FF] transition-colors hover:bg-[#1890FF] hover:text-[#F3F9FF] dark:bg-[#1890FF]/10">
+        <span className="block rounded-sm border border-primary bg-accent px-3.5 py-0.5 text-xs leading-4.5 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground dark:bg-primary/10">
           Going
         </span>
       </div>
@@ -254,14 +254,14 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Suggested People</h4>
-          <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-[#1890FF]">
+          <Link href="/friends/list" className="text-xs leading-4.5 font-medium text-primary">
             See All
           </Link>
         </div>
 
         {isSuggestionsLoading ? (
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="h-5 w-5 animate-spin text-[#1890FF]" />
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
           </div>
         ) : suggestions.length === 0 ? (
           <p className="py-4 text-sm text-buddy-text-muted">No suggestions right now.</p>
@@ -277,7 +277,7 @@ export const LeftSidebar = () => {
       <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-1.5">
         <div className="mb-6 flex items-center justify-between">
           <h4 className="m-0 text-xl leading-snug font-medium text-buddy-text-dark">Events</h4>
-          <Link href="#0" className="text-xs leading-4.5 font-medium text-[#1890FF]">
+          <Link href="#0" className="text-xs leading-4.5 font-medium text-primary">
             See all
           </Link>
         </div>

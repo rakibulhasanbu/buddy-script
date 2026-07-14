@@ -53,7 +53,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
               type="button"
               onClick={() => setActiveTab("ALL")}
               className={`border-b-2 px-2 py-2 text-sm font-medium transition-colors ${
-                activeTab === "ALL" ? "border-[#1890FF] text-[#1890FF]" : "border-transparent text-buddy-text-secondary"
+                activeTab === "ALL" ? "border-primary text-primary" : "border-transparent text-buddy-text-secondary"
               }`}
             >
               All {counts.total}
@@ -68,7 +68,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
                   onClick={() => setActiveTab(type)}
                   className={`flex items-center gap-1 border-b-2 px-2 py-2 text-sm font-medium transition-colors ${
                     activeTab === type
-                      ? "border-[#1890FF] text-[#1890FF]"
+                      ? "border-primary text-primary"
                       : "border-transparent text-buddy-text-secondary"
                   }`}
                 >

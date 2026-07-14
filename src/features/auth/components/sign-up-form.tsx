@@ -86,7 +86,7 @@ export const SignUpForm = () => {
               {...register("firstName")}
               className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
             />
-            {errors.firstName && <p className="mt-1 text-sm text-red-500">{errors.firstName.message}</p>}
+            {errors.firstName && <p className="mt-1 text-sm text-destructive">{errors.firstName.message}</p>}
           </div>
           <div className="flex-1">
             <label className="mb-2 block text-base leading-snug font-medium text-buddy-text">Last Name</label>
@@ -95,7 +95,7 @@ export const SignUpForm = () => {
               {...register("lastName")}
               className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
             />
-            {errors.lastName && <p className="mt-1 text-sm text-red-500">{errors.lastName.message}</p>}
+            {errors.lastName && <p className="mt-1 text-sm text-destructive">{errors.lastName.message}</p>}
           </div>
         </div>
         <div className="mb-[14px]">
@@ -105,7 +105,7 @@ export const SignUpForm = () => {
             {...register("email")}
             className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
           />
-          {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
         </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-buddy-text">Password</label>
@@ -114,7 +114,7 @@ export const SignUpForm = () => {
             {...register("password")}
             className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
           />
-          {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
+          {errors.password && <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>}
         </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-buddy-text">Repeat Password</label>
@@ -123,25 +123,25 @@ export const SignUpForm = () => {
             {...register("confirmPassword")}
             className="h-12 w-full rounded-md border border-buddy-input-border bg-buddy-page-bg px-4 text-sm text-buddy-text outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-buddy-text-muted"
           />
-          {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && <p className="mt-1 text-sm text-destructive">{errors.confirmPassword.message}</p>}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <label className="flex cursor-pointer items-center gap-2">
             <input type="checkbox" {...register("terms")} className="peer sr-only" />
-            <span className="flex h-4 w-4 items-center justify-center rounded-full border border-buddy-text-secondary transition-colors peer-checked:border-[#1890FF] peer-checked:bg-transparent">
-              <span className="h-2 w-2 rounded-full bg-[#1890FF] opacity-0 transition-opacity peer-checked:opacity-100" />
+            <span className="flex h-4 w-4 items-center justify-center rounded-full border border-buddy-text-secondary transition-colors peer-checked:border-primary peer-checked:bg-transparent">
+              <span className="h-2 w-2 rounded-full bg-primary opacity-0 transition-opacity peer-checked:opacity-100" />
             </span>
             <span className="text-sm leading-snug font-normal text-buddy-text">I agree to terms & conditions</span>
           </label>
         </div>
-        {errors.terms && <p className="mt-1 text-sm text-red-500">{errors.terms.message}</p>}
+        {errors.terms && <p className="mt-1 text-sm text-destructive">{errors.terms.message}</p>}
 
         <div className="mt-10 mb-[60px]">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full cursor-pointer rounded-md border border-transparent bg-primary px-[116px] py-3 text-base font-medium text-primary-foreground transition-shadow hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "Creating account..." : "Register now"}
           </button>

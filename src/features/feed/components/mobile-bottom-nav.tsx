@@ -52,7 +52,7 @@ export const MobileBottomNav = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
+              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-primary px-[3px] text-[11px] leading-none font-normal text-primary-foreground">
                 6
               </span>
             </Link>
@@ -68,7 +68,7 @@ export const MobileBottomNav = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-[#1890FF] px-[3px] text-[11px] leading-none font-normal text-white">
+              <span className="absolute top-1 right-0 flex h-[17px] min-w-[17px] items-center justify-center rounded-[9px] border border-buddy-card-bg bg-primary px-[3px] text-[11px] leading-none font-normal text-primary-foreground">
                 2
               </span>
             </Link>

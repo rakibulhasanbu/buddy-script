@@ -42,7 +42,7 @@ export const FriendCard = ({
             type="button"
             onClick={onConnect}
             disabled={isLoading}
-            className="h-9 rounded-md bg-[#1890FF] px-4 text-sm text-white hover:bg-[#1890FF]/90 disabled:opacity-60"
+            className="h-9 rounded-md bg-primary px-4 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
           >
             {isLoading ? "Connecting..." : "Connect"}
           </Button>
@@ -54,7 +54,7 @@ export const FriendCard = ({
               type="button"
               onClick={onAccept}
               disabled={isLoading}
-              className="h-9 rounded-md bg-[#1890FF] px-4 text-sm text-white hover:bg-[#1890FF]/90 disabled:opacity-60"
+              className="h-9 rounded-md bg-primary px-4 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
             >
               Accept
             </Button>

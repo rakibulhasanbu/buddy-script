@@ -16,7 +16,7 @@ export const StoriesSection = () => {
         <div className="absolute top-1/2 -right-1 z-[18] -translate-y-1/2">
           <button
             type="button"
-            className="flex h-6 w-6 items-center justify-center rounded-full border border-buddy-page-bg bg-[#1890FF] px-[7px] py-0"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-buddy-page-bg bg-primary px-[7px] py-0"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" fill="none" viewBox="0 0 9 8">
               <path
@@ -36,11 +36,11 @@ export const StoriesSection = () => {
                 height={400}
                 className="h-auto w-full rounded-md"
               />
-              <div className="absolute bottom-0 z-[1] w-full rounded-t-[25.5px] rounded-b-md bg-[#112032] pt-8">
+              <div className="absolute bottom-0 z-[1] w-full rounded-t-[25.5px] rounded-b-md bg-foreground pt-8">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <button
                     type="button"
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#112032] bg-[#1890FF]"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground bg-primary"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10">
                       <path stroke="#fff" strokeLinecap="round" d="M.5 4.884h9M4.884 9.5v-9" />
@@ -49,7 +49,7 @@ export const StoriesSection = () => {
                 </div>
                 <p className="mb-2.5 text-center text-xs leading-[19px] font-medium text-white">Your Story</p>
               </div>
-              <div className="absolute inset-0 z-0 rounded-md bg-black opacity-50" />
+              <div className="absolute inset-0 z-0 rounded-md bg-foreground opacity-50" />
             </div>
           </div>
           {publicStories.map((story, index) => (
@@ -74,10 +74,10 @@ export const StoriesSection = () => {
                     alt="Mini"
                     width={28}
                     height={28}
-                    className="h-7 w-7 rounded-full border-2 border-white bg-[#C4C4C4]"
+                    className="h-7 w-7 rounded-full border-2 border-white bg-buddy-text-muted"
                   />
                 </div>
-                <div className="absolute inset-0 z-0 rounded-md bg-black opacity-50 transition-opacity hover:opacity-70" />
+                <div className="absolute inset-0 z-0 rounded-md bg-foreground opacity-50 transition-opacity hover:opacity-70" />
               </div>
             </div>
           ))}
@@ -98,7 +98,7 @@ export const StoriesSection = () => {
                     height={80}
                     className="h-20 w-[60px] rounded-full object-cover"
                   />
-                  <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#1890FF]">
+                  <div className="absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
                       <path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" d="M6 2.5v7M2.5 6h7" />
                     </svg>

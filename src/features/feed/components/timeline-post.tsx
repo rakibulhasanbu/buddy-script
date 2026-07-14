@@ -62,7 +62,7 @@ const PostDropdown = ({
             }}
             className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm text-buddy-text-dark hover:bg-buddy-muted-bg"
           >
-            <Pencil className="h-4 w-4 text-[#1890FF]" />
+            <Pencil className="h-4 w-4 text-primary" />
             Edit Post
           </button>
           <button
@@ -72,7 +72,7 @@ const PostDropdown = ({
               setOpen(false);
             }}
             disabled={isDeleting}
-            className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-left text-sm text-[#FF4D4F] hover:bg-buddy-muted-bg disabled:opacity-50"
+            className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-left text-sm text-destructive hover:bg-buddy-muted-bg disabled:opacity-50"
           >
             <Trash2 className="h-4 w-4" />
             {isDeleting ? "Deleting..." : "Delete Post"}
@@ -212,7 +212,7 @@ const TimelinePostInner = ({ post }: TimelinePostProps) => {
             type="button"
             onClick={() => handleReact(EReactionType.LIKE)}
             className={`flex w-full flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border-none py-3 text-sm leading-5.25 font-normal transition-colors ${
-              post.myReaction ? "bg-[#e4f1fd]" : "bg-transparent hover:bg-[#e4f1fd]"
+              post.myReaction ? "bg-accent" : "bg-transparent hover:bg-accent"
             }`}
             style={{ color: post.myReaction ? REACTION_CONFIG[post.myReaction].color : undefined }}
           >
@@ -223,7 +223,7 @@ const TimelinePostInner = ({ post }: TimelinePostProps) => {
         <button
           type="button"
           onClick={openDetail}
-          className="mr-1 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-[#e4f1fd]"
+          className="mr-1 flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-accent"
         >
           <MessageCircle className="h-5 w-5" />
           Comment
@@ -231,7 +231,7 @@ const TimelinePostInner = ({ post }: TimelinePostProps) => {
         {!isAuthor && <SavePostButton postId={post.id} isSaved={post.isSaved} />}
         <button
           type="button"
-          className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-[#e4f1fd]"
+          className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border-none bg-transparent py-3 text-sm leading-5.25 font-normal text-buddy-text-dark transition-colors hover:bg-accent"
         >
           <Share2 className="h-5 w-5" />
           Share

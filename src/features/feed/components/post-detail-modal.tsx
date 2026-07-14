@@ -91,7 +91,7 @@ const PostDropdown = ({
                   setOpen(false);
                 }}
                 disabled={isDeleting}
-                className="flex w-full cursor-pointer items-center gap-2 px-2 py-2 text-left text-sm text-[#FF4D4F] hover:bg-buddy-muted-bg disabled:opacity-50"
+                className="flex w-full cursor-pointer items-center gap-2 px-2 py-2 text-left text-sm text-destructive hover:bg-buddy-muted-bg disabled:opacity-50"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
                   <path

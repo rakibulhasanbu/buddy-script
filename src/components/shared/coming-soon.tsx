@@ -25,7 +25,7 @@ export const ComingSoon = ({ feature = "This feature" }: ComingSoonProps) => {
           </div>
         </div>
 
-        <p className="mb-3 text-xs font-semibold tracking-widest text-[#0ACF83] uppercase">Coming Soon</p>
+        <p className="mb-3 text-xs font-semibold tracking-widest text-buddy-success uppercase">Coming Soon</p>
         <h1 className="mb-4 text-3xl font-bold text-buddy-text-dark md:text-4xl dark:text-white">
           {feature} is on the way
         </h1>
@@ -40,10 +40,10 @@ export const ComingSoon = ({ feature = "This feature" }: ComingSoonProps) => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="h-11 w-full rounded-lg border border-buddy-border-color bg-buddy-muted-bg pr-4 pl-10 text-sm text-buddy-text transition-colors outline-none placeholder:text-buddy-text-muted focus:border-[#1890FF] focus:bg-buddy-page-bg dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-white/10"
+              className="h-11 w-full rounded-lg border border-buddy-border-color bg-buddy-muted-bg pr-4 pl-10 text-sm text-buddy-text transition-colors outline-none placeholder:text-buddy-text-muted focus:border-primary focus:bg-buddy-page-bg dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-white/10"
             />
           </div>
-          <Button type="submit" className="h-11 gap-2 bg-[#1890FF] px-5 text-white hover:bg-[#1890FF]/90">
+          <Button type="submit" className="h-11 gap-2 bg-primary px-5 text-primary-foreground hover:bg-primary/90">
             <Bell className="h-4 w-4" />
             Notify me
           </Button>

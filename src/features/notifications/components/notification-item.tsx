@@ -42,7 +42,7 @@ export const NotificationItem = ({ notification, onClick }: NotificationItemProp
       type="button"
       onClick={onClick}
       className={`mb-2 flex w-full items-start rounded-md p-2 text-left transition-colors hover:bg-buddy-muted-bg ${
-        notification.isRead ? "bg-buddy-card-bg" : "bg-[#e6f3ff] dark:bg-[#1a3a5c]"
+        notification.isRead ? "bg-buddy-card-bg" : "bg-accent"
       }`}
     >
       <div className="relative mr-3 shrink-0">
@@ -53,7 +53,7 @@ export const NotificationItem = ({ notification, onClick }: NotificationItemProp
           height={48}
           className="h-12 w-12 rounded-full object-cover"
         />
-        {!notification.isRead && <span className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-[#1890FF]" />}
+        {!notification.isRead && <span className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-primary" />}
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-sm leading-relaxed text-buddy-text-secondary">
@@ -81,7 +81,7 @@ export const FriendRequestNotificationItem = ({
 }: FriendRequestNotificationItemProps) => {
   return (
     <div
-      className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-buddy-card-bg" : "bg-[#e6f3ff] dark:bg-[#1a3a5c]"}`}
+      className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-buddy-card-bg" : "bg-accent"}`}
     >
       <Link href={`/users/${notification.actor.id}`} className="mr-3 shrink-0">
         <Image
@@ -106,7 +106,7 @@ export const FriendRequestNotificationItem = ({
           <button
             type="button"
             onClick={onAccept}
-            className="rounded-md bg-[#1890FF] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#40a9ff]"
+            className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-buddy-primary-hover"
           >
             Accept
           </button>

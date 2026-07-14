@@ -36,7 +36,7 @@ export const AuthFormInput = <T extends FieldValues>({
       control={control}
       render={({ field, fieldState }) => (
         <div className="flex flex-col gap-2">
-          <label htmlFor={name} className="text-base leading-snug font-medium text-[#4A5568]">
+          <label htmlFor={name} className="text-base leading-snug font-medium text-buddy-text-secondary">
             {label}
             {required && <span className="ml-0.5 text-destructive">*</span>}
           </label>

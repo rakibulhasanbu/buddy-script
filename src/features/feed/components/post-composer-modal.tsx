@@ -257,7 +257,7 @@ export const PostComposerModal = ({
           <Button
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className="h-10 w-full bg-[#1890FF] text-white hover:bg-[#377DFF] disabled:opacity-50"
+            className="h-10 w-full bg-primary text-primary-foreground hover:bg-buddy-primary-hover disabled:opacity-50"
           >
             {isLoading ? <Spinner className="mr-2 h-4 w-4" /> : mode === "edit" ? "Save" : "Post"}
           </Button>
