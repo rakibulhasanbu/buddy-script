@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useDeletePostMutation, useToggleReactionMutation, useUpdatePostMutation } from "@/features/feed/api";
 import { CommentSection } from "@/features/feed/components/comment-section";
@@ -167,7 +168,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
   return (
     <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-6">
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex cursor-pointer items-center">
+        <Link href={`/users/${post.author.id}`} className="flex cursor-pointer items-center">
           <div className="mr-4">
             <Image
               src={post.author.photoUrl || "/images/post_img.png"}
@@ -208,7 +209,7 @@ export const TimelinePost = ({ post, onPostUpdated, onPostDeleted }: TimelinePos
               </span>
             </p>
           </div>
-        </div>
+        </Link>
         <PostDropdown
           isAuthor={isAuthor}
           onEdit={() => setIsEditing(true)}

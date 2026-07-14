@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useAppSelector } from "@/redux/hook";
+
 import { ThreeDotsIcon } from "./feed-icons";
 
 const NotificationDropdown = () => {
@@ -105,6 +107,7 @@ const NotificationDropdown = () => {
 const ProfileDropdown = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const currentUser = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -114,13 +117,21 @@ const ProfileDropdown = () => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  if (!currentUser) return null;
+
   return (
     <div ref={ref} className="relative flex items-center">
       <div className="mr-2 w-6">
-        <Image src="/images/profile.png" alt="Image" width={24} height={24} className="h-auto w-full rounded-full" />
+        <Image
+          src={currentUser.photoUrl || "/images/profile.png"}
+          alt={currentUser.name}
+          width={24}
+          height={24}
+          className="h-auto w-full rounded-full object-cover"
+        />
       </div>
       <div className="flex cursor-pointer items-center">
-        <p className="text-base leading-6 font-normal text-[#212121]">Dylan Field</p>
+        <p className="text-base leading-6 font-normal text-[#212121]">{currentUser.name}</p>
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
@@ -139,11 +150,17 @@ const ProfileDropdown = () => {
         <div className="absolute top-12.5 right-0 z-50 w-70 rounded-md bg-white p-4 shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
           <div className="mb-4 flex items-center">
             <div className="mr-3">
-              <Image src="/images/profile.png" alt="Image" width={56} height={56} className="h-14 w-14 rounded-full" />
+              <Image
+                src={currentUser.photoUrl || "/images/profile.png"}
+                alt={currentUser.name}
+                width={56}
+                height={56}
+                className="h-14 w-14 rounded-full object-cover"
+              />
             </div>
             <div>
-              <h4 className="text-base font-medium text-[#212121]">Dylan Field</h4>
-              <Link href="#0" className="text-sm text-[#1890FF]">
+              <h4 className="text-base font-medium text-[#212121]">{currentUser.name}</h4>
+              <Link href="/profile" className="text-sm text-[#1890FF]" onClick={() => setOpen(false)}>
                 View Profile
               </Link>
             </div>

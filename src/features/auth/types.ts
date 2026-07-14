@@ -26,6 +26,8 @@ export interface User {
   name: string;
   createdAt: string;
   photoUrl: string;
+  coverUrl: string | null;
+  bio: string | null;
   role: UserRole;
 }
 

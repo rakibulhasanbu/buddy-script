@@ -90,7 +90,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
   return (
     <div className={`flex gap-3 ${depth > 0 ? "mt-3" : ""}`}>
       <div className="shrink-0">
-        <Link href="#0">
+        <Link href={`/users/${comment.author.id}`}>
           <Image
             src={comment.author.photoUrl || "/images/txt_img.png"}
             alt={comment.author.name}
@@ -103,7 +103,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
       <div className="flex-1">
         <div>
           <div className="mb-1">
-            <Link href="#0">
+            <Link href={`/users/${comment.author.id}`}>
               <h4 className="text-sm font-medium text-[#212121]">{comment.author.name}</h4>
             </Link>
           </div>

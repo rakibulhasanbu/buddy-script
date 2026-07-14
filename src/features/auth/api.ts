@@ -1,6 +1,6 @@
-import { User, UserRole } from "@/features/auth/types";
+import { User } from "@/features/auth/types";
 import { api } from "@/redux/api";
-import { METHOD, PaginatedResponse, QueryParams, ResponseObject, TagType } from "@/redux/types";
+import { METHOD } from "@/redux/types";
 
 const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,42 +18,7 @@ const authApi = api.injectEndpoints({
         body: payload,
       }),
     }),
-    getUser: builder.query<ResponseObject<User>, void>({
-      query: () => ({
-        url: `/user/me`,
-        method: METHOD.GET,
-      }),
-    }),
-    getUsers: builder.query<PaginatedResponse<User>, QueryParams>({
-      query: (payload) => ({
-        url: `/user/`,
-        method: METHOD.GET,
-        params: payload,
-      }),
-      providesTags: [TagType.User],
-    }),
-    updateUser: builder.mutation<void, { id: string; role: UserRole }>({
-      query: ({ id, role }) => ({
-        url: `/user/${id}`,
-        method: METHOD.PATCH,
-        body: { role },
-      }),
-      invalidatesTags: [TagType.User],
-    }),
-    deleteUser: builder.mutation<void, { id: string }>({
-      query: ({ id }) => ({
-        url: `/user/${id}`,
-        method: METHOD.DELETE,
-      }),
-    }),
   }),
 });
 
-export const {
-  useVerifySignupOTPMutation,
-  useReSendVerificationSignupOTPMutation,
-  useGetUserQuery,
-  useGetUsersQuery,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-} = authApi;
+export const { useVerifySignupOTPMutation, useReSendVerificationSignupOTPMutation } = authApi;
