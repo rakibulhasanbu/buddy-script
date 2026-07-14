@@ -17,11 +17,11 @@ import { ReactionPicker } from "@/features/feed/components/reaction-picker";
 import { WhoReactedModal } from "@/features/feed/components/who-reacted-modal";
 import { Comment, EReactionEntity, EReactionType } from "@/features/feed/types";
 import { formatRelativeTime, getTopReactions, getTotalReactions } from "@/features/feed/utils";
-import { useAlert } from "@/hooks/use-alert";
 import { AlertType } from "@/providers/AlertProvider";
 import { useAppSelector } from "@/redux/hook";
 import { toast } from "sonner";
 
+import { useAlert } from "@/hooks/use-alert";
 import { Spinner } from "@/components/ui/spinner";
 
 interface CommentItemProps {

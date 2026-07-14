@@ -67,9 +67,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
                   type="button"
                   onClick={() => setActiveTab(type)}
                   className={`flex items-center gap-1 border-b-2 px-2 py-2 text-sm font-medium transition-colors ${
-                    activeTab === type
-                      ? "border-primary text-primary"
-                      : "border-transparent text-buddy-text-secondary"
+                    activeTab === type ? "border-primary text-primary" : "border-transparent text-buddy-text-secondary"
                   }`}
                 >
                   <span>{REACTION_CONFIG[type].emoji}</span>

@@ -7,10 +7,9 @@ import Link from "next/link";
 import { useGetFriendsQuery } from "@/features/friends/api";
 import { Friendship } from "@/features/friends/types";
 import { useAppSelector } from "@/redux/hook";
+import { Search } from "lucide-react";
 
 import { Spinner } from "@/components/ui/spinner";
-
-import { Search } from "lucide-react";
 
 const YouMightLikeCard = () => (
   <div className="mb-4 rounded-md bg-buddy-card-bg px-6 pt-6 pb-6">
@@ -77,7 +76,7 @@ const YourFriendsCard = () => {
         </Link>
       </div>
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-buddy-text-secondary" />
+        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-buddy-text-secondary" />
         <input
           className="h-10 w-full rounded-[32px] border border-buddy-muted-bg bg-buddy-muted-bg py-2 pr-3 pl-[42px] text-sm text-buddy-text transition-colors outline-none placeholder:text-buddy-text-muted hover:border-primary"
           type="search"

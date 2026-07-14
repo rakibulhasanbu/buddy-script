@@ -87,7 +87,11 @@ export const CustomTextCopy = ({
           className={cn("cursor-pointer hover:text-primary", buttonClassName)}
           title={copied ? "Copied!" : "Copy to clipboard"}
         >
-          {copied ? <Check className="h-4 w-4 text-buddy-success" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
+          {copied ? (
+            <Check className="h-4 w-4 text-buddy-success" />
+          ) : (
+            <Copy className="h-4 w-4 text-muted-foreground" />
+          )}
         </button>
       )}
     </div>

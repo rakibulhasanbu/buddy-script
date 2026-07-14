@@ -144,9 +144,7 @@ export const NotificationDropdown = () => {
                 type="button"
                 onClick={() => setActiveTab("unread")}
                 className={`h-9 rounded-md border border-buddy-border-color px-3 text-base leading-tight font-medium transition-colors ${
-                  activeTab === "unread"
-                    ? "bg-accent text-primary"
-                    : "text-buddy-text-dark hover:bg-buddy-muted-bg"
+                  activeTab === "unread" ? "bg-accent text-primary" : "text-buddy-text-dark hover:bg-buddy-muted-bg"
                 }`}
               >
                 Unread

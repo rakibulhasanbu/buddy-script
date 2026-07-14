@@ -67,7 +67,9 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           {/* Footer link */}
-          <div className="text-sm text-buddy-text-secondary">© 2026 Inventory — The Standard for Inventory Management</div>
+          <div className="text-sm text-buddy-text-secondary">
+            © 2026 Inventory — The Standard for Inventory Management
+          </div>
         </div>
       </div>
 

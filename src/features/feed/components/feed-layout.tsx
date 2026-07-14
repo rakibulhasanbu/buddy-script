@@ -26,7 +26,7 @@ export const FeedLayout = ({ leftSidebar, middle, rightSidebar }: FeedLayoutProp
             </aside>
             <main
               ref={setScrollElement}
-              className="col-span-1 no-scrollbar h-full overflow-auto px-2 pt-2 lg:col-span-6 lg:px-0 lg:pt-2.5"
+              className="col-span-1 no-scrollbar h-full overflow-auto px-2 pt-2 lg:col-span-6 lg:px-0 lg:pt-4.5"
             >
               {middle}
             </main>

@@ -35,31 +35,19 @@ export const FriendCard = ({
 
         <div className="flex flex-col items-center gap-1">
           <h4 className="text-sm font-semibold text-buddy-text-dark">{user.name}</h4>
-          {user.headline && (
-            <p className="line-clamp-2 text-xs text-buddy-text-secondary">{user.headline}</p>
-          )}
+          {user.headline && <p className="line-clamp-2 text-xs text-buddy-text-secondary">{user.headline}</p>}
         </div>
 
         <div className="flex w-full flex-col items-center gap-2 pt-1">
           {action === "connect" && (
-            <Button
-              type="button"
-              onClick={onConnect}
-              disabled={isLoading}
-              className="h-9 w-full rounded-full text-sm"
-            >
+            <Button type="button" onClick={onConnect} disabled={isLoading} className="h-9 w-full rounded-full text-sm">
               {isLoading ? "Connecting..." : "Connect"}
             </Button>
           )}
 
           {action === "accept-decline" && (
             <div className="flex w-full gap-2">
-              <Button
-                type="button"
-                onClick={onAccept}
-                disabled={isLoading}
-                className="h-9 flex-1 rounded-full text-sm"
-              >
+              <Button type="button" onClick={onAccept} disabled={isLoading} className="h-9 flex-1 rounded-full text-sm">
                 Accept
               </Button>
               <Button

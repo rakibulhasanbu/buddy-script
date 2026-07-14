@@ -4,10 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { FriendsList } from "@/features/friends/components/friends-list";
+import { Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-
-import { Search } from "lucide-react";
 
 const Page = () => {
   const [search, setSearch] = useState("");

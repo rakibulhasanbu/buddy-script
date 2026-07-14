@@ -80,9 +80,7 @@ export const FriendRequestNotificationItem = ({
   onDecline,
 }: FriendRequestNotificationItemProps) => {
   return (
-    <div
-      className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-buddy-card-bg" : "bg-accent"}`}
-    >
+    <div className={`mb-2 flex items-start rounded-md p-2 ${notification.isRead ? "bg-buddy-card-bg" : "bg-accent"}`}>
       <Link href={`/users/${notification.actor.id}`} className="mr-3 shrink-0">
         <Image
           src={notification.actor.photoUrl || "/images/profile.png"}
