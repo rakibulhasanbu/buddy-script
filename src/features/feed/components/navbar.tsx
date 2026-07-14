@@ -141,10 +141,10 @@ const ProfileDropdown = () => {
   );
 };
 
-export const DesktopHeader = () => {
+export const Navbar = () => {
   return (
     <nav className="fixed top-0 right-0 left-0 z-1030 bg-buddy-card-bg pt-2.5 pb-0">
-      <div className="container mx-auto max-w-285 px-4">
+      <div className="container mx-auto max-w-330 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="navbar-brand">
