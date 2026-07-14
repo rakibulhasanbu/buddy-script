@@ -4,13 +4,44 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export const SignInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
+import { loginAction } from "@/features/auth/actions";
+import { useAuthSuccess } from "@/features/auth/hooks/use-auth-utils";
+import { signInFormSchema } from "@/features/auth/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-  const handleSubmit = () => {
-    console.log({ email, password, remember });
+type SignInFormValues = z.infer<typeof signInFormSchema>;
+
+export const SignInForm = () => {
+  const [remember, setRemember] = useState(true);
+  const onAuthSuccess = useAuthSuccess();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInFormValues>({
+    resolver: zodResolver(signInFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: SignInFormValues) => {
+    const result = await loginAction(values.email, values.password);
+
+    if (result.status === "error") {
+      toast.error(result.error || "Failed to login");
+      return;
+    }
+
+    toast.success("Logged in successfully");
+
+    const { accessToken, refreshToken, user } = result.data;
+    onAuthSuccess({ accessToken, refreshToken, user });
   };
 
   return (
@@ -37,24 +68,24 @@ export const SignInForm = () => {
         <span className="absolute top-1/2 right-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
       </div>
 
-      <form className="w-full">
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Email</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email")}
             className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
           />
+          {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
         </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password")}
             className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
           />
+          {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -77,11 +108,11 @@ export const SignInForm = () => {
 
         <div className="mt-10 mb-[60px]">
           <button
-            type="button"
-            onClick={handleSubmit}
-            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md"
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Login now
+            {isSubmitting ? "Logging in..." : "Login now"}
           </button>
         </div>
       </form>

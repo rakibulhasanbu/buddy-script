@@ -1,17 +1,54 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export const SignUpForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [terms, setTerms] = useState(true);
+import { registerAction } from "@/features/auth/actions";
+import { useAuthSuccess } from "@/features/auth/hooks/use-auth-utils";
+import { signUpFormSchema } from "@/features/auth/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-  const handleSubmit = () => {
-    console.log({ email, password, confirmPassword, terms });
+type SignUpFormValues = z.infer<typeof signUpFormSchema>;
+
+export const SignUpForm = () => {
+  const onAuthSuccess = useAuthSuccess();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+    },
+  });
+
+  const onSubmit = async (values: SignUpFormValues) => {
+    const result = await registerAction({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+    });
+
+    if (result.status === "error") {
+      toast.error(result.error || "Failed to create account");
+      return;
+    }
+
+    toast.success("Account created successfully");
+
+    const { accessToken, refreshToken, user } = result.data;
+    onAuthSuccess({ accessToken, refreshToken, user });
   };
 
   return (
@@ -38,65 +75,81 @@ export const SignUpForm = () => {
         <span className="absolute top-1/2 right-0 h-[2px] w-[108px] -translate-y-1/2 bg-[#DFDFDF]" />
       </div>
 
-      <form className="w-full">
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div className="mb-[14px] flex gap-4">
+          <div className="flex-1">
+            <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">First Name</label>
+            <input
+              type="text"
+              {...register("firstName")}
+              className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+            />
+            {errors.firstName && <p className="mt-1 text-sm text-red-500">{errors.firstName.message}</p>}
+          </div>
+          <div className="flex-1">
+            <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Last Name</label>
+            <input
+              type="text"
+              {...register("lastName")}
+              className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
+            />
+            {errors.lastName && <p className="mt-1 text-sm text-red-500">{errors.lastName.message}</p>}
+          </div>
+        </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Email</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email")}
             className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
           />
+          {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
         </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password")}
             className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
           />
+          {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
         </div>
         <div className="mb-[14px]">
           <label className="mb-2 block text-base leading-snug font-medium text-[#4A5568]">Repeat Password</label>
           <input
             type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            {...register("confirmPassword")}
             className="h-12 w-full rounded-md border border-[#E8E8E8] bg-white px-4 text-sm outline-none placeholder:text-[13px] placeholder:font-normal placeholder:text-[#2D3748]"
           />
+          {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword.message}</p>}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <label className="flex cursor-pointer items-center gap-2">
-            <input
-              type="checkbox"
-              checked={terms}
-              onChange={(e) => setTerms(e.target.checked)}
-              className="peer sr-only"
-            />
+            <input type="checkbox" {...register("terms")} className="peer sr-only" />
             <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#666666] transition-colors peer-checked:border-[#1890FF] peer-checked:bg-transparent">
               <span className="h-2 w-2 rounded-full bg-[#1890FF] opacity-0 transition-opacity peer-checked:opacity-100" />
             </span>
             <span className="text-sm leading-snug font-normal text-[#2D3748]">I agree to terms & conditions</span>
           </label>
         </div>
+        {errors.terms && <p className="mt-1 text-sm text-red-500">{errors.terms.message}</p>}
 
         <div className="mt-10 mb-[60px]">
           <button
-            type="button"
-            onClick={handleSubmit}
-            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md"
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full cursor-pointer rounded-md border border-transparent bg-[#1890FF] px-[116px] py-3 text-base font-medium text-white transition-shadow hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Login now
+            {isSubmitting ? "Creating account..." : "Register now"}
           </button>
         </div>
       </form>
 
       <p className="text-center text-sm text-[#2D3748]">
-        Dont have an account?{" "}
+        Already have an account?{" "}
         <Link href="/auth/sign-in" className="text-[#1890FF]">
-          Create New Account
+          Login
         </Link>
       </p>
     </div>

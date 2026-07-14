@@ -16,6 +16,9 @@ export enum TagType {
   MadeIn = "MadeIn",
   ProductModel = "ProductModel",
   ReturnOrder = "ReturnOrder",
+  Post = "Post",
+  Comment = "Comment",
+  Reaction = "Reaction",
 }
 
 export const tagTypes = Object.values(TagType);

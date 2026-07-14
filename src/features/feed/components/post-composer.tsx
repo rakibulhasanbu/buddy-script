@@ -3,6 +3,12 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 
+import { useCreatePostMutation, useUploadImageMutation } from "@/features/feed/api";
+import { EVisibility } from "@/features/feed/types";
+import { toast } from "sonner";
+
+import { Spinner } from "@/components/ui/spinner";
+
 const ActionButton = ({ icon, label, onClick }: { icon: React.ReactNode; label?: string; onClick?: () => void }) => (
   <button
     type="button"
@@ -18,20 +24,71 @@ const ActionButton = ({ icon, label, onClick }: { icon: React.ReactNode; label?:
   </button>
 );
 
-export const PostComposer = () => {
+interface PostComposerProps {
+  onPostCreated?: () => void;
+}
+
+export const PostComposer = ({ onPostCreated }: PostComposerProps) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [visibility, setVisibility] = useState<EVisibility>(EVisibility.PUBLIC);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
+  const [uploadImage, { isLoading: isUploading }] = useUploadImageMutation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setImage(file);
-    console.log({ file });
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
-  const handlePost = () => {
-    console.log({ text, image });
+  const removeImage = () => {
+    setImage(null);
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+      setImagePreview(null);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
+
+  const handlePost = async () => {
+    if (!text.trim()) {
+      toast.error("Please write something");
+      return;
+    }
+
+    try {
+      let imageUrl: string | undefined;
+
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+        const uploadResult = await uploadImage(formData).unwrap();
+        imageUrl = uploadResult.data.url;
+      }
+
+      await createPost({
+        content: text.trim(),
+        imageUrl,
+        visibility,
+      }).unwrap();
+
+      setText("");
+      removeImage();
+      toast.success("Post created successfully");
+      onPostCreated?.();
+    } catch {
+      toast.error("Failed to create post");
+    }
+  };
+
+  const isLoading = isCreating || isUploading;
 
   return (
     <div className="mb-4 rounded-md bg-white px-6 pt-6 pb-6">
@@ -58,6 +115,19 @@ export const PostComposer = () => {
         </div>
       </div>
 
+      {imagePreview && (
+        <div className="relative mt-2 mb-4">
+          <Image src={imagePreview} alt="Preview" width={600} height={400} className="h-auto w-full rounded-md" />
+          <button
+            type="button"
+            onClick={removeImage}
+            className="absolute top-2 right-2 rounded-full bg-black/50 p-1 text-white"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
       {/* Desktop bottom */}
@@ -76,60 +146,71 @@ export const PostComposer = () => {
             }
           />
           <ActionButton
-            label="Video"
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
-                <path
-                  fill="#666"
-                  d="M11.485 4.5c2.213 0 3.753 1.534 3.917 3.784l2.418-1.082c1.047-.468 2.188.327 2.271 1.533l.005.141v6.64c0 1.237-1.103 2.093-2.155 1.72l-.121-.047-2.418-1.083c-.164 2.25-1.708 3.785-3.917 3.785H5.76c-2.343 0-3.932-1.72-3.932-4.188V8.688c0-2.47 1.589-4.188 3.932-4.188h5.726zm0 1.5H5.76C4.169 6 3.197 7.05 3.197 8.688v7.015c0 1.636.972 2.688 2.562 2.688h5.726c1.586 0 2.562-1.054 2.562-2.688v-.686-6.329c0-1.636-.973-2.688-2.562-2.688zM18.4 8.57l-.062.02-2.921 1.306v4.596l2.921 1.307c.165.073.343-.036.38-.215l.008-.07V8.876c0-.195-.16-.334-.326-.305z"
-                />
-              </svg>
+            label={visibility === EVisibility.PUBLIC ? "Public" : "Private"}
+            onClick={() =>
+              setVisibility((prev) => (prev === EVisibility.PUBLIC ? EVisibility.PRIVATE : EVisibility.PUBLIC))
             }
-          />
-          <ActionButton
-            label="Event"
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
-                <path
-                  fill="#666"
-                  d="M14.371 2c.32 0 .585.262.627.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.788c0-.386.283-.698.633-.698.32 0 .584.262.626.603l.006.095v.771h5.546v-.771c0-.386.284-.698.633-.698zm3.546 8.283H4.004l.001 6.621c0 2.325 1.137 3.616 3.183 3.697l.207.004h7.132c2.184 0 3.39-1.271 3.39-3.63v-6.692zm-3.202 5.853c.349 0 .632.312.632.698 0 .353-.238.645-.546.691l-.086.006c-.357 0-.64-.312-.64-.697 0-.354.237-.645.546-.692l.094-.006zm-3.742 0c.35 0 .632.312.632.698 0 .353-.238.645-.546.691l-.086.006c-.357 0-.64-.312-.64-.697 0-.354.238-.645.546-.692l.094-.006zm-3.75 0c.35 0 .633.312.633.698 0 .353-.238.645-.547.691l-.093.006c-.35 0-.633-.312-.633-.697 0-.354.238-.645.547-.692l.094-.006zm7.492-3.615c.349 0 .632.312.632.697 0 .354-.238.645-.546.692l-.086.006c-.357 0-.64-.312-.64-.698 0-.353.237-.645.546-.691l.094-.006zm-3.742 0c.35 0 .632.312.632.697 0 .354-.238.645-.546.692l-.086.006c-.357 0-.64-.312-.64-.698 0-.353.238-.645.546-.691l.094-.006zm-3.75 0c.35 0 .633.312.633.697 0 .354-.238.645-.547.692l-.093.006c-.35 0-.633-.312-.633-.698 0-.353.238-.645.547-.691l.094-.006zm6.515-7.657H8.192v.895c0 .385-.283.698-.633.698-.32 0-.584-.263-.626-.603l-.006-.095v-.874c-1.886.173-2.922 1.422-2.922 3.6v.402h13.912v-.403c.007-2.181-1.024-3.427-2.914-3.599v.874c0 .385-.283.698-.632.698-.32 0-.585-.263-.627-.603l-.005-.095v-.895z"
-                />
-              </svg>
-            }
-          />
-          <ActionButton
-            label="Article"
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="none" viewBox="0 0 18 20">
-                <path
-                  fill="#666"
-                  d="M12.49 0c2.92 0 4.665 1.92 4.693 5.132v9.659c0 3.257-1.75 5.209-4.693 5.209H5.434c-.377 0-.734-.032-1.07-.095l-.2-.041C2 19.371.74 17.555.74 14.791V5.209c0-.334.019-.654.055-.96C1.114 1.564 2.799 0 5.434 0h7.056zm-.008 1.457H5.434c-2.244 0-3.381 1.263-3.381 3.752v9.582c0 2.489 1.137 3.752 3.38 3.752h7.049c2.242 0 3.372-1.263 3.372-3.752V5.209c0-2.489-1.13-3.752-3.372-3.752zm-.239 12.053c.36 0 .652.324.652.724 0 .4-.292.724-.652.724H5.656c-.36 0-.652-.324-.652-.724 0-.4.293-.724.652-.724h6.587zm0-4.239a.643.643 0 01.632.339.806.806 0 010 .78.643.643 0 01-.632.339H5.656c-.334-.042-.587-.355-.587-.729s.253-.688.587-.729h6.587zM8.17 5.042c.335.041.588.355.588.729 0 .373-.253.687-.588.728H5.665c-.336-.041-.589-.355-.589-.728 0-.374.253-.688.589-.729H8.17z"
-                />
-              </svg>
+              visibility === EVisibility.PUBLIC ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#666"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#666"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+              )
             }
           />
         </div>
         <button
           type="button"
           onClick={handlePost}
-          className="flex cursor-pointer items-center justify-center rounded-md bg-[#1890FF] px-5 py-3 transition-colors hover:bg-[#377DFF]"
+          disabled={isLoading}
+          className="flex cursor-pointer items-center justify-center rounded-md bg-[#1890FF] px-5 py-3 transition-colors hover:bg-[#377DFF] disabled:opacity-50"
         >
-          <svg
-            className="mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="13"
-            fill="none"
-            viewBox="0 0 14 13"
-          >
-            <path
-              fill="#fff"
-              fillRule="evenodd"
-              d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88zM9.097 13c-.464 0-.89-.236-1.14-.641L5.372 8.165l-4.237-2.65a1.336 1.336 0 01-.622-1.331c.074-.536.441-.96.957-1.112L11.774.054a1.347 1.347 0 011.67 1.682l-3.05 10.296A1.332 1.332 0 019.098 13z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span className="text-base leading-6 font-medium text-white">Post</span>
+          {isLoading ? (
+            <Spinner className="mr-2 h-4 w-4 text-white" />
+          ) : (
+            <svg
+              className="mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="13"
+              fill="none"
+              viewBox="0 0 14 13"
+            >
+              <path
+                fill="#fff"
+                fillRule="evenodd"
+                d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88zM9.097 13c-.464 0-.89-.236-1.14-.641L5.372 8.165l-4.237-2.65a1.336 1.336 0 01-.622-1.331c.074-.536.441-.96.957-1.112L11.774.054a1.347 1.347 0 011.67 1.682l-3.05 10.296A1.332 1.332 0 019.098 13z"
+                clipRule="evenodd"
+              />
+            </svg>
+          )}
+          <span className="text-base leading-6 font-medium text-white">{isLoading ? "Posting..." : "Post"}</span>
         </button>
       </div>
 
@@ -148,57 +229,70 @@ export const PostComposer = () => {
             }
           />
           <ActionButton
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
-                <path
-                  fill="#666"
-                  d="M11.485 4.5c2.213 0 3.753 1.534 3.917 3.784l2.418-1.082c1.047-.468 2.188.327 2.271 1.533l.005.141v6.64c0 1.237-1.103 2.093-2.155 1.72l-.121-.047-2.418-1.083c-.164 2.25-1.708 3.785-3.917 3.785H5.76c-2.343 0-3.932-1.72-3.932-4.188V8.688c0-2.47 1.589-4.188 3.932-4.188h5.726zm0 1.5H5.76C4.169 6 3.197 7.05 3.197 8.688v7.015c0 1.636.972 2.688 2.562 2.688h5.726c1.586 0 2.562-1.054 2.562-2.688v-.686-6.329c0-1.636-.973-2.688-2.562-2.688zM18.4 8.57l-.062.02-2.921 1.306v4.596l2.921 1.307c.165.073.343-.036.38-.215l.008-.07V8.876c0-.195-.16-.334-.326-.305z"
-                />
-              </svg>
+            onClick={() =>
+              setVisibility((prev) => (prev === EVisibility.PUBLIC ? EVisibility.PRIVATE : EVisibility.PUBLIC))
             }
-          />
-          <ActionButton
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="none" viewBox="0 0 22 24">
-                <path
-                  fill="#666"
-                  d="M14.371 2c.32 0 .585.262.627.603l.005.095v.788c2.598.195 4.188 2.033 4.18 5v8.488c0 3.145-1.786 5.026-4.656 5.026H7.395C4.53 22 2.74 20.087 2.74 16.904V8.486c0-2.966 1.596-4.804 4.187-5v-.788c0-.386.283-.698.633-.698.32 0 .584.262.626.603l.006.095v.771h5.546v-.771c0-.386.284-.698.633-.698zm3.546 8.283H4.004l.001 6.621c0 2.325 1.137 3.616 3.183 3.697l.207.004h7.132c2.184 0 3.39-1.271 3.39-3.63v-6.692z"
-                />
-              </svg>
-            }
-          />
-          <ActionButton
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="none" viewBox="0 0 18 20">
-                <path
-                  fill="#666"
-                  d="M12.49 0c2.92 0 4.665 1.92 4.693 5.132v9.659c0 3.257-1.75 5.209-4.693 5.209H5.434c-.377 0-.734-.032-1.07-.095l-.2-.041C2 19.371.74 17.555.74 14.791V5.209c0-.334.019-.654.055-.96C1.114 1.564 2.799 0 5.434 0h7.056zm-.008 1.457H5.434c-2.244 0-3.381 1.263-3.381 3.752v9.582c0 2.489 1.137 3.752 3.38 3.752h7.049c2.242 0 3.372-1.263 3.372-3.752V5.209c0-2.489-1.13-3.752-3.372-3.752z"
-                />
-              </svg>
+              visibility === EVisibility.PUBLIC ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#666"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#666"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+              )
             }
           />
         </div>
         <button
           type="button"
           onClick={handlePost}
-          className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-md bg-[#1890FF] px-5 py-3 transition-colors hover:bg-[#377DFF]"
+          disabled={isLoading}
+          className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-md bg-[#1890FF] px-5 py-3 transition-colors hover:bg-[#377DFF] disabled:opacity-50"
         >
-          <svg
-            className="mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="13"
-            fill="none"
-            viewBox="0 0 14 13"
-          >
-            <path
-              fill="#fff"
-              fillRule="evenodd"
-              d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88zM9.097 13c-.464 0-.89-.236-1.14-.641L5.372 8.165l-4.237-2.65a1.336 1.336 0 01-.622-1.331c.074-.536.441-.96.957-1.112L11.774.054a1.347 1.347 0 011.67 1.682l-3.05 10.296A1.332 1.332 0 019.098 13z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span className="text-base leading-6 font-medium text-white">Post</span>
+          {isLoading ? (
+            <Spinner className="mr-2 h-4 w-4 text-white" />
+          ) : (
+            <svg
+              className="mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="13"
+              fill="none"
+              viewBox="0 0 14 13"
+            >
+              <path
+                fill="#fff"
+                fillRule="evenodd"
+                d="M6.37 7.879l2.438 3.955a.335.335 0 00.34.162c.068-.01.23-.05.289-.247l3.049-10.297a.348.348 0 00-.09-.35.341.341 0 00-.34-.088L1.75 4.03a.34.34 0 00-.247.289.343.343 0 00.16.347L5.666 7.17 9.2 3.597a.5.5 0 01.712.703L6.37 7.88zM9.097 13c-.464 0-.89-.236-1.14-.641L5.372 8.165l-4.237-2.65a1.336 1.336 0 01-.622-1.331c.074-.536.441-.96.957-1.112L11.774.054a1.347 1.347 0 011.67 1.682l-3.05 10.296A1.332 1.332 0 019.098 13z"
+                clipRule="evenodd"
+              />
+            </svg>
+          )}
+          <span className="text-base leading-6 font-medium text-white">{isLoading ? "Posting..." : "Post"}</span>
         </button>
       </div>
     </div>

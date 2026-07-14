@@ -5,7 +5,11 @@ import { cookies } from "next/headers";
 import { config } from "@/config";
 import { User } from "@/features/auth/types";
 
-export const loginAction = async (email: string, password: string) => {
+type AuthActionResult =
+  | { status: "success"; data: { accessToken: string; refreshToken: string; user: User } }
+  | { status: "error"; error: string };
+
+export const loginAction = async (email: string, password: string): Promise<AuthActionResult> => {
   try {
     const response = await fetch(`${config.serverUrl}/auth/signin`, {
       method: "POST",
@@ -46,16 +50,23 @@ export const loginAction = async (email: string, password: string) => {
 };
 
 interface RegisterActionProps {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
-export const registerAction = async ({ name, email, password }: RegisterActionProps) => {
+export const registerAction = async ({
+  firstName,
+  lastName,
+  email,
+  password,
+}: RegisterActionProps): Promise<AuthActionResult> => {
   try {
     const response = await fetch(`${config.serverUrl}/auth/signup`, {
       method: "POST",
       body: JSON.stringify({
-        name,
+        firstName,
+        lastName,
         email,
         password,
       }),
@@ -187,7 +198,7 @@ const setTokensToCookies = async (accessToken: string, refreshToken: string) => 
   const cookieStore = await cookies();
   const base = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax" as const,
     path: "/",
   };
@@ -207,7 +218,7 @@ const setUserToCookies = async (user: User) => {
   const cookieStore = await cookies();
   const base = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax" as const,
     path: "/",
   };
