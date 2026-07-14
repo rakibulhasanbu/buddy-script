@@ -17,6 +17,8 @@ import { ReactionPicker } from "@/features/feed/components/reaction-picker";
 import { WhoReactedModal } from "@/features/feed/components/who-reacted-modal";
 import { Comment, EReactionEntity, EReactionType } from "@/features/feed/types";
 import { formatRelativeTime, getTopReactions, getTotalReactions } from "@/features/feed/utils";
+import { useAlert } from "@/hooks/use-alert";
+import { AlertType } from "@/providers/AlertProvider";
 import { useAppSelector } from "@/redux/hook";
 import { toast } from "sonner";
 
@@ -31,6 +33,7 @@ interface CommentItemProps {
 export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const isAuthor = currentUser?.id === comment.author.id;
+  const { fire } = useAlert();
 
   const [showReplies, setShowReplies] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
@@ -78,13 +81,20 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
     }
   };
 
-  const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this comment?")) return;
-    try {
-      await deleteComment({ id: comment.id, postId, parentId: comment.parentId }).unwrap();
-    } catch {
-      toast.error("Failed to delete comment");
-    }
+  const handleDelete = () => {
+    fire({
+      title: "Delete comment?",
+      text: "This action cannot be undone.",
+      type: AlertType.ERROR,
+      confirmButtonOptions: { text: "Delete", variant: "destructive" },
+      onConfirm: async () => {
+        try {
+          await deleteComment({ id: comment.id, postId, parentId: comment.parentId }).unwrap();
+        } catch {
+          toast.error("Failed to delete comment");
+        }
+      },
+    });
   };
 
   return (
@@ -102,11 +112,9 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
       </div>
       <div className="flex-1">
         <div>
-          <div className="mb-1">
-            <Link href={`/users/${comment.author.id}`}>
-              <h4 className="text-sm font-medium text-buddy-text-dark">{comment.author.name}</h4>
-            </Link>
-          </div>
+          <Link href={`/users/${comment.author.id}`} className="mb-1 hover:underline">
+            <h4 className="text-sm font-medium text-buddy-text-dark">{comment.author.name}</h4>
+          </Link>
 
           {isEditing ? (
             <div className="mb-2">

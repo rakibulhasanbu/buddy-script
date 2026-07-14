@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { NotificationDropdown } from "@/features/notifications/components/notification-dropdown";
 import { useAppSelector } from "@/redux/hook";
@@ -142,8 +143,20 @@ const ProfileDropdown = () => {
 };
 
 export const Navbar = () => {
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
+  const activeClass =
+    "relative block px-4 py-5.5 transition-colors before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-primary";
+  const inactiveClass =
+    "relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-primary hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-primary";
+
   return (
-    <nav className="fixed top-0 right-0 left-0 z-1030 bg-buddy-card-bg pt-2.5 pb-0">
+    <nav className="fixed top-0 right-0 left-0 z-40 bg-buddy-card-bg pt-2.5 pb-0">
       <div className="container mx-auto max-w-330 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -183,7 +196,7 @@ export const Navbar = () => {
               <li className="mx-3">
                 <Link
                   href="/"
-                  className="relative block px-4 py-5.5 transition-colors before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:bg-primary"
+                  className={isActive("/") ? activeClass : inactiveClass}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="21" fill="none" viewBox="0 0 18 21">
                     <path
@@ -205,8 +218,8 @@ export const Navbar = () => {
               </li>
               <li className="mx-3">
                 <Link
-                  href="/friends"
-                  className="relative block px-4 py-5.5 text-buddy-text-secondary transition-colors hover:text-primary hover:before:absolute hover:before:bottom-0 hover:before:left-0 hover:before:h-0.5 hover:before:w-full hover:before:bg-primary"
+                  href="/friends/list"
+                  className={isActive("/friends") ? activeClass : inactiveClass}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" fill="none" viewBox="0 0 26 20">
                     <path

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FriendUser } from "@/features/friends/types";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface FriendCardProps {
   user: FriendUser;
@@ -26,62 +27,66 @@ export const FriendCard = ({
   onCancel,
 }: FriendCardProps) => {
   return (
-    <div className="flex items-center justify-between rounded-md bg-buddy-card-bg p-4 shadow-[0_2px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
-      <div className="flex items-center gap-3">
-        <div className="relative h-12 w-12 overflow-hidden rounded-full">
+    <Card className="items-center text-center">
+      <CardContent className="flex flex-col items-center gap-3 pt-4">
+        <div className="relative h-20 w-20 overflow-hidden rounded-full">
           <Image src={user.photoUrl || "/images/profile.png"} alt={user.name} fill className="object-cover" />
         </div>
-        <div>
-          <h4 className="text-base font-medium text-buddy-text-dark">{user.name}</h4>
+
+        <div className="flex flex-col items-center gap-1">
+          <h4 className="text-sm font-semibold text-buddy-text-dark">{user.name}</h4>
+          {user.headline && (
+            <p className="line-clamp-2 text-xs text-buddy-text-secondary">{user.headline}</p>
+          )}
         </div>
-      </div>
 
-      <div className="flex items-center gap-2">
-        {action === "connect" && (
-          <Button
-            type="button"
-            onClick={onConnect}
-            disabled={isLoading}
-            className="h-9 rounded-md bg-primary px-4 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
-          >
-            {isLoading ? "Connecting..." : "Connect"}
-          </Button>
-        )}
-
-        {action === "accept-decline" && (
-          <>
+        <div className="flex w-full flex-col items-center gap-2 pt-1">
+          {action === "connect" && (
             <Button
               type="button"
-              onClick={onAccept}
+              onClick={onConnect}
               disabled={isLoading}
-              className="h-9 rounded-md bg-primary px-4 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
+              className="h-9 w-full rounded-full text-sm"
             >
-              Accept
+              {isLoading ? "Connecting..." : "Connect"}
             </Button>
+          )}
+
+          {action === "accept-decline" && (
+            <div className="flex w-full gap-2">
+              <Button
+                type="button"
+                onClick={onAccept}
+                disabled={isLoading}
+                className="h-9 flex-1 rounded-full text-sm"
+              >
+                Accept
+              </Button>
+              <Button
+                type="button"
+                onClick={onDecline}
+                disabled={isLoading}
+                variant="outline"
+                className="h-9 flex-1 rounded-full text-sm"
+              >
+                Decline
+              </Button>
+            </div>
+          )}
+
+          {action === "cancel" && (
             <Button
               type="button"
-              onClick={onDecline}
+              onClick={onCancel}
               disabled={isLoading}
               variant="outline"
-              className="h-9 rounded-md border-buddy-border-color bg-buddy-card-bg px-4 text-sm text-buddy-text-dark hover:bg-buddy-muted-bg disabled:opacity-60"
+              className="h-9 w-full rounded-full text-sm"
             >
-              Decline
+              {isLoading ? "Canceling..." : "Cancel"}
             </Button>
-          </>
-        )}
-
-        {action === "cancel" && (
-          <Button
-            type="button"
-            onClick={onCancel}
-            disabled={isLoading}
-            variant="outline"
-            className="h-9 rounded-md border-buddy-border-color bg-buddy-card-bg px-4 text-sm text-buddy-text-dark hover:bg-buddy-muted-bg disabled:opacity-60"
-          >
-            {isLoading ? "Canceling..." : "Cancel"}
-          </Button>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };

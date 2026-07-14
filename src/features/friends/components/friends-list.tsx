@@ -9,12 +9,16 @@ import { useAppSelector } from "@/redux/hook";
 
 import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
 
-export const FriendsList = () => {
+interface FriendsListProps {
+  search?: string;
+}
+
+export const FriendsList = ({ search = "" }: FriendsListProps) => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const { data, isLoading } = useGetFriendsQuery();
 
   if (isLoading) {
-    return <FriendListSkeleton count={5} />;
+    return <FriendListSkeleton count={8} />;
   }
 
   const friendships = data?.data.data || [];
@@ -37,9 +41,21 @@ export const FriendsList = () => {
     return friendship.requesterId === currentUser?.id ? friendship.addressee : friendship.requester;
   };
 
+  const filtered = search
+    ? friendships.filter((f) => getFriendUser(f).name.toLowerCase().includes(search.toLowerCase()))
+    : friendships;
+
+  if (filtered.length === 0) {
+    return (
+      <div className="rounded-md bg-buddy-card-bg p-8 text-center text-buddy-text-secondary">
+        No friends match &quot;{search}&quot;
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-3">
-      {friendships.map((friendship) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {filtered.map((friendship) => (
         <FriendCard key={friendship.id} user={getFriendUser(friendship)} action="none" />
       ))}
     </div>

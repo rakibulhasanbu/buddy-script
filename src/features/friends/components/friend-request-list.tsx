@@ -10,7 +10,11 @@ import { toast } from "sonner";
 
 import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
 
-export const FriendRequestList = () => {
+interface FriendRequestListProps {
+  search?: string;
+}
+
+export const FriendRequestList = ({ search = "" }: FriendRequestListProps) => {
   const { data, isLoading } = useGetPendingRequestsQuery();
   const [acceptRequest, { isLoading: isAccepting }] = useAcceptFriendRequestMutation();
   const [declineRequest, { isLoading: isDeclining }] = useDeclineFriendRequestMutation();
@@ -36,7 +40,7 @@ export const FriendRequestList = () => {
   };
 
   if (isLoading) {
-    return <FriendListSkeleton count={3} />;
+    return <FriendListSkeleton count={4} />;
   }
 
   if (requests.length === 0) {
@@ -47,9 +51,21 @@ export const FriendRequestList = () => {
     );
   }
 
+  const filtered = search
+    ? requests.filter((f) => f.requester.name.toLowerCase().includes(search.toLowerCase()))
+    : requests;
+
+  if (filtered.length === 0) {
+    return (
+      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
+        No friend requests match &quot;{search}&quot;
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-3">
-      {requests.map((friendship) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {filtered.map((friendship) => (
         <FriendCard
           key={friendship.id}
           user={friendship.requester}

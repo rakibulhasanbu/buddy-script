@@ -6,7 +6,11 @@ import { toast } from "sonner";
 
 import { FriendListSkeleton } from "@/components/shared/friend-skeleton";
 
-export const SuggestionsList = () => {
+interface SuggestionsListProps {
+  search?: string;
+}
+
+export const SuggestionsList = ({ search = "" }: SuggestionsListProps) => {
   const { data, isLoading } = useGetSuggestionsQuery();
   const [sendRequest, { isLoading: isSending }] = useSendFriendRequestMutation();
 
@@ -33,9 +37,21 @@ export const SuggestionsList = () => {
     );
   }
 
+  const filtered = search
+    ? suggestions.filter((u) => u.name.toLowerCase().includes(search.toLowerCase()))
+    : suggestions;
+
+  if (filtered.length === 0) {
+    return (
+      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
+        No suggestions match &quot;{search}&quot;
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-3">
-      {suggestions.map((user) => (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {filtered.map((user) => (
         <FriendCard
           key={user.id}
           user={user}
