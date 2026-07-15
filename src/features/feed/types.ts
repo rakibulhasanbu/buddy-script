@@ -39,13 +39,6 @@ export interface Post {
   isSaved?: boolean;
 }
 
-export interface FeedResponse {
-  data: Post[];
-  meta: {
-    nextCursor: string | null;
-  };
-}
-
 export interface CreatePostInput {
   content: string;
   imageUrl?: string;
@@ -126,4 +119,9 @@ export interface WhoReactedResponse {
 
 export interface UploadImageResponse {
   url: string;
+}
+
+export interface FeedResponse {
+  data: Post[];
+  meta: { nextCursor: string | null };
 }

@@ -18,8 +18,8 @@ export const FeedMiddle = () => {
   const { data, isLoading, isError } = useGetFeedQuery({ limit: POSTS_LIMIT });
   const [fetchMore, { isFetching: isFetchingMore }] = useLazyGetFeedQuery();
 
-  const posts = data?.data.data || [];
-  const nextCursor = data?.data.meta.nextCursor || null;
+  const posts = data?.data || [];
+  const nextCursor = data?.meta?.nextCursor || null;
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({

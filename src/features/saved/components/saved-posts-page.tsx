@@ -11,7 +11,7 @@ import { PostListSkeleton } from "@/components/shared/post-skeleton";
 export const SavedPostsPage = () => {
   const { data, isLoading, isError } = useGetSavedPostsQuery({});
 
-  const posts = data?.data.data || [];
+  const posts = data?.data || [];
 
   return (
     <FeedLayout

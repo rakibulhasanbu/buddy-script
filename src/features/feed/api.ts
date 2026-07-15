@@ -4,7 +4,6 @@ import {
   CreateCommentInput,
   CreatePostInput,
   EReactionEntity,
-  FeedResponse,
   Post,
   ToggleReactionInput,
   ToggleReactionResult,
@@ -14,11 +13,11 @@ import {
   WhoReactedResponse,
 } from "@/features/feed/types";
 import { api } from "@/redux/api";
-import { METHOD, ResponseObject, TagType } from "@/redux/types";
+import { METHOD, PaginatedResponse, ResponseObject, TagType } from "@/redux/types";
 
 const feedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getFeed: builder.query<ResponseObject<FeedResponse>, { cursor?: string; limit?: number }>({
+    getFeed: builder.query<PaginatedResponse<Post>, { cursor?: string; limit?: number }>({
       query: ({ cursor, limit }) => ({
         url: `/posts`,
         method: METHOD.GET,
@@ -27,19 +26,18 @@ const feedApi = api.injectEndpoints({
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCache, newItems, { arg }) => {
         if (!arg?.cursor) {
-          currentCache.data.data = newItems.data.data;
+          currentCache.data = newItems.data;
         } else {
-          currentCache.data.data.push(...newItems.data.data);
+          currentCache.data.push(...newItems.data);
         }
-        currentCache.data.meta.nextCursor = newItems.data.meta.nextCursor;
+        if (currentCache.meta) {
+          currentCache.meta.nextCursor = newItems?.meta?.nextCursor;
+        }
       },
       forceRefetch: ({ currentArg, previousArg }) => currentArg?.cursor !== previousArg?.cursor,
       providesTags: (result) =>
         result
-          ? [
-              ...result.data.data.map(({ id }) => ({ type: TagType.Post, id }) as const),
-              { type: TagType.Post, id: "LIST" },
-            ]
+          ? [...result.data.map(({ id }) => ({ type: TagType.Post, id }) as const), { type: TagType.Post, id: "LIST" }]
           : [{ type: TagType.Post, id: "LIST" }],
     }),
 
@@ -73,7 +71,7 @@ const feedApi = api.injectEndpoints({
       ],
     }),
 
-    getSavedPosts: builder.query<ResponseObject<FeedResponse>, { cursor?: string; limit?: number }>({
+    getSavedPosts: builder.query<PaginatedResponse<Post>, { cursor?: string; limit?: number }>({
       query: ({ cursor, limit }) => ({
         url: `/posts/saved`,
         method: METHOD.GET,
@@ -81,10 +79,7 @@ const feedApi = api.injectEndpoints({
       }),
       providesTags: (result) =>
         result
-          ? [
-              ...result.data.data.map(({ id }) => ({ type: TagType.Post, id }) as const),
-              { type: TagType.Post, id: "SAVED" },
-            ]
+          ? [...result.data.map(({ id }) => ({ type: TagType.Post, id }) as const), { type: TagType.Post, id: "SAVED" }]
           : [{ type: TagType.Post, id: "SAVED" }],
     }),
 
@@ -198,7 +193,7 @@ const feedApi = api.injectEndpoints({
             patchResults.push(
               dispatch(
                 feedApi.util.updateQueryData("getFeed", arg, (draft) => {
-                  const post = draft.data.data.find((p) => p.id === entityId);
+                  const post = draft.data.find((p) => p.id === entityId);
                   if (post) {
                     updateReactionInDraft(post, type);
                   }

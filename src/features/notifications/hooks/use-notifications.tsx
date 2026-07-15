@@ -39,8 +39,8 @@ export const useNotifications = () => {
 
   const firstPage: PageState = useMemo(
     () => ({
-      groups: notificationsData?.data.data ?? [],
-      nextCursor: notificationsData?.data.meta.nextCursor ?? null,
+      groups: notificationsData?.data ?? [],
+      nextCursor: notificationsData?.meta?.nextCursor ?? null,
     }),
     [notificationsData]
   );
@@ -68,8 +68,8 @@ export const useNotifications = () => {
       unreadOnly: activeTab === "unread",
     });
 
-    const newGroups = response.data?.data.data ?? [];
-    const nextCursor = response.data?.data.meta.nextCursor ?? null;
+    const newGroups = response.data?.data ?? [];
+    const nextCursor = response.data?.meta?.nextCursor ?? null;
 
     if (newGroups.length > 0 || nextCursor) {
       setExtraPages((prev) => [...prev, { groups: newGroups, nextCursor }]);

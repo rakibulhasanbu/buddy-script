@@ -1,12 +1,12 @@
 import { api } from "@/redux/api";
-import { METHOD, ResponseObject, TagType } from "@/redux/types";
+import { METHOD, PaginatedResponse, ResponseObject, TagType } from "@/redux/types";
 
-import { NotificationListResponse, UnreadCountResponse } from "./types";
+import { NotificationGroup, UnreadCountResponse } from "./types";
 
 const notificationsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getNotifications: builder.query<
-      ResponseObject<NotificationListResponse>,
+      PaginatedResponse<NotificationGroup>,
       { cursor?: string; limit?: number; unreadOnly?: boolean }
     >({
       query: ({ cursor, limit, unreadOnly }) => ({

@@ -36,6 +36,7 @@ export interface IMeta {
   limit: number;
   page: number;
   total: number;
+  nextCursor?: string | null;
 }
 
 export type PaginatedResponse<T> = {
