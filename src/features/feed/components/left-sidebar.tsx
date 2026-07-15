@@ -112,7 +112,7 @@ const EventCard = () => (
 );
 
 export const LeftSidebar = () => {
-  const { data: suggestionsResponse, isLoading: isSuggestionsLoading } = useGetSuggestionsQuery();
+  const { data: suggestionsResponse, isLoading: isSuggestionsLoading } = useGetSuggestionsQuery({});
   const [sendRequest, { isLoading: isSending }] = useSendFriendRequestMutation();
 
   const handleConnect = async (id: string) => {
@@ -124,7 +124,7 @@ export const LeftSidebar = () => {
     }
   };
 
-  const suggestions = suggestionsResponse?.data?.data ?? [];
+  const suggestions = suggestionsResponse?.data ?? [];
 
   return (
     <div className="flex flex-col">

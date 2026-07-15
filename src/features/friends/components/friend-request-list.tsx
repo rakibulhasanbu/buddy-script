@@ -15,11 +15,13 @@ interface FriendRequestListProps {
 }
 
 export const FriendRequestList = ({ search = "" }: FriendRequestListProps) => {
-  const { data, isLoading } = useGetPendingRequestsQuery();
+  const { data, isLoading } = useGetPendingRequestsQuery({
+    searchTerm: search,
+  });
   const [acceptRequest, { isLoading: isAccepting }] = useAcceptFriendRequestMutation();
   const [declineRequest, { isLoading: isDeclining }] = useDeclineFriendRequestMutation();
 
-  const requests = data?.data.data || [];
+  const requests = data?.data || [];
 
   const handleAccept = async (id: string) => {
     try {
@@ -51,21 +53,9 @@ export const FriendRequestList = ({ search = "" }: FriendRequestListProps) => {
     );
   }
 
-  const filtered = search
-    ? requests.filter((f) => f.requester.name.toLowerCase().includes(search.toLowerCase()))
-    : requests;
-
-  if (filtered.length === 0) {
-    return (
-      <div className="rounded-md bg-buddy-card-bg p-6 text-center text-buddy-text-secondary">
-        No friend requests match &quot;{search}&quot;
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {filtered.map((friendship) => (
+      {requests?.map((friendship) => (
         <FriendCard
           key={friendship.id}
           user={friendship.requester}

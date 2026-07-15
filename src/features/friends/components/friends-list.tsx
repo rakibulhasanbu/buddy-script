@@ -15,13 +15,13 @@ interface FriendsListProps {
 
 export const FriendsList = ({ search = "" }: FriendsListProps) => {
   const currentUser = useAppSelector((state) => state.auth.user);
-  const { data, isLoading } = useGetFriendsQuery({ search });
+  const { data, isLoading } = useGetFriendsQuery({ searchTerm: search });
 
   if (isLoading) {
     return <FriendListSkeleton count={8} />;
   }
 
-  const friendships = data?.data.data || [];
+  const friendships = data?.data || [];
 
   if (friendships.length === 0) {
     return (
@@ -41,21 +41,9 @@ export const FriendsList = ({ search = "" }: FriendsListProps) => {
     return friendship.requesterId === currentUser?.id ? friendship.addressee : friendship.requester;
   };
 
-  const filtered = search
-    ? friendships.filter((f) => getFriendUser(f).name.toLowerCase().includes(search.toLowerCase()))
-    : friendships;
-
-  if (filtered.length === 0) {
-    return (
-      <div className="rounded-md bg-buddy-card-bg p-8 text-center text-buddy-text-secondary">
-        No friends match &quot;{search}&quot;
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {filtered.map((friendship) => (
+      {friendships.map((friendship) => (
         <FriendCard key={friendship.id} user={getFriendUser(friendship)} action="none" />
       ))}
     </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { useGetFriendsQuery } from "@/features/friends/api";
 import { Friendship } from "@/features/friends/types";
@@ -61,7 +61,7 @@ const YourFriendsCard = () => {
   const [search, setSearch] = useState("");
   const { data, isLoading } = useGetFriendsQuery({ search });
 
-  const friendships = data?.data.data || [];
+  const friendships = data?.data || [];
 
   const getFriendUser = (friendship: Friendship) => {
     return friendship.requesterId === currentUser?.id ? friendship.addressee : friendship.requester;

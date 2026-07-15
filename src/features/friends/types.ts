@@ -27,11 +27,3 @@ export type Friendship = {
 export type SendFriendRequestInput = {
   addresseeId: string;
 };
-
-export type FriendListResponse = {
-  data: Friendship[];
-};
-
-export type SuggestionListResponse = {
-  data: FriendUser[];
-};

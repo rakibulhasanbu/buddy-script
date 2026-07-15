@@ -1,29 +1,31 @@
 import { api } from "@/redux/api";
-import { METHOD, ResponseObject, TagType } from "@/redux/types";
+import { METHOD, PaginatedResponse, QueryParams, ResponseObject, TagType } from "@/redux/types";
 
-import { FriendListResponse, Friendship, SendFriendRequestInput, SuggestionListResponse } from "./types";
+import { Friendship, FriendUser, SendFriendRequestInput } from "./types";
 
 const friendsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getFriends: builder.query<ResponseObject<FriendListResponse>, { search?: string }>({
-      query: ({ search }) => ({
+    getFriends: builder.query<PaginatedResponse<Friendship>, QueryParams>({
+      query: (params) => ({
         url: "/friendships/friends",
         method: METHOD.GET,
-        params: search ? { search } : undefined,
+        params,
       }),
       providesTags: [TagType.User],
     }),
-    getPendingRequests: builder.query<ResponseObject<FriendListResponse>, void>({
-      query: () => ({
+    getPendingRequests: builder.query<PaginatedResponse<Friendship>, QueryParams>({
+      query: (params) => ({
         url: "/friendships/pending",
         method: METHOD.GET,
+        params,
       }),
       providesTags: [TagType.User],
     }),
-    getSuggestions: builder.query<ResponseObject<SuggestionListResponse>, void>({
-      query: () => ({
+    getSuggestions: builder.query<PaginatedResponse<FriendUser>, QueryParams>({
+      query: (params) => ({
         url: "/friendships/suggestions",
         method: METHOD.GET,
+        params,
       }),
       providesTags: [TagType.User],
     }),
