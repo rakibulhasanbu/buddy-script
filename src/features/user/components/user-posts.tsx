@@ -25,7 +25,7 @@ export const UserPosts = ({ userId }: UserPostsProps) => {
     );
   }
 
-  const posts = data?.data.data || [];
+  const posts = data?.data || [];
 
   if (posts.length === 0) {
     return (

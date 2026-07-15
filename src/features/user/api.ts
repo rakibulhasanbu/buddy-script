@@ -1,6 +1,6 @@
-import { FeedResponse } from "@/features/feed/types";
+import { Post } from "@/features/feed/types";
 import { api } from "@/redux/api";
-import { METHOD, ResponseObject, TagType } from "@/redux/types";
+import { METHOD, PaginatedResponse, ResponseObject, TagType } from "@/redux/types";
 
 import { ProfileUser, PublicProfileUser, UpdateProfileInput } from "./types";
 
@@ -28,7 +28,7 @@ const userApi = api.injectEndpoints({
       }),
       invalidatesTags: [TagType.User],
     }),
-    getUserPosts: builder.query<ResponseObject<FeedResponse>, { userId: string; cursor?: string; limit?: number }>({
+    getUserPosts: builder.query<PaginatedResponse<Post>, { userId: string; cursor?: string; limit?: number }>({
       query: ({ userId, cursor, limit }) => ({
         url: `/posts/user/${userId}`,
         method: METHOD.GET,
@@ -37,7 +37,7 @@ const userApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.data.data.map(({ id }) => ({ type: TagType.Post, id }) as const),
+              ...result.data.map(({ id }) => ({ type: TagType.Post, id }) as const),
               { type: TagType.Post, id: "USER_POSTS" },
             ]
           : [{ type: TagType.Post, id: "USER_POSTS" }],

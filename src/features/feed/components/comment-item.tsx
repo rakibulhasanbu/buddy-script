@@ -51,7 +51,7 @@ export const CommentItem = ({ comment, postId, depth = 0 }: CommentItemProps) =>
   const [deleteComment, { isLoading: isDeleting }] = useDeleteCommentMutation();
   const [toggleReaction] = useToggleReactionMutation();
 
-  const replies = repliesData?.data.data || [];
+  const replies = repliesData?.data || [];
   const totalReactions = getTotalReactions(comment.reactionCounts);
   const topReactions = getTopReactions(comment.reactionCounts);
 

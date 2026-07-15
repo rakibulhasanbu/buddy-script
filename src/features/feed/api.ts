@@ -1,16 +1,15 @@
 import {
   Comment,
-  CommentListResponse,
   CreateCommentInput,
   CreatePostInput,
   EReactionEntity,
   Post,
+  ReactedUser,
   ToggleReactionInput,
   ToggleReactionResult,
   UpdateCommentInput,
   UpdatePostInput,
   UploadImageResponse,
-  WhoReactedResponse,
 } from "@/features/feed/types";
 import { api } from "@/redux/api";
 import { METHOD, PaginatedResponse, ResponseObject, TagType } from "@/redux/types";
@@ -120,10 +119,7 @@ const feedApi = api.injectEndpoints({
       }),
     }),
 
-    getCommentsByPost: builder.query<
-      ResponseObject<CommentListResponse>,
-      { postId: string; cursor?: string; limit?: number }
-    >({
+    getCommentsByPost: builder.query<PaginatedResponse<Comment>, { postId: string; cursor?: string; limit?: number }>({
       query: ({ postId, cursor, limit }) => ({
         url: `/comments/post/${postId}`,
         method: METHOD.GET,
@@ -133,7 +129,7 @@ const feedApi = api.injectEndpoints({
     }),
 
     getRepliesByComment: builder.query<
-      ResponseObject<CommentListResponse>,
+      PaginatedResponse<Comment>,
       { commentId: string; cursor?: string; limit?: number }
     >({
       query: ({ commentId, cursor, limit }) => ({
@@ -222,7 +218,7 @@ const feedApi = api.injectEndpoints({
             patchResults.push(
               dispatch(
                 feedApi.util.updateQueryData("getCommentsByPost", arg, (draft) => {
-                  const comment = draft.data.data.find((c) => c.id === entityId);
+                  const comment = draft.data.find((c) => c.id === entityId);
                   if (comment) {
                     updateReactionInDraft(comment, type);
                   }
@@ -236,7 +232,7 @@ const feedApi = api.injectEndpoints({
             patchResults.push(
               dispatch(
                 feedApi.util.updateQueryData("getRepliesByComment", arg, (draft) => {
-                  const reply = draft.data.data.find((c) => c.id === entityId);
+                  const reply = draft.data?.find((c) => c.id === entityId);
                   if (reply) {
                     updateReactionInDraft(reply, type);
                   }
@@ -255,7 +251,7 @@ const feedApi = api.injectEndpoints({
     }),
 
     getWhoReacted: builder.query<
-      ResponseObject<WhoReactedResponse>,
+      PaginatedResponse<ReactedUser>,
       { entityType: EReactionEntity; entityId: string; cursor?: string; limit?: number }
     >({
       query: ({ entityType, entityId, cursor, limit }) => ({

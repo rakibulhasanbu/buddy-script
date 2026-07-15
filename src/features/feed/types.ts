@@ -72,13 +72,6 @@ export interface Comment {
   myReaction: EReactionType | null;
 }
 
-export interface CommentListResponse {
-  data: Comment[];
-  meta: {
-    nextCursor: string | null;
-  };
-}
-
 export interface CreateCommentInput {
   postId: string;
   parentId?: string;
@@ -110,18 +103,6 @@ export interface ReactedUser {
   createdAt: string;
 }
 
-export interface WhoReactedResponse {
-  data: ReactedUser[];
-  meta: {
-    nextCursor: string | null;
-  };
-}
-
 export interface UploadImageResponse {
   url: string;
-}
-
-export interface FeedResponse {
-  data: Post[];
-  meta: { nextCursor: string | null };
 }

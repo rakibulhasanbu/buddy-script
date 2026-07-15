@@ -11,7 +11,7 @@ interface CommentListProps {
 
 export const CommentList = ({ postId }: CommentListProps) => {
   const { data, isLoading } = useGetCommentsByPostQuery({ postId });
-  const comments = data?.data.data || [];
+  const comments = data?.data || [];
 
   if (isLoading) {
     return (
