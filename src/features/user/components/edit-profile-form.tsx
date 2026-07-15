@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useUploadImageMutation } from "@/features/feed/api";
 import { editProfileFormSchema, EditProfileFormValues } from "@/features/user/schemas";
 import { ProfileUser } from "@/features/user/types";
+import { validateImageSize } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -69,6 +70,7 @@ export const EditProfileForm = ({ user, open, onOpenChange, onSubmit, isLoading 
   const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>, type: "profile" | "cover") => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!validateImageSize(file)) return;
 
     const previewUrl = URL.createObjectURL(file);
     if (type === "profile") {

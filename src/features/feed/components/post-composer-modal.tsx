@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { useCreatePostMutation, useUpdatePostMutation, useUploadImageMutation } from "@/features/feed/api";
 import { EVisibility, Post } from "@/features/feed/types";
+import { validateImageSize } from "@/lib/utils";
 import { useAppSelector } from "@/redux/hook";
 import { Globe, ImageIcon, Lock, MapPin, MoreHorizontal, Smile, UserPlus, Video, X } from "lucide-react";
 import { toast } from "sonner";
@@ -91,6 +92,7 @@ export const PostComposerModal = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
+      if (!validateImageSize(file)) return;
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
       setImageRemoved(false);

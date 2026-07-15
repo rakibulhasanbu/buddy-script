@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useUploadImageMutation } from "@/features/feed/api";
 import { useUpdateMeMutation } from "@/features/user/api";
 import { PublicProfileUser } from "@/features/user/types";
+import { validateImageSize } from "@/lib/utils";
 import { format } from "date-fns";
 import { Camera, Pencil } from "lucide-react";
 import { toast } from "sonner";
@@ -46,6 +47,7 @@ export const ProfileHeader = ({ user, isOwner, onEdit }: ProfileHeaderProps) => 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: "profile" | "cover") => {
     const file = e.target.files?.[0];
     if (file) {
+      if (!validateImageSize(file)) return;
       handleImageUpload(file, type);
     }
     e.target.value = "";

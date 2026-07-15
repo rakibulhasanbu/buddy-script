@@ -24,7 +24,7 @@ export const WhoReactedModal = ({ open, onOpenChange, entityType, entityId }: Wh
   const [activeTab, setActiveTab] = useState<TabValue>("ALL");
   const { data, isLoading } = useGetWhoReactedQuery({ entityType, entityId, limit: 100 }, { skip: !open });
 
-  const reactions = useMemo(() => data?.data.data || [], [data?.data.data]);
+  const reactions = useMemo(() => data?.data || [], [data?.data]);
 
   const counts = useMemo(() => {
     const total = reactions.length;

@@ -59,7 +59,7 @@ const YouMightLikeCard = () => (
 const YourFriendsCard = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   const [search, setSearch] = useState("");
-  const { data, isLoading } = useGetFriendsQuery({ search });
+  const { data, isLoading } = useGetFriendsQuery({ searchTerm: search });
 
   const friendships = data?.data || [];
 
