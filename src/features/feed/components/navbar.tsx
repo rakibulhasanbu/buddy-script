@@ -70,7 +70,7 @@ const ProfileDropdown = () => {
         <DropdownMenuSeparator className="my-3 border-buddy-border-color" />
 
         <DropdownMenuItem asChild>
-          <Link href="#0" className="flex cursor-pointer items-center justify-between text-buddy-text-dark">
+          <Link href="#0" className="flex cursor-pointer items-center justify-between py-3 text-buddy-text-dark">
             <span className="flex items-center gap-2 text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="none" viewBox="0 0 18 19">
                 <path
@@ -91,7 +91,7 @@ const ProfileDropdown = () => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href="#0" className="flex cursor-pointer items-center justify-between text-buddy-text-dark">
+          <Link href="#0" className="flex cursor-pointer items-center justify-between py-3 text-buddy-text-dark">
             <span className="flex items-center gap-2 text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
                 <path
@@ -123,7 +123,7 @@ const ProfileDropdown = () => {
 
         <DropdownMenuItem
           onClick={handleLogout}
-          className="flex cursor-pointer items-center justify-between text-buddy-text-dark"
+          className="flex cursor-pointer items-center justify-between py-3 text-buddy-text-dark"
         >
           <span className="flex items-center gap-2 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="none" viewBox="0 0 19 19">
