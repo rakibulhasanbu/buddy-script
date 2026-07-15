@@ -16,24 +16,24 @@ import { METHOD, PaginatedResponse, ResponseObject, TagType } from "@/redux/type
 
 const feedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getFeed: builder.query<PaginatedResponse<Post>, { cursor?: string; limit?: number }>({
-      query: ({ cursor, limit }) => ({
+    getFeed: builder.query<PaginatedResponse<Post>, { page?: number; limit?: number }>({
+      query: ({ page, limit }) => ({
         url: `/posts`,
         method: METHOD.GET,
-        params: { cursor, limit },
+        params: { page, limit },
       }),
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCache, newItems, { arg }) => {
-        if (!arg?.cursor) {
+        if (!arg?.page || arg.page === 1) {
           currentCache.data = newItems.data;
         } else {
           currentCache.data.push(...newItems.data);
         }
-        if (currentCache.meta) {
-          currentCache.meta.nextCursor = newItems?.meta?.nextCursor;
+        if (newItems.meta) {
+          currentCache.meta = newItems.meta;
         }
       },
-      forceRefetch: ({ currentArg, previousArg }) => currentArg?.cursor !== previousArg?.cursor,
+      forceRefetch: ({ currentArg, previousArg }) => currentArg?.page !== previousArg?.page,
       providesTags: (result) =>
         result
           ? [...result.data.map(({ id }) => ({ type: TagType.Post, id }) as const), { type: TagType.Post, id: "LIST" }]

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { useGetFeedQuery, useLazyGetFeedQuery } from "@/features/feed/api";
 import { useFeedScrollElement } from "@/features/feed/components/feed-scroll-context";
@@ -11,15 +11,21 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { PostListSkeleton } from "@/components/shared/post-skeleton";
 
-const POSTS_LIMIT = 20;
+const POSTS_LIMIT = 5;
 
 export const FeedMiddle = () => {
   const scrollElement = useFeedScrollElement();
-  const { data, isLoading, isError } = useGetFeedQuery({ limit: POSTS_LIMIT });
+  const { data, isLoading, isError } = useGetFeedQuery({ page: 1, limit: POSTS_LIMIT });
   const [fetchMore, { isFetching: isFetchingMore }] = useLazyGetFeedQuery();
 
   const posts = data?.data || [];
-  const nextCursor = data?.meta?.nextCursor || null;
+  const total = data?.meta?.total ?? 0;
+  const hasMore = posts.length < total;
+
+  const nextPage = useMemo(() => {
+    if (!data?.meta) return 1;
+    return Math.floor(data.meta.limit > 0 ? posts.length / data.meta.limit : 0) + 1;
+  }, [data?.meta, posts.length]);
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
@@ -39,8 +45,8 @@ export const FeedMiddle = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry.isIntersecting && nextCursor && !isFetchingMore && !isLoading) {
-          fetchMore({ cursor: nextCursor, limit: POSTS_LIMIT });
+        if (entry.isIntersecting && hasMore && !isFetchingMore && !isLoading) {
+          fetchMore({ page: nextPage, limit: POSTS_LIMIT });
         }
       },
       { root: scrollElement, rootMargin: "600px" }
@@ -48,7 +54,7 @@ export const FeedMiddle = () => {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [scrollElement, nextCursor, isFetchingMore, isLoading, fetchMore]);
+  }, [scrollElement, hasMore, isFetchingMore, isLoading, fetchMore, nextPage]);
 
   const virtualItems = virtualizer.getVirtualItems();
 
